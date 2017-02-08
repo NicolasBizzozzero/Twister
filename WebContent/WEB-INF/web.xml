@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd"> 
+<web-app> 
+	<display-name>Bonjour :)</display-name> 
+	<servlet> 
+		<servlet-name>HelloWorld</servlet-name> 
+		<servlet-class>servlets.HelloWorld</servlet-class>
+	</servlet>
+	<servlet> 
+		<servlet-name>Operations</servlet-name> 
+		<servlet-class>servlets.Operations</servlet-class>
+	</servlet>
+	<servlet> 
+		<servlet-name>SimpleServlet1</servlet-name> 
+		<servlet-class>servlets.SimpleServlet1</servlet-class>
+	</servlet>
+	<servlet> 
+		<servlet-name>SimpleServlet2</servlet-name> 
+		<servlet-class>servlets.SimpleServlet2</servlet-class> 
+	</servlet>
+	
+	<servlet-mapping> 
+		<servlet-name>HelloWorld</servlet-name> 
+		<url-pattern>/helloworld</url-pattern>
+	</servlet-mapping> 
+	<servlet-mapping>
+		<servlet-name>Operations</servlet-name> 
+		<url-pattern>/operations</url-pattern>
+	</servlet-mapping> 
+	<servlet-mapping>
+		<servlet-name>SimpleServlet1</servlet-name> 
+		<url-pattern>/simpleservlet1</url-pattern>
+	</servlet-mapping> 
+	<servlet-mapping>
+		<servlet-name>SimpleServlet2</servlet-name> 
+		<url-pattern>/simpleservlet2</url-pattern> 
+	</servlet-mapping> 
+</web-app>
