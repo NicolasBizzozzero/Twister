@@ -31,13 +31,14 @@ public class AjouterAmi {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_ami2), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
 			
-			// On vérifie que les deux ne sont pas déja amis
-			boolean sontAmis = AmitiesTools.sontAmis(id_ami1, id_ami2);
-			if (sontAmis) {
-				return ErrorJSON.serviceRefused(String.format("Vous êtes déjà amis ! %s %s", id_ami1, id_ami2), CodesErreur.ERREUR_DEJA_AMIS);
+			// On vérifie que ami1 ne suit pas déjà ami2
+			boolean suitDeja = AmitiesTools.suitDeja(id_ami1, id_ami2);
+			if (suitDeja) {
+				return ErrorJSON.serviceRefused(String.format("%s suit déjà %s", id_ami1, id_ami2), CodesErreur.ERREUR_DEJA_SUIVI);
 			}
 			
-			// TODO: FAIRE l'ajout d'amis
+			// on ajoute une relation d'amitié à la base de données
+			AmitiesTools.ajouterAmi(id_ami1, id_ami2);
 
 			// On renvoie une réponse
 			JSONObject reponse = new JSONObject();
@@ -54,5 +55,4 @@ public class AjouterAmi {
 	private static boolean verificationParametres(String id_ami1, String id_ami2) {
 		return (id_ami1 != null && id_ami2 != null);
 	}
-
 }

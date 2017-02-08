@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 public class Database {
 	private DataSource dataSource;
 	private static Database database;
+
 	/**
 	 * Creer une database
 	 * @param name nom de la database
@@ -35,11 +36,10 @@ public class Database {
 	
 	/**
 	 * donne une connexion a la database 
-	 * @return
-	 * @throws SQLException
 	 */
-	public static Connection getMySQLConnection() throws SQLException {
+	public static Connection getMySQLConnection() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		if (DBStatic.mysql_pooling == false) {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			return DriverManager.getConnection("jdbc:mysql://" + DBStatic.mysql_host + "/" + DBStatic.mysql_db, DBStatic.mysql_username, DBStatic.mysql_password);
 		} else {
 			if (database == null) {

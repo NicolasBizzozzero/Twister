@@ -15,6 +15,8 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 
+import exceptions.BDException;
+
 
 public class AjouterCommentaire {
 	public static JSONObject ajouterCommentaire(String contenu, String id_auteur, String pseudo) {
@@ -31,11 +33,7 @@ public class AjouterCommentaire {
 			
 			// Connexion à la base de données
 			Mongo mongo = null;
-			try {
-				mongo = new Mongo("li328.lip6.fr", 27130);
-			} catch (UnknownHostException e) {
-				return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.HOTE_INCONNU);
-			}
+			mongo = new Mongo("li328.lip6.fr", 27130);
 			DB db = mongo.getDB("gr2-2017-bourmaud-bizzozzero");
 			DBCollection collection = db.getCollection("Commentaires");
 			
@@ -52,8 +50,10 @@ public class AjouterCommentaire {
 			// On renvoie une réponse
 			JSONObject reponse = new JSONObject();
 			return reponse;
-		} catch (SQLException e) {
-			return ErrorJSON.serviceRefused("Erreur de la base de donnees", CodesErreur.ERREUR_SQL);
+		} catch (UnknownHostException e) {
+			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.HOTE_INCONNU);
+		} catch (BDException e) {
+			return ErrorJSON.serviceRefused("Erreur de la base de données MySQL", CodesErreur.ERREUR_SQL);
 		}
 	}
 	

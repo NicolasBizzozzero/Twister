@@ -1,4 +1,4 @@
-package services.user;
+package services.utilisateur;
 
 import java.sql.SQLException;
 import java.security.MessageDigest;

@@ -29,10 +29,13 @@ public class Login {
 			
 			// On génère un identifiant aléatoire
 			String identifiant = UtilisateursTools.getIdUser(login);
+
+			// On insère la session dans la base de données
+			boolean estAdministrateur = estAdministrateur(login);
+			String key = UtilisateursTools.insertSession(identifiant, estAdministrateur);
 			
 			// On génère une réponse
 			JSONObject retour = new JSONObject();
-			String key = UtilisateursTools.insertSession(identifiant, false);
 			retour.put("key", key);
 			return retour;
 
@@ -45,5 +48,9 @@ public class Login {
 	
 	private static boolean verificationParametres(String login, String motDePasse) {
 		return (login != null&& motDePasse != null);
+	}
+	
+	private static boolean estAdministrateur(String login) {
+		return (login.equals("SuperAlexia")) || (login.equals("SuperNicolas"));
 	}
 }

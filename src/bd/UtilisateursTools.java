@@ -53,7 +53,7 @@ public class UtilisateursTools {
 	        connection.close();
 	        return retour;
 	    } catch (Exception e) {
-	        throw new BDException("Impossible de se connecter a la base de données");
+	        throw new BDException("Impossible de se connecter à la base de données");
 	    }
 	}
 
@@ -71,7 +71,7 @@ public class UtilisateursTools {
 	        statement.close();
 	        connection.close();
 	    } catch (Exception e) {
-	        throw new BDException("Impossible de se connecter a la base de données");
+	        throw new BDException("Impossible de se connecter à la base de données");
 	    }
 	}
 	
@@ -139,7 +139,7 @@ public class UtilisateursTools {
 	        
 	        // Création et execution de la requête
 	        Statement statement = connection.createStatement();
-	        statement.executeQuery(requete);
+	        statement.executeUpdate(requete);
 	        
 	        // Libération des ressources
 	        statement.close();

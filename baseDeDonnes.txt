@@ -10,8 +10,8 @@ MySQL:
 		anniversaire Date
 				
 	Amities:
-		id_ami1 Integer
-		id_ami2 Integer
+		id_ami1 Integer	(suiveur)
+		id_ami2 Integer	(suivi)
 		timestamp Timestamp 
 		primary key (id_ami1, id_ami2)
 

@@ -1,4 +1,4 @@
-package services.user;
+package services.utilisateur;
 
 public class SuppresionUtilisateur {
 

@@ -3,8 +3,8 @@
 <web-app> 
 	<display-name>Bonjour :)</display-name> 
 	<servlet> 
-		<servlet-name>HelloWorld</servlet-name> 
-		<servlet-class>servlets.HelloWorld</servlet-class>
+		<servlet-name>CreationUtilisateur</servlet-name> 
+		<servlet-class>servlets.utilisateur.ServletCreationUtilisateur</servlet-class>
 	</servlet>
 	<servlet> 
 		<servlet-name>Operations</servlet-name> 
@@ -20,8 +20,8 @@
 	</servlet>
 	
 	<servlet-mapping> 
-		<servlet-name>HelloWorld</servlet-name> 
-		<url-pattern>/helloworld</url-pattern>
+		<servlet-name>CreationUtilisateur</servlet-name> 
+		<url-pattern>/utilisateur/creation</url-pattern>
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>Operations</servlet-name> 

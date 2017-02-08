@@ -8,8 +8,10 @@ public abstract class CodesErreur {
 	public static final int ERREUR_MDP = 4;
 	public static final int ERREUR_DECONNEXION = 5;
 	public static final int HOTE_INCONNU = 6;
-	public static final int ERREUR_DEJA_AMIS = 7;
+	public static final int ERREUR_DEJA_SUIVI = 7;
 	public static final int ERREUR_ID_IDENTIQUES = 8;
+	public static final int ERREUR_NE_SUIVAIT_PAS = 9;
+	public static final int ERREUR_UTILISATEUR_DECONNECTE = 10;
 	public static final int ERREUR_JSON = 100;
 	public static final int ERREUR_SQL = 1000;
 	public static final int ERREUR_JAVA = 10000;
