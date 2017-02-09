@@ -15,7 +15,7 @@ public class ServletAjouterAmis extends HttpServlet {
 	public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
 			 
 		String ami1= requete.getParameter("id_ami1"); 
-		String ami2= requete.getParameter("id_amis2"); 
+		String ami2= requete.getParameter("id_ami2"); 
 			
 		JSONObject retour = AjouterAmi.ajouterAmi(ami1,ami2);
 		reponse.setContentType("application/json");
