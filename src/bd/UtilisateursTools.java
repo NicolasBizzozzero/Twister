@@ -9,28 +9,47 @@ import outils.MesMethodes;
 import exceptions.BDException;
 
 public class UtilisateursTools {
-	public static boolean verificationExistenceLogin(String login) throws BDException {
-	    try {
+	public static boolean verificationExistenceLogin(String login) {
+		try {
 	    	// Connection à la base de données
+	    	System.out.println("1");
 	        Connection connection = Database.getMySQLConnection();
-	        String requete = String.format("SELECT id FROM Utilisateurs WHERE login=%s", login);
-	        
+	    	System.out.println("2");
+	    	System.out.println(login);
+	        String requete = String.format("SELECT id FROM Utilisateurs WHERE pseudo=\"%s\";", login);
+	        System.out.println(requete);
+	    	System.out.println("3");
 	        // Création et execution de la requête
 	        Statement statement = connection.createStatement();
+	    	System.out.println("4");
 	        statement.executeQuery(requete);
+	    	System.out.println("5");
 	        
 	        // Récuperation des données
 	        ResultSet resultSet = statement.getResultSet();
+	    	System.out.println("6");
 	        boolean retour = resultSet.next();
+	    	System.out.println("7");
 	        
 	        // Libération des ressources
 	        resultSet.close();
+	    	System.out.println("8");
 	        statement.close();
+	    	System.out.println("9");
 	        connection.close();
+	    	System.out.println("10");
 	        return retour;
-	    } catch (Exception e) {
-	        throw new BDException("Impossible de se connecter a la base de données");
-	    }
+		} catch (NullPointerException e) {
+			return false;
+		} catch (InstantiationException e) {
+			return false;
+		} catch (IllegalAccessException e) {
+			return false;
+		} catch (ClassNotFoundException e) {
+			return false;
+		} catch (SQLException e) {
+			return false;
+		}
 	}
 	
 	public static boolean verificationExistenceId(String id) throws BDException {

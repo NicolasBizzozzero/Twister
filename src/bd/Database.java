@@ -27,7 +27,7 @@ public class Database {
 	
 	/**
 	 * creer une connexion avec la database
-	 * @return la connexion qui vient d'Ãªtre crÃ©Ã©e
+	 * @return la connexion qui vient d'être créée
 	 * @throws SQLException
 	 */
 	public Connection getConnection() throws SQLException {
@@ -38,8 +38,8 @@ public class Database {
 	 * donne une connexion a la database 
 	 */
 	public static Connection getMySQLConnection() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		if (DBStatic.mysql_pooling == false) {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			return DriverManager.getConnection("jdbc:mysql://" + DBStatic.mysql_host + "/" + DBStatic.mysql_db, DBStatic.mysql_username, DBStatic.mysql_password);
 		} else {
 			if (database == null) {

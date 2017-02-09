@@ -1,6 +1,6 @@
 # Création de la table Utilisateurs
 CREATE TABLE Utilisateurs(
-    	id Integer PRIMARY KEY AUTO_INCREMENT,
+    id Integer PRIMARY KEY AUTO_INCREMENT,
 	pseudo Varchar(32) UNIQUE,
 	mot_de_passe Varchar(64),
 	mail Varchar(64),
