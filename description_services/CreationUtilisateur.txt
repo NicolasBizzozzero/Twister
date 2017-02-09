@@ -1,11 +1,11 @@
-﻿Nom du service Web								createUtilisateur
-Lieu ou se trouve le service					services/user/CreationUtilisateur
-URL du service Web								user/create
-Description du service							Creer un nouvel utilisateur
-Paramètres en entrée							nom, prenom, mail, login, motDePasse
+﻿Nom du service Web								creationUtilisateur
+Lieu ou se trouve le service					services/utilisateur/CreationUtilisateur
+URL du service Web								/utilisateur/creation
+Description du service							Créer un nouvel utilisateur
+Paramètres en entrée							pseudo, motDePasse, email, prenom, nom, anniversaire
 Format de sortie								ok ou erreur
 exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
-Erreurs possibles								1: Utilisateur déjà existant
+Erreurs possibles								1: Utilisateur déjà existant, Mot de passe trop court, Mot de passe trop long
 Avancement du Service							Servlet à faire
 Classes JAVA en rapport avec le service Web
 Informations additionnelles

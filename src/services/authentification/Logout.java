@@ -4,7 +4,8 @@ import java.sql.SQLException;
 
 import org.json.JSONObject;
 
-import bd.UtilisateursTools;
+import bd.tools.SessionsTools;
+import bd.tools.UtilisateursTools;
 import services.CodesErreur;
 import services.ErrorJSON;
 
@@ -17,7 +18,7 @@ public class Logout {
 
 	try {
 		// On verrifie que l'utilisateur existe
-		boolean isUser = UtilisateursTools.verificationExistenceLogin(login);
+		boolean isUser = UtilisateursTools.verificationExistencePseudo(login);
 		if (! isUser) {
 			return ErrorJSON.serviceRefused("L'utilisateur n'existe pas", CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 		}
@@ -29,7 +30,7 @@ public class Logout {
 		}*/
 		
 		//on supprime la cle de connexion
-		boolean sup= UtilisateursTools.suppressionCle(cle);
+		boolean sup= SessionsTools.suppressionCle(cle);
 		if(sup){
 			// On genere une reponse
 			JSONObject retour = new JSONObject();

@@ -4,7 +4,8 @@ import java.sql.SQLException;
 
 import org.json.JSONObject;
 
-import bd.UtilisateursTools;
+import bd.tools.SessionsTools;
+import bd.tools.UtilisateursTools;
 import services.CodesErreur;
 import services.ErrorJSON;
 
@@ -16,7 +17,7 @@ public class Login {
 		
 		try {
 			// On vérifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistenceLogin(login);
+			boolean isUser = UtilisateursTools.verificationExistencePseudo(login);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused("L'utilisateur n'existe pas", CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
@@ -28,11 +29,11 @@ public class Login {
 			}
 			
 			// On génère un identifiant aléatoire
-			String identifiant = UtilisateursTools.getIdUser(login);
+			String identifiant = UtilisateursTools.getIdUtilisateur(login);
 
 			// On insère la session dans la base de données
 			boolean estAdministrateur = estAdministrateur(login);
-			String key = UtilisateursTools.insertSession(identifiant, estAdministrateur);
+			String key = SessionsTools.insertSession(identifiant, estAdministrateur);
 			
 			// On génère une réponse
 			JSONObject retour = new JSONObject();

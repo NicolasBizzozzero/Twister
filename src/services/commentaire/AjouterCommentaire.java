@@ -8,13 +8,13 @@ import org.json.JSONObject;
 
 import services.CodesErreur;
 import services.ErrorJSON;
-import bd.UtilisateursTools;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 
+import bd.tools.UtilisateursTools;
 import exceptions.BDException;
 
 
@@ -52,9 +52,15 @@ public class AjouterCommentaire {
 			return reponse;
 		} catch (UnknownHostException e) {
 			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.HOTE_INCONNU);
-		} catch (BDException e) {
-			return ErrorJSON.serviceRefused("Erreur de la base de donnÃ©es MySQL", CodesErreur.ERREUR_SQL);
-		}
+		} catch (InstantiationException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (IllegalAccessException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (ClassNotFoundException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (SQLException e) {
+			return ErrorJSON.serviceRefused("Erreur, requête SQL Incorrecte", CodesErreur.ERREUR_SQL);
+		} 
 	}
 	
 	   /**

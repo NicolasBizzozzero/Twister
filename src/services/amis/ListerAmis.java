@@ -4,14 +4,15 @@ import java.sql.SQLException;
 
 import org.json.JSONObject;
 
+import bd.tools.AmitiesTools;
+import bd.tools.SessionsTools;
+import bd.tools.UtilisateursTools;
+import exceptions.IndexInvalideException;
 import services.CodesErreur;
 import services.ErrorJSON;
-import bd.AmitiesTools;
-import bd.SessionsTools;
-import bd.UtilisateursTools;
 
 public class ListerAmis {
-	public static JSONObject listerAmis(String id_utilisateur, int limite) {
+	public static JSONObject listerAmis(String id_utilisateur, int index_debut, int nombre_demandes) {
 		if (! verificationParametres(id_utilisateur)){
 			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
@@ -30,13 +31,21 @@ public class ListerAmis {
 			}
 
 	        //Lister les amis 
-			JSONObject reponse = AmitiesTools.listerAmis(id_utilisateur, limite);
+			JSONObject reponse = AmitiesTools.listerAmis(id_utilisateur, index_debut, nombre_demandes);
 	
 			// On renvoie une rÃ©ponse
 			return reponse;
 			
 		} catch (SQLException e) {
-			return ErrorJSON.serviceRefused("Erreur de la base de donnees", CodesErreur.ERREUR_SQL);
+			return ErrorJSON.serviceRefused("Erreur, requête SQL Incorrecte", CodesErreur.ERREUR_SQL);
+		} catch (InstantiationException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (IllegalAccessException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (ClassNotFoundException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (IndexInvalideException e) {
+			return ErrorJSON.serviceRefused("Erreur, indexation invalide lors du listing d'amis", CodesErreur.ERREUR_INDEX_INVALIDE);
 		}
 	}
 

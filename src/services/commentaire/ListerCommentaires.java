@@ -1,13 +1,13 @@
 package services.commentaire;
 
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.Date;
 
 import org.json.JSONObject;
 
 import services.CodesErreur;
 import services.ErrorJSON;
-import bd.UtilisateursTools;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -15,6 +15,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.Mongo;
 
+import bd.tools.UtilisateursTools;
 import exceptions.BDException;
 
 public class ListerCommentaires {
@@ -53,8 +54,14 @@ public class ListerCommentaires {
 	
 			// On renvoie une rÃ©ponse
 			return reponse;
-		} catch (BDException e) {
-			return ErrorJSON.serviceRefused("Erreur de la base de donnÃ©es MySQL", CodesErreur.ERREUR_SQL);
+		} catch (InstantiationException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (IllegalAccessException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (ClassNotFoundException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (SQLException e) {
+			return ErrorJSON.serviceRefused("Erreur, requête SQL Incorrecte", CodesErreur.ERREUR_SQL);
 		}
 	}
 	
