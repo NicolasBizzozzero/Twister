@@ -7,73 +7,32 @@
 		<servlet-class>servlets.utilisateur.ServletCreationUtilisateur</servlet-class>
 	</servlet>
 	<servlet> 
-		<servlet-name>Login</servlet-name> 
-		<servlet-class>servlets.authentification.ServletLogin</servlet-class>
+		<servlet-name>Operations</servlet-name> 
+		<servlet-class>servlets.Operations</servlet-class>
 	</servlet>
 	<servlet> 
-		<servlet-name>Logout</servlet-name> 
-		<servlet-class>servlets.authentification.ServletLogout</servlet-class>
+		<servlet-name>SimpleServlet1</servlet-name> 
+		<servlet-class>servlets.SimpleServlet1</servlet-class>
 	</servlet>
 	<servlet> 
-		<servlet-name>SupprimerAmi</servlet-name> 
-		<servlet-class>servlets.amis.ServletSupprimerAmi</servlet-class> 
+		<servlet-name>SimpleServlet2</servlet-name> 
+		<servlet-class>servlets.SimpleServlet2</servlet-class> 
 	</servlet>
-	<servlet> 
-		<servlet-name>AjouterAmi</servlet-name> 
-		<servlet-class>servlets.amis.ServletAjouterAmi</servlet-class> 
-	</servlet>
-	<servlet> 
-		<servlet-name>ListerAmis</servlet-name> 
-		<servlet-class>servlets.amis.ServletListerAmis</servlet-class> 
-	</servlet>
-	<servlet> 
-		<servlet-name>AjouterCommentaire</servlet-name> 
-		<servlet-class>servlets.commentaire.ServletAjouterCommentaire</servlet-class> 
-	</servlet>
-	<servlet> 
-		<servlet-name>SupprimerCommentaire</servlet-name> 
-		<servlet-class>servlets.commentaire.ServletSupprimerCommentaire</servlet-class> 
-	</servlet>
-	<servlet> 
-		<servlet-name>ListerCommentaires</servlet-name> 
-		<servlet-class>servlets.commentaire.ServletListerCommentaires</servlet-class> 
-	</servlet>
-	
 	
 	<servlet-mapping> 
 		<servlet-name>CreationUtilisateur</servlet-name> 
-		<url-pattern>/utilisateur/creationUtilisateur</url-pattern>
+		<url-pattern>/utilisateur/creation</url-pattern>
 	</servlet-mapping> 
 	<servlet-mapping>
-		<servlet-name>Login</servlet-name> 
-		<url-pattern>/authentification/login</url-pattern>
+		<servlet-name>Operations</servlet-name> 
+		<url-pattern>/operations</url-pattern>
 	</servlet-mapping> 
 	<servlet-mapping>
-		<servlet-name>Logout</servlet-name> 
-		<url-pattern>/authentification/logout</url-pattern>
+		<servlet-name>SimpleServlet1</servlet-name> 
+		<url-pattern>/simpleservlet1</url-pattern>
 	</servlet-mapping> 
 	<servlet-mapping>
-		<servlet-name>SupprimerAmi</servlet-name> 
-		<url-pattern>/amis/supprimerAmis</url-pattern> 
+		<servlet-name>SimpleServlet2</servlet-name> 
+		<url-pattern>/simpleservlet2</url-pattern> 
 	</servlet-mapping> 
-	<servlet-mapping>
-		<servlet-name>AjouterAmi</servlet-name> 
-		<url-pattern>/amis/ajouterAmis</url-pattern> 
-	</servlet-mapping> 
-	<servlet-mapping>
-		<servlet-name>ListerAmis</servlet-name> 
-		<url-pattern>/amis/listerAmis</url-pattern> 
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>AjouterCommentaire</servlet-name> 
-		<url-pattern>/commentaire/ajouterCommentaire</url-pattern> 
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>SupprimerCommentaire</servlet-name> 
-		<url-pattern>/commentaire/supprimerCommentaire</url-pattern> 
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>ListerCommentaires</servlet-name> 
-		<url-pattern>/commentaire/listerCommentaires</url-pattern> 
-	</servlet-mapping>
 </web-app>

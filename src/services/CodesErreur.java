@@ -17,8 +17,10 @@ public abstract class CodesErreur {
 	public static final int ERREUR_MDP_TROP_LONG = 12;
 	public static final int ERREUR_HASHAGE = 13;
 	public static final int ERREUR_INDEX_INVALIDE = 14;
+	public static final int ERREUR_UTILISATEUR_DEJA_CONNECTE = 15;
 	public static final int ERREUR_JSON = 100;
 	public static final int ERREUR_SQL = 1000;
 	public static final int ERREUR_JAVA = 10000;
 	public static final int ERREUR_INCONNUE = 100000;
+
 }
