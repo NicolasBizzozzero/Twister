@@ -1,0 +1,11 @@
+Nom du service Web								supprimerAmi
+Lieu ou se trouve le service					services/amis/SupprimerAmi
+URL du service Web								/ami/supprimerAmi
+Description du service							supprime le tuple(id_ami1, id_ami2, date) de la base de donnée amities
+Paramètres en entrée							id_ami1,id_ami2
+Format de sortie								ok ou erreur
+exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
+Erreurs possibles								-1: ERREUR_ARGUMENTS, 8:ERREUR_ID_IDENTIQUES, 2: ERREUR_UTILISATEUR_INEXISTANT, 9: ERREUR_NE_SUIVAIT_PAS, 1000: ERREUR_SQL
+												0:ERREUR_CONNEXION_BD_MYSQL
+Avancement du Service							terminer à tester
+Informations additionnelles

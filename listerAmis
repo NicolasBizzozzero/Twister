@@ -1,0 +1,10 @@
+Nom du service Web								listerAmis
+Lieu ou se trouve le service					services/amis/ListerAmis
+URL du service Web								/ami/listerAmis
+Description du service							liste les amis compris entre index_debut et nombre_demandes d'id_utilisateur 
+Paramètres en entrée							id_utilisateur, index_debut, nombre_demandes
+Format de sortie								JSON contenant les amis ou erreur
+exemple de sortie								{"Amis": [{"id_ami2":123},'"id_ami2":546},....]} si ok , {"error_code":XXX, "message":"..."} si erreur
+Erreurs possibles								-1: ERREUR_ARGUMENTS, 2: ERREUR_UTILISATEUR_INEXISTANT, 1000: ERREUR_SQL, 0:ERREUR_CONNEXION_BD_MYSQL
+Avancement du Service							terminer à tester
+Informations additionnelles
