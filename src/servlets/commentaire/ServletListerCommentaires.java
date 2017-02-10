@@ -18,9 +18,10 @@ public class ServletListerCommentaires extends HttpServlet {
 	        // Récuperation des paramètres
 	        String id_utilisateur = requete.getParameter("id_utilisateur");
 	        int limite = Integer.parseInt(requete.getParameter("limite"));
+	        int index_debut = Integer.parseInt(requete.getParameter("index_debut"));
 
 	        // Utilisation du service approprié
-	        JSONObject retour =ListerCommentaires.listerCommentaires(id_utilisateur, limite);
+	        JSONObject retour = ListerCommentaires.listerCommentaires(id_utilisateur, index_debut, limite);
 	        reponse.setContentType("application/json");
 	        reponse.getWriter().print(retour);
 	    
