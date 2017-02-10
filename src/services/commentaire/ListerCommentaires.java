@@ -19,7 +19,7 @@ import bd.tools.UtilisateursTools;
 import exceptions.BDException;
 
 public class ListerCommentaires {
-	public static JSONObject listerCommentaires(String id_utilisateur, int limite) {
+	public static JSONObject listerCommentaires(String id_utilisateur, int index_debut, int limite) {
 		if (! verificationParametres(id_utilisateur)){
 			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
@@ -46,7 +46,7 @@ public class ListerCommentaires {
 			requete.put("id_auteur", id_utilisateur);
 	
 			// On itÃ¨re sur les rÃ©sultats
-			DBCursor curseur = collection.find(requete).limit(limite);
+			DBCursor curseur = collection.find(requete).skip(index_debut).limit(limite);
 			JSONObject reponse = new JSONObject();
 			while (curseur.hasNext()) {
 				reponse.accumulate("comments", curseur.next());
@@ -55,13 +55,13 @@ public class ListerCommentaires {
 			// On renvoie une rÃ©ponse
 			return reponse;
 		} catch (InstantiationException e) {
-			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnï¿½es MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (IllegalAccessException e) {
-			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnï¿½es MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (ClassNotFoundException e) {
-			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de données MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnï¿½es MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (SQLException e) {
-			return ErrorJSON.serviceRefused("Erreur, requête SQL Incorrecte", CodesErreur.ERREUR_SQL);
+			return ErrorJSON.serviceRefused("Erreur, requï¿½te SQL Incorrecte", CodesErreur.ERREUR_SQL);
 		}
 	}
 	
