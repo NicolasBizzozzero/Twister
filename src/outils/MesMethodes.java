@@ -1,6 +1,8 @@
 package outils;
 
 import java.lang.Math;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public abstract class MesMethodes {
 
@@ -64,4 +66,17 @@ public abstract class MesMethodes {
 
         return (int) (Math.log10(Math.abs(nombre)) + 1);
     }
+    
+	/**
+	 * Utilise l'algorithme SHA-521 pour encrypter un mot de passe.
+	 * @param motDePasse: Le mot de passe en clair à encrypter.
+	 * @return : Une string encryptée correspondant au mot de passe passé en paramaètre.
+	 * @throws NoSuchAlgorithmException 
+	 */
+ 	public static String hasherMotDePasse(String motDePasse) throws NoSuchAlgorithmException {
+         MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+         messageDigest.update(motDePasse.getBytes());
+         motDePasse = new String(messageDigest.digest());
+ 		return motDePasse;
+ 	}
 }

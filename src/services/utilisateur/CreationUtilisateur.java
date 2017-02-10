@@ -46,7 +46,7 @@ public class CreationUtilisateur {
 			}
 
 			// On hash le mot de passe
-			//motDePasse = hasherMotDePasse(motDePasse);
+			motDePasse = outils.MesMethodes.hasherMotDePasse(motDePasse);
 
 			// On ajoute l'utilisateur à la BDD
 			UtilisateursTools.ajouterUtilisateur(pseudo, motDePasse, email, prenom, nom, anniversaire);
@@ -56,8 +56,8 @@ public class CreationUtilisateur {
 			return reponse;
 		} catch (SQLException e) {
 			return ErrorJSON.serviceRefused("Erreur, requ�te SQL Incorrecte", CodesErreur.ERREUR_SQL);
-		//} catch (NoSuchAlgorithmException e) {
-			//return ErrorJSON.serviceRefused("Erreur lors du hashage du mot de passe", CodesErreur.ERREUR_HASHAGE);
+		} catch (NoSuchAlgorithmException e) {
+			return ErrorJSON.serviceRefused("Erreur lors du hashage du mot de passe", CodesErreur.ERREUR_HASHAGE);
 		} catch (InstantiationException e) {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donn�es MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (IllegalAccessException e) {
@@ -73,20 +73,6 @@ public class CreationUtilisateur {
         */
 	private static boolean verificationParametres(String pseudo, String motDePasse, String email) {
 		return (pseudo != null && email != null && motDePasse != null);
-	}
-
-
-       /**
-        * Utilise l'algorithme SHA-521 pour encrypter un mot de passe.
-        * @param motDePasse: Le mot de passe en clair à encrypter.
-        * @return : Une string encryptée correspondant au mot de passe passé en paramaètre.
-     * @throws NoSuchAlgorithmException 
-        */
-	private static String hasherMotDePasse(String motDePasse) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
-        messageDigest.update(motDePasse.getBytes());
-        motDePasse = new String(messageDigest.digest());
-		return motDePasse;
 	}
 
    /**

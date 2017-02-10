@@ -32,6 +32,7 @@ public class SessionsTools {
 	}
 
 	public static String insertSession(String identifiant ,boolean isAdmin) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	       System.out.println("0");
 		// On génère une clef puis on vérifie si elle n'existe pas déjà
 		// Tant qu'on n'obtient pas de clef unique, on recommence
 		String cle;
@@ -42,9 +43,9 @@ public class SessionsTools {
 		// On créé une session dans la BDD avec cette clé
     	// Connection à la base de données
         Connection connection = Database.getMySQLConnection();
-        String requete = String.format("INSERT INTO Session Values (\"%s\", \"%s\", null, \"%s\")", cle, identifiant, isAdmin);
-        
+
         // Création et execution de la requête
+        String requete = String.format("INSERT INTO Sessions Values (\"%s\", %d, null, %b);", cle, Integer.parseInt(identifiant), isAdmin);
         Statement statement = connection.createStatement();
         statement.executeUpdate(requete);
         
@@ -61,7 +62,7 @@ public class SessionsTools {
 	        Connection connection = Database.getMySQLConnection();
 	        
 	        // Création et execution de la requête
-	        String requete = String.format("SELECT clef FROM Session WHERE clef=\"%s\";", cle);
+	        String requete = String.format("SELECT clef FROM Sessions WHERE clef=\"%s\";", cle);
 	        Statement statement = connection.createStatement();
 	        statement.executeQuery(requete);
 	        
