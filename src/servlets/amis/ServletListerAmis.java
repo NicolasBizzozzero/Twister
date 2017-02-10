@@ -15,8 +15,8 @@ public class ServletListerAmis extends HttpServlet {
 	public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
 			 
 		String utilisateur= requete.getParameter("id_utilisateur"); 
-		String index_debut= requete.getParameter("index_debut");
-		String nombre_demandes= requete.getParameter("nombre_demandes");
+		int index_debut= Integer.parseInt(requete.getParameter("index_debut"));
+		int nombre_demandes= Integer.parseInt(requete.getParameter("nombre_demandes"));
 		
 			
 		JSONObject retour = ListerAmis.listerAmis(utilisateur, index_debut, nombre_demandes);
