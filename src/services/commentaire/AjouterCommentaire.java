@@ -31,21 +31,8 @@ public class AjouterCommentaire {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_auteur), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
 			
-			// Connexion a la base de donnees
-			Mongo mongo = null;
-			mongo = new Mongo("li328.lip6.fr", 27130);
-			DB db = mongo.getDB("gr2-2017-bourmaud-bizzozzero");
-			DBCollection collection = db.getCollection("Commentaires");
-			
-			// Creation du commentaire
-			BasicDBObject commentaire = new BasicDBObject();
-			commentaire.put("id_auteur", id_auteur);
-			commentaire.put("contenu", contenu);
-			commentaire.put("pseudo", pseudo);
-			commentaire.put("date", new Date());
-			
-			// On ajoute le commentaire
-			collection.insert(commentaire);
+			// On ajoute le commentaire à la BDD
+			bd.tools.CommentairesTools.ajouterCommentaire(contenu, id_auteur, pseudo);
 	
 			// On renvoie une reponse
 			JSONObject reponse = new JSONObject();

@@ -37,7 +37,7 @@ public class SupprimerAmi {
 				return ErrorJSON.serviceRefused(String.format("%s ne suit pas %s", id_ami1, id_ami2), CodesErreur.ERREUR_NE_SUIVAIT_PAS);
 			}
 			
-			// On retire une relation d'amitiee a la base de données
+			// On retire une relation d'amitiee a la base de donnees
 			AmitiesTools.supprimerAmi(id_ami1, id_ami2);
 
 			// On renvoie une reponse
