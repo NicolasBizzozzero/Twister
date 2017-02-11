@@ -7,48 +7,69 @@ import exceptions.BDException;
 
 public class TestUtilisateur {
 	public static void main(String[] args) throws BDException {
+		//testCreationUtilisateur();
+		//testSuppressionUtilisateur();
+		testModificationUtilisateur();
+	}
+	
+	private static void testCreationUtilisateur() {
+		System.out.println("Debut du test de creation d'utilisateurs");
+		System.out.println("On peut creer un utilisateur en remplissant tous les champs:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_1", "motDePasseEnClair", "mail@gmail.com", "John", "Smith", "1900-01-01"));
+		System.out.println("On peut creer un utilisateur en omettant des champs:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_2", "motDePasseEnClair", "mail@gmail.com", null, null, null));
+		System.out.println("On ne peut pas creer d'utilisateur avec le meme pseudo:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_2", "motDePasseEnClair", "mail@gmail.com", null, null, null));
+		System.out.println("On ne peut pas creer d'utilisateur avec un mot de passe trop court:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_3", "mdp", "mail@gmail.com", null, null, null));
+		System.out.println("On ne peut pas creer d'utilisateur avec un mot de passe trop long:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_4", "CeMotDePasseEstDrolementLong,JemedemandejusquaOuPeutIlaller,SurementresLoin,EnToutCasilDoitEtreVraimentTresLongDeManiereASassurerQuilNePassePas...VousEtesEncoreEnTrainDeLire?", "mail@gmail.com", null, null, null));
+		System.out.println("On peut creer un utilisateur avec un mot de passe contenant des caracteres speciaux:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_5", "AAzs\"\"\\\\//!@#😁😈'DROP TABLE Utilisateurs", "mail@gmail.com", null, null, null));
+		
+		// Nettoyage des utilisateurs crees
 		try {
-			String pseudo = "PseudoNul75_5";
-			//String mdp = "PatesCarbonara";
-			String mdp = "JeSuisUNMotDePass\"econtenantun";
-			String mdp2 = "JeSuisUNMotDeP''\"'\"'#asse//\\\\contenantun";
-			String email = "weeeeeeee@gmail.com";
-			String prenom = "Alexia";
-			String nom = null;
-			String anniversaire = "1995-01-31";
-			System.out.println(testCreationUtilisateur(pseudo, mdp2, email, prenom, nom, anniversaire));
+			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_1");
+			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_2");
+			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_5");
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
+		System.out.println("Fin du test de creation d'utilisateurs");
+	}
+
+	
+	private static void testSuppressionUtilisateur() {
+		System.out.println("Debut du test de suppression d'utilisateurs");
+		System.out.println("On ne peut pas supprimer d'utilisateur n'existant pas:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur("-500", "MotDePassePeuImportant"));
+		System.out.println("On ne peut pas supprimer d'utilisateur avec le mauvais mot de passe:");
+		try {
+			bd.tools.UtilisateursTools.ajouterUtilisateur("10000", "TEST_utilisateur_10000", outils.MesMethodes.hasherMotDePasse("MotDePasseRaisonnableEtCorrect"), "mail@gmail.com", null, null, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur("10000", "MauvaisMotDePasse"));
+		System.out.println("On peut supprimer un utilisateur avec le bon id et le bon mot de passe:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur("10000", "MotDePasseRaisonnableEtCorrect"));
+		
+		System.out.println("Fin du test de suppression d'utilisateurs");
 	}
 	
-	private static boolean testCreationUtilisateur(String pseudo, String mdp, String email, String prenom, String nom, String anniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		System.out.println("On verifie que le pseudonyme n'est pas deja prit :");
-		if (! bd.tools.UtilisateursTools.verificationExistencePseudo(pseudo)){
-			System.out.println("Il n'existe pas. On va l'ajouter");
-			System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, mdp, email, prenom, nom, anniversaire));
-			System.out.println("On vient de l'ajouter, on verifie son existence :");
-			return bd.tools.UtilisateursTools.verificationExistencePseudo(pseudo);
-		} else {
-			System.out.println("Il existe deja.");
-			return false;
-		}
-	}
-	
-	/*private static boolean testCreation1000Utilisateur() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		System.out.println("On verifie que le pseudonyme n'est pas deja prit :");
-		if (! bd.tools.UtilisateursTools.verificationExistencePseudo()){
-			System.out.println("Il n'existe pas. On va l'ajouter");
-			System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, mdp, email, prenom, nom, anniversaire));
-			System.out.println("On vient de l'ajouter, on verifie son existence :");
-			return bd.tools.UtilisateursTools.verificationExistencePseudo(pseudo);
-		} else {
-			System.out.println("Il existe deja.");
-			return false;
-		}
-	}*/
-	
-	private static boolean testSuppressionUtilisateur(String id, String mdp) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		return false;
+	private static void testModificationUtilisateur() {
+		System.out.println("Debut du test de suppression d'utilisateurs");
+		System.out.println("On ne peut pas supprimer d'utilisateur n'existant pas:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur("-500", "MotDePassePeuImportant"));
+		System.out.println("On ne peut pas supprimer d'utilisateur avec le mauvais mot de passe:");
+		try {
+			bd.tools.UtilisateursTools.ajouterUtilisateur("10000", "TEST_utilisateur_10000", outils.MesMethodes.hasherMotDePasse("MotDePasseRaisonnableEtCorrect"), "mail@gmail.com", null, null, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur("10000", "MauvaisMotDePasse"));
+		System.out.println("On peut supprimer un utilisateur avec le bon id et le bon mot de passe:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur("10000", "MotDePasseRaisonnableEtCorrect"));
+		
+		System.out.println("Fin du test de suppression d'utilisateurs");
 	}
 }

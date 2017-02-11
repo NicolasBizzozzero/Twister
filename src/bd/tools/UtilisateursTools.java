@@ -73,8 +73,28 @@ public class UtilisateursTools {
         connection.close();
 	}
 	
+	public static void ajouterUtilisateur(String id, String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "INSERT INTO Utilisateurs Values (?, ?, ?, ?, ?, ?, ?);";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id));
+        statement.setString(2, pseudo);
+        statement.setString(3, motDePasse);
+        statement.setString(4, email);
+        statement.setString(5, prenom);
+        statement.setString(6, nom);
+        statement.setString(7, anniversaire);
+        statement.executeUpdate();
+
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
 	
-	public static void supprimerUtilisateur(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static void supprimerUtilisateurAvecId(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -88,7 +108,21 @@ public class UtilisateursTools {
         statement.close();
         connection.close();
 	}
+	
+	public static void supprimerUtilisateurAvecPseudo(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "DELETE FROM Utilisateurs WHERE pseudo=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, pseudo);
+        statement.executeUpdate();
 
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
 	
 	public static boolean checkMotDePasseAvecPseudo(String pseudo, String motDePasse) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees

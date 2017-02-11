@@ -48,7 +48,7 @@ public class CreationUtilisateur {
 			// On hash le mot de passe
 			motDePasse = outils.MesMethodes.hasherMotDePasse(motDePasse);
 
-			// On ajoute l'utilisateur à la BDD
+			// On ajoute l'utilisateur a la BDD
 			UtilisateursTools.ajouterUtilisateur(pseudo, motDePasse, email, prenom, nom, anniversaire);
 
 			// On renvoie une reponse

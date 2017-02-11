@@ -23,7 +23,7 @@ public class SuppressionUtilisateur {
 			// On verifie que l'id existe
 			boolean idExiste = UtilisateursTools.verificationExistenceId(id);
 			if (! idExiste) {
-				return ErrorJSON.serviceRefused(String.format("Erreur, l'utilisateur d'id \"%s\" n'existe pas.", id), CodesErreur.ERREUR_ID_INEXISTANT);
+				return ErrorJSON.serviceRefused(String.format("Erreur, l'utilisateur d'ID %s n'existe pas.", id), CodesErreur.ERREUR_ID_INEXISTANT);
 			}
 			
 			// On verifie que le mot de passe est le bon
@@ -33,7 +33,7 @@ public class SuppressionUtilisateur {
 			}
 
 			// On supprime l'utilisateur
-			UtilisateursTools.supprimerUtilisateur(id);
+			UtilisateursTools.supprimerUtilisateurAvecId(id);
 
 			// On renvoie une reponse
 			JSONObject reponse = new JSONObject();
