@@ -26,7 +26,7 @@ public class Database {
 	}
 	
 	/**
-	 * creer une connexion avec la database
+	 * Creer une connexion avec la database
 	 * @return la connexion qui vient d'être créée
 	 * @throws SQLException
 	 */
@@ -35,7 +35,7 @@ public class Database {
 	}
 	
 	/**
-	 * donne une connexion a la database 
+	 * Donne une connexion a la database 
 	 */
 	public static Connection getMySQLConnection() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver").newInstance();

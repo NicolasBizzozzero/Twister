@@ -13,19 +13,19 @@ import exceptions.IndexInvalideException;
 
 public class AmitiesTools {
 	public static boolean suitDeja(String id_ami1, String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		// Connection à la base de données
+		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
-        // Création et execution de la requête
+        // Creation et execution de la requete
         String requete = String.format("SELECT * FROM Amities WHERE (id_ami1=\"%s\" AND id_ami2=\"%s\");", id_ami1, id_ami2);
         Statement statement = connection.createStatement();
         statement.executeQuery(requete);
         
-        // Récuperation des données
+        // Recuperation des donnees
         ResultSet resultSet = statement.getResultSet();
         boolean retour = resultSet.next();
         
-        // Libération des ressources
+        // Liberation des ressources
         resultSet.close();
         statement.close();
         connection.close();
@@ -33,29 +33,29 @@ public class AmitiesTools {
         return retour;
 	}
 	public static void ajouterAmi(String id_ami1,String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-    	// Connection à la base de données
+		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
-        // Création et execution de la requête
+        // Creation et execution de la requete
         String requete = String.format("INSERT INTO Amities Values (\"%s\", \"%s\", null);", id_ami1, id_ami2 );
         Statement statement = connection.createStatement();
         statement.executeUpdate(requete);
         
-        // Libération des ressources
+        // Liberation des ressources
         statement.close();
         connection.close();
 	}
 	
 	public static void supprimerAmi(String id_ami1,String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-    	// Connection à la base de données
+		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
-        // Création et execution de la requête
+        // Creation et execution de la requete
         String requete = String.format("DELETE FROM Amities WHERE id_ami1=\"%s\" AND id_ami2=\"%s\";", id_ami1, id_ami2 );
         Statement statement = connection.createStatement();
         statement.executeUpdate(requete);
         
-        // Libération des ressources
+        // Liberation des ressources
         statement.close();
         connection.close();
 	}
@@ -77,21 +77,21 @@ public class AmitiesTools {
     		throw new IndexInvalideException("L'index ne peut pas negatif.");
     	}
 		
-		// Connection à la base de données
+		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
-        // Création et execution de la requête
+        // Creation et execution de la requete
         String requete = String.format("SELECT id_ami2 FROM Amities WHERE id_ami1=\"%s\" LIMIT %d OFFSET %d;", nombre_demandes, index_debut);
         Statement statement = connection.createStatement();
         ResultSet res = statement.executeQuery(requete);
         
-        // création d'un JSONObject dans lequel on met les amis
+        // creation d'un JSONObject dans lequel on met les amis
         JSONObject liste = new JSONObject();
         while (res.next()){
         	liste.accumulate("Amis", res.getString("id_ami2"));
         }
         
-        // Libération des ressources
+        // Liberation des ressources
         statement.close();
         connection.close();
         

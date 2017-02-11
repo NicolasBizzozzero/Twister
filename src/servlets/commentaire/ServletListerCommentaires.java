@@ -15,12 +15,12 @@ import services.commentaire.ListerCommentaires;
 
 public class ServletListerCommentaires extends HttpServlet {
 	    public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-	        // Récuperation des paramètres
+	        // Recuperation des parametres
 	        String id_utilisateur = requete.getParameter("id_utilisateur");
 	        int limite = Integer.parseInt(requete.getParameter("limite"));
 	        int index_debut = Integer.parseInt(requete.getParameter("index_debut"));
 
-	        // Utilisation du service approprié
+	        // Utilisation du service approprie
 	        JSONObject retour = ListerCommentaires.listerCommentaires(id_utilisateur, index_debut, limite);
 	        reponse.setContentType("application/json");
 	        reponse.getWriter().print(retour);

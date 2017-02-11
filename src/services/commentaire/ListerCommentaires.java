@@ -25,13 +25,13 @@ public class ListerCommentaires {
 		}
 		
 		try {
-			// On vérifie que l'utilisateur existe
+			// On verifie que l'utilisateur existe
 			boolean isUser = UtilisateursTools.verificationExistenceId(id_utilisateur);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_utilisateur), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
 	
-			// Connexion à la base de données
+			// Connexion a la base de donnees
 			Mongo mongo = null;
 			try {
 				mongo = new Mongo("li328.lip6.fr", 27130);
@@ -41,35 +41,35 @@ public class ListerCommentaires {
 			DB db = mongo.getDB("gr2-2017-bourmaud-bizzozzero");
 			DBCollection collection = db.getCollection("Commentaires");
 			
-			// Création du commentaire
+			// Creation du commentaire
 			BasicDBObject requete = new BasicDBObject();
 			requete.put("id_auteur", id_utilisateur);
 	
-			// On itère sur les résultats
+			// On itere sur les resultats
 			DBCursor curseur = collection.find(requete).skip(index_debut).limit(limite);
 			JSONObject reponse = new JSONObject();
 			while (curseur.hasNext()) {
 				reponse.accumulate("comments", curseur.next());
 			}
 	
-			// On renvoie une réponse
+			// On renvoie une reponse
 			return reponse;
-		} catch (InstantiationException e) {
-			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donn�es MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		}  catch (InstantiationException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (IllegalAccessException e) {
-			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donn�es MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (ClassNotFoundException e) {
-			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donn�es MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (SQLException e) {
-			return ErrorJSON.serviceRefused("Erreur, requ�te SQL Incorrecte", CodesErreur.ERREUR_SQL);
+			return ErrorJSON.serviceRefused("Erreur, requete SQL Incorrecte", CodesErreur.ERREUR_SQL);
 		}
 	}
 	
-	   /**
-	    * Vérification de la validité des paramètres.
-	    * @return : Un boolean à true si les paramètres sont valides.
-	    */
-		private static boolean verificationParametres(String id_utilisateur) {
-			return (id_utilisateur != null);
-		}
+   /**
+    * Verification de la validite des parametres
+    * @return : Un booleen a true si les paramatres sont valides.
+    */
+	private static boolean verificationParametres(String id_utilisateur) {
+		return (id_utilisateur != null);
+	}
 }

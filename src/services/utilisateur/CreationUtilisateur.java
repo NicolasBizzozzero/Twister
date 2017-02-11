@@ -20,25 +20,25 @@ public class CreationUtilisateur {
 	
 	public static JSONObject creationUtilisateur(String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) {
 		if (! verificationParametres(pseudo, motDePasse, email)){
-			return ErrorJSON.serviceRefused("Erreur, le pseudo, mot de passe et l'email doivent �tre renseign�s", CodesErreur.ERREUR_ARGUMENTS);
+			return ErrorJSON.serviceRefused("Erreur, le pseudo, mot de passe et l'email doivent etre renseignes", CodesErreur.ERREUR_ARGUMENTS);
 		}
 
 		try {
-			// On vérifie que l'utilisateur n'existe pas déjà
+			// On verifie que l'utilisateur n'existe pas deja
 			boolean isUser = UtilisateursTools.verificationExistencePseudo(pseudo);
 			if (isUser) {
 				return ErrorJSON.serviceRefused("Erreur, l'utilisateur existe deja", CodesErreur.ERREUR_UTILISATEUR_EXISTANT);
 			}
 
-			// On verifie que le mot de passe est sécurisé
+			// On verifie que le mot de passe est securise
 			StatutMotDePasse statutMotDePasse = verifierSecuriteMotDePasse(motDePasse);
 			switch (statutMotDePasse) {
 				case TROP_COURT:
-					return ErrorJSON.serviceRefused("Mot de passe pas trop court", CodesErreur.ERREUR_MDP_TROP_COURT);
+					return ErrorJSON.serviceRefused("Mot de passe trop court", CodesErreur.ERREUR_MDP_TROP_COURT);
 				case TROP_LONG:
-					return ErrorJSON.serviceRefused("Mot de passe pas trop long", CodesErreur.ERREUR_MDP_TROP_LONG);
+					return ErrorJSON.serviceRefused("Mot de passe trop long", CodesErreur.ERREUR_MDP_TROP_LONG);
 				case NON_SECURISE:
-					return ErrorJSON.serviceRefused("Mot de passe pas non s�curis�", CodesErreur.ERREUR_MDP_NON_SECURISE);
+					return ErrorJSON.serviceRefused("Mot de passe non securise", CodesErreur.ERREUR_MDP_NON_SECURISE);
 				case SECURISE:
 					break;
 				default:
@@ -54,33 +54,33 @@ public class CreationUtilisateur {
 			// On renvoie une réponse
 			JSONObject reponse = new JSONObject();
 			return reponse;
-		} catch (SQLException e) {
-			return ErrorJSON.serviceRefused("Erreur, requ�te SQL Incorrecte", CodesErreur.ERREUR_SQL);
-		} catch (NoSuchAlgorithmException e) {
+		}  catch (NoSuchAlgorithmException e) {
 			return ErrorJSON.serviceRefused("Erreur lors du hashage du mot de passe", CodesErreur.ERREUR_HASHAGE);
-		} catch (InstantiationException e) {
-			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donn�es MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		}  catch (InstantiationException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (IllegalAccessException e) {
-			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donn�es MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (ClassNotFoundException e) {
-			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donn�es MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (SQLException e) {
+			return ErrorJSON.serviceRefused("Erreur, requete SQL Incorrecte", CodesErreur.ERREUR_SQL);
 		}
 	}
 
-       /**
-        * Vérification de la validité des paramètres.
-        * @return : Un boolean à true si les paramètres sont valides.
-        */
+   /**
+    * Verification de la validite des parametres
+    * @return : Un booleen a true si les paramatres sont valides.
+    */
 	private static boolean verificationParametres(String pseudo, String motDePasse, String email) {
 		return (pseudo != null && email != null && motDePasse != null);
 	}
-
+	
    /**
-	* Vérifie que le mot de passe entré par l'utilisateur est assez fort selon nos critères de sécurité.
-        * Le mot de passe entré doit respecter les règles suivantes :
-        *       - Doit contenir au moins 8 caractères.
-        *       - Ne doit pas faire plus de 64 caractères.
-	* @param motDePasse : Le mot de passe dont la force reste à vérifier.
+	* Verifie que le mot de passe entre par l'utilisateur est assez fort selon nos criteres de securite.
+    * Le mot de passe entre doit respecter les regles suivantes :
+    *       - Doit contenir au moins 8 caracteres.
+    *       - Ne doit pas faire plus de 64 caracteres.
+	* @param motDePasse : Le mot de passe dont la force reste a verifier.
 	* @return : Un enum correspondant au statut du mot de passe
 	*/
 	private static StatutMotDePasse verifierSecuriteMotDePasse(String motDePasse) {

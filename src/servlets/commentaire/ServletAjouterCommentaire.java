@@ -15,16 +15,15 @@ import services.commentaire.AjouterCommentaire;
 
 public class ServletAjouterCommentaire extends HttpServlet {
      public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-        // Récuperation des paramètres
+	    // Recuperation des parametres
         String id_auteur = requete.getParameter("id_auteur");
         String contenu = requete.getParameter("contenu");
         String pseudo = requete.getParameter("pseudo"); 
 
-        // Utilisation du service approprié
+        // Utilisation du service approprie
         JSONObject retour = AjouterCommentaire.ajouterCommentaire(contenu, id_auteur, pseudo);
         reponse.setContentType("application/json");
         reponse.getWriter().print(retour);
-    
      }
 
 }

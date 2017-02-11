@@ -26,4 +26,3 @@ public class ServletCreationUtilisateur extends HttpServlet {
 		reponse.getWriter().print(retour);
 	 }
 }
-// li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/utilisateur/creation?login=SuperAlexia&motDePasse=9856&nom=Bourmaud&prenom=Alexia&email=truc@hotmail.fr

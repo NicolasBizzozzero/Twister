@@ -15,11 +15,11 @@ import services.commentaire.SupprimerCommentaire;
 
 public class ServletSupprimerCommentaire extends HttpServlet {
      public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-        // Récuperation des paramètres
+	    // Recuperation des parametres
         String id_auteur = requete.getParameter("id_auteur");
         String id_commentaire = requete.getParameter("id_commentaire"); 
 
-        // Utilisation du service approprié
+        // Utilisation du service approprie
         JSONObject retour = SupprimerCommentaire.supprimerCommentaire(id_auteur, id_commentaire);
         reponse.setContentType("application/json");
         reponse.getWriter().print(retour);

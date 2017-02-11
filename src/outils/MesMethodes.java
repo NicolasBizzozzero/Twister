@@ -7,8 +7,8 @@ import java.security.NoSuchAlgorithmException;
 public abstract class MesMethodes {
 
     /**
-     * Retourne une chaine de caractères aléatoires (entre A-Z et 0-9).
-     * @param taille : La taille de la String générée.
+     * Retourne une chaine de caracteres aleatoires (entre A-Z et 0-9).
+     * @param taille : La taille de la String generee.
      */
     public static String getStringAleatoire(int taille) {
         String lettres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -17,13 +17,13 @@ public abstract class MesMethodes {
 
         int n_aleatoire;
         while (taille > 0) {
-            /* On genere un premier nombre pour décider de prendre une lettre ou un chiffre. */
+            /* On genere un premier nombre pour decider de prendre une lettre ou un chiffre. */
             if (MesMethodes.getIntAleatoire(0, 1) == 0) {
-                // On récupère une lettre aléatoirement
+                // On recupere une lettre aleatoirement
                 n_aleatoire = MesMethodes.getIntAleatoire(0, 25);
                 resultat = String.format("%s%s", resultat, lettres.charAt(n_aleatoire));
             } else {
-                // On récupère un chiffre aléatoirement
+                // On recupere un chiffre aleatoirement
                 n_aleatoire = MesMethodes.getIntAleatoire(0, 9);
                 resultat = String.format("%s%s", resultat, chiffres.charAt(n_aleatoire));
             }
@@ -43,9 +43,9 @@ public abstract class MesMethodes {
     }
 
     /**
-     * Retourne une chaine de caractères de taille 'taille' composée uniquement d'entiers.
-     * @param taille: La taille de la chaine de caractères retournée.
-     * @return Une chaine de caractères d'entiers de taille 'taille'.
+     * Retourne une chaine de caracteres de taille 'taille' composee uniquement d'entiers.
+     * @param taille: La taille de la chaine de caracteres retournee.
+     * @return Une chaine de caracteres d'entiers de taille 'taille'.
      */
     public static String getIntAleatoireDeTaille(int taille){
         if (taille <= 0)
@@ -56,9 +56,9 @@ public abstract class MesMethodes {
     }
 
     /**
-     * Calcule et retourne le nombre de chiffres d'un entier positif passé en paramètre.
+     * Calcule et retourne le nombre de chiffres d'un entier positif passse en parametre.
      * @param nombre : L'entier positif dont on souhaite avoir le nombre de chiffres.
-     * @return Le nombre de chiffres de l'entier passé en paramètre.
+     * @return Le nombre de chiffres de l'entier passe en parametre.
      */
     public static int getNombreDeChiffres(int nombre) {
         if (nombre == 0)
@@ -68,9 +68,9 @@ public abstract class MesMethodes {
     }
     
 	/**
-	 * Utilise l'algorithme SHA-521 pour encrypter un mot de passe.
-	 * @param motDePasse: Le mot de passe en clair à encrypter.
-	 * @return : Une string encryptée correspondant au mot de passe passé en paramaètre.
+	 * Utilise l'algorithme SHA-521 pour hasher un mot de passe.
+	 * @param motDePasse: Le mot de passe en clair a hasher.
+	 * @return : Une string hashee correspondant au mot de passe passe en parametre.
 	 * @throws NoSuchAlgorithmException 
 	 */
  	public static String hasherMotDePasse(String motDePasse) throws NoSuchAlgorithmException {

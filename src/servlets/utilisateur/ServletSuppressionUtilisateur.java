@@ -15,11 +15,11 @@ import services.utilisateur.SuppressionUtilisateur;
 
 public class ServletSuppressionUtilisateur extends HttpServlet {
      public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-        // Récuperation des paramètres
+        // Recuperation des parametres
         String id = requete.getParameter("id");
         String motDePasse = requete.getParameter("motDePasse"); 
 
-        // Utilisation du service approprié
+        // Utilisation du service approprie
         JSONObject retour = SuppressionUtilisateur.suppressionUtilisateur(id, motDePasse);
         reponse.setContentType("application/json");
         reponse.getWriter().print(retour);

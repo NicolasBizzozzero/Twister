@@ -27,11 +27,11 @@ public class TestUtilisateur {
 	}
 	
 	private static boolean testCreationUtilisateur(String pseudo, String mdp, String email, String prenom, String nom, String anniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		System.out.println("On vérifie que le pseudonyme n'est pas déja prit :");
+		System.out.println("On verifie que le pseudonyme n'est pas dejaprit :");
 		if (! bd.tools.UtilisateursTools.verificationExistencePseudo(pseudo)){
 			System.out.println("Il n'existe pas. On va l'ajouter");
 			System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, mdp, email, prenom, nom, anniversaire));
-			System.out.println("On vient de l'ajouter, on vérifie son existence :");
+			System.out.println("On vient de l'ajouter, on verifie son existence :");
 			return bd.tools.UtilisateursTools.verificationExistencePseudo(pseudo);
 		} else {
 			System.out.println("Il existe deja.");

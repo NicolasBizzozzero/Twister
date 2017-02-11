@@ -7,7 +7,7 @@ import org.json.JSONObject;
 public class ErrorJSON {
 	
 	/**
-	 * Génere un objet JSON en cas d'erreur du service.
+	 * Genere un objet JSON en cas d'erreur du service.
 	 * @param message : Le message d'erreur
 	 * @param codeErreur : Le code d'erreur
 	 * @return : L'objet JSON
@@ -24,7 +24,7 @@ public class ErrorJSON {
 	}
 
 	/**
-	 * Génere un objet JSON en cas de succès du service.
+	 * Genere un objet JSON en cas de succes du service.
 	 * @return : L'objet JSON
 	 */
 	public static JSONObject serviceAccepted(){
