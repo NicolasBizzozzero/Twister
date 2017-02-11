@@ -7,8 +7,6 @@ import exceptions.BDException;
 public class TestAjouterAmi {
 
 public static void main(String[] args) throws BDException {
-	//testCreationUtilisateur();
-	//testSuppressionUtilisateur();
 	testAjouterAmis();
 	testSupprimerAmi();
 }
