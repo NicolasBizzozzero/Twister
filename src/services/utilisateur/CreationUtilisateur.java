@@ -6,18 +6,12 @@ import java.security.NoSuchAlgorithmException;
 import org.json.JSONObject;
 
 import bd.tools.UtilisateursTools;
+import outils.StatutMotDePasse;
 import services.CodesErreur;
 import services.ErrorJSON;
 
 
-public class CreationUtilisateur {
-	private enum StatutMotDePasse {
-		SECURISE,
-		NON_SECURISE,
-		TROP_COURT,
-		TROP_LONG
-	}
-	
+public class CreationUtilisateur {	
 	public static JSONObject creationUtilisateur(String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) {
 		if (! verificationParametres(pseudo, motDePasse, email)){
 			return ErrorJSON.serviceRefused("Erreur, le pseudo, mot de passe et l'email doivent etre renseignes", CodesErreur.ERREUR_ARGUMENTS);
@@ -31,7 +25,7 @@ public class CreationUtilisateur {
 			}
 
 			// On verifie que le mot de passe est securise
-			StatutMotDePasse statutMotDePasse = verifierSecuriteMotDePasse(motDePasse);
+			StatutMotDePasse statutMotDePasse = outils.MesMethodes.verifierSecuriteMotDePasse(motDePasse);
 			switch (statutMotDePasse) {
 				case TROP_COURT:
 					return ErrorJSON.serviceRefused("Mot de passe trop court", CodesErreur.ERREUR_MDP_TROP_COURT);
@@ -73,25 +67,5 @@ public class CreationUtilisateur {
     */
 	private static boolean verificationParametres(String pseudo, String motDePasse, String email) {
 		return (pseudo != null && email != null && motDePasse != null);
-	}
-	
-   /**
-	* Verifie que le mot de passe entre par l'utilisateur est assez fort selon nos criteres de securite.
-    * Le mot de passe entre doit respecter les regles suivantes :
-    *       - Doit contenir au moins 8 caracteres.
-    *       - Ne doit pas faire plus de 64 caracteres.
-	* @param motDePasse : Le mot de passe dont la force reste a verifier.
-	* @return : Un enum correspondant au statut du mot de passe
-	*/
-	private static StatutMotDePasse verifierSecuriteMotDePasse(String motDePasse) {
-		// Mot de passe trop court
-		if (motDePasse.length() < 8)
-		        return StatutMotDePasse.TROP_COURT;
-
-		// Mot de passe trop long
-		if (motDePasse.length() > 64)
-		        return StatutMotDePasse.TROP_LONG;
-
-		return StatutMotDePasse.SECURISE;
 	}
 }

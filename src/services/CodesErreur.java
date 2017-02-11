@@ -19,6 +19,7 @@ public abstract class CodesErreur {
 	public static final int ERREUR_INDEX_INVALIDE = 14;
 	public static final int ERREUR_UTILISATEUR_DEJA_CONNECTE = 15;
 	public static final int ERREUR_ID_INEXISTANT = 16;
+	public static final int ERREUR_PSEUDO_DEJA_PRIT = 17;
 	public static final int ERREUR_JSON = 100;
 	public static final int ERREUR_SQL = 1000;
 	public static final int ERREUR_JAVA = 10000;

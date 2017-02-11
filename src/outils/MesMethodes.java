@@ -79,4 +79,24 @@ public abstract class MesMethodes {
          motDePasse = new String(messageDigest.digest());
  		return motDePasse;
  	}
+ 	
+    /**
+ 	* Verifie que le mot de passe entre par l'utilisateur est assez fort selon nos criteres de securite.
+     * Le mot de passe entre doit respecter les regles suivantes :
+     *       - Doit contenir au moins 8 caracteres.
+     *       - Ne doit pas faire plus de 64 caracteres.
+ 	* @param motDePasse : Le mot de passe dont la force reste a verifier.
+ 	* @return : Un enum correspondant au statut du mot de passe
+ 	*/
+ 	public static StatutMotDePasse verifierSecuriteMotDePasse(String motDePasse) {
+ 		// Mot de passe trop court
+ 		if (motDePasse.length() < 8)
+ 		        return StatutMotDePasse.TROP_COURT;
+
+ 		// Mot de passe trop long
+ 		if (motDePasse.length() > 64)
+ 		        return StatutMotDePasse.TROP_LONG;
+
+ 		return StatutMotDePasse.SECURISE;
+ 	}
 }

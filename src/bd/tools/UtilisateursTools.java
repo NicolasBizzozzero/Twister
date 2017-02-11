@@ -192,4 +192,100 @@ public class UtilisateursTools {
         
         return id;
 	}
+	
+	public static void modifierPseudo(String id, String nouveauPseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "UPDATE Utilisateurs SET pseudo=? WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, nouveauPseudo);
+        statement.setInt(2, Integer.parseInt(id));
+        statement.executeUpdate();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+
+	public static void modifierMotDePasse(String id, String nouveauMotDePasse) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "UPDATE Utilisateurs SET mot_de_passe=? WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, nouveauMotDePasse);
+        statement.setInt(2, Integer.parseInt(id));
+        statement.executeUpdate();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();		
+	}
+
+	public static void modifierEmail(String id, String nouvelEmail) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "UPDATE Utilisateurs SET mail=? WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, nouvelEmail);
+        statement.setInt(2, Integer.parseInt(id));
+        statement.executeUpdate();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();	
+	}
+
+	public static void modifierPrenom(String id, String nouveauPrenom) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "UPDATE Utilisateurs SET prenom=? WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, nouveauPrenom);
+        statement.setInt(2, Integer.parseInt(id));
+        statement.executeUpdate();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();	
+	}
+
+	public static void modifierNom(String id, String nouveauNom) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "UPDATE Utilisateurs SET nom=? WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, nouveauNom);
+        statement.setInt(2, Integer.parseInt(id));
+        statement.executeUpdate();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+
+	public static void modifierAnniversaire(String id, String nouvelAnniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "UPDATE Utilisateurs SET anniversaire=? WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, nouvelAnniversaire);
+        statement.setInt(2, Integer.parseInt(id));
+        statement.executeUpdate();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
 }
