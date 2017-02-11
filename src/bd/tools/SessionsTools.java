@@ -1,6 +1,7 @@
 package bd.tools;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,9 +17,10 @@ public class SessionsTools {
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = String.format("SELECT * FROM Sessions WHERE id=\"%s\";", id_utilisateur);
-        Statement statement = connection.createStatement();
-        statement.executeQuery(requete);
+        String requete = "SELECT * FROM Sessions WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id_utilisateur));
+        statement.executeQuery();
         
         // Recuperation des donnees
         ResultSet resultSet = statement.getResultSet();
@@ -31,7 +33,7 @@ public class SessionsTools {
         return retour;
 	}
 
-	public static String insertSession(String identifiant ,boolean isAdmin) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static String insertSession(String identifiant, boolean isAdmin) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// On genere une clef puis on verifie si elle n'existe pas deja
 		// Tant qu'on n'obtient pas de clef unique, on recommence
 		String cle;
@@ -44,9 +46,12 @@ public class SessionsTools {
         Connection connection = Database.getMySQLConnection();
 
         // Creation et execution de la requete
-        String requete = String.format("INSERT INTO Sessions Values (\"%s\", %d, null, %b);", cle, Integer.parseInt(identifiant), isAdmin);
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(requete);
+        String requete = "INSERT INTO Sessions Values (?, ?, null, ?);";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, cle);
+        statement.setInt(2, Integer.parseInt(identifiant));
+        statement.setBoolean(3, isAdmin);
+        statement.executeUpdate();
         
         // Liberation des ressources
         statement.close();
@@ -61,9 +66,10 @@ public class SessionsTools {
 	        Connection connection = Database.getMySQLConnection();
 	        
 	        // Creation et execution de la requete
-	        String requete = String.format("SELECT clef FROM Sessions WHERE clef=\"%s\";", cle);
-	        Statement statement = connection.createStatement();
-	        statement.executeQuery(requete);
+	        String requete = "SELECT clef FROM Sessions WHERE clef=?;";
+	        PreparedStatement statement = connection.prepareStatement(requete);
+	        statement.setString(1, cle);
+	        statement.executeQuery();
 	        
 	        // Recuperation des donnees
 	        ResultSet resultSet = statement.getResultSet();
@@ -82,9 +88,10 @@ public class SessionsTools {
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = String.format("UPDATE Session SET timestamp=NOW() WHERE clef=\"%s\";", cle);
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(requete);
+        String requete = "UPDATE Session SET timestamp=NOW() WHERE clef=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, cle);
+        statement.executeUpdate();
             
         // Liberation des ressources
         statement.close();
@@ -96,9 +103,10 @@ public class SessionsTools {
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = String.format("DELETE FROM Session WHERE clef=\"%s\";", clef);
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(requete);
+        String requete = "DELETE FROM Session WHERE clef=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, clef);
+        statement.executeUpdate();
         
         // Recuperation des donnees
         ResultSet resultSet = statement.getResultSet();

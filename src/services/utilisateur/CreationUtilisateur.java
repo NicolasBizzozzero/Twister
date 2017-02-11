@@ -51,7 +51,7 @@ public class CreationUtilisateur {
 			// On ajoute l'utilisateur à la BDD
 			UtilisateursTools.ajouterUtilisateur(pseudo, motDePasse, email, prenom, nom, anniversaire);
 
-			// On renvoie une réponse
+			// On renvoie une reponse
 			JSONObject reponse = new JSONObject();
 			return reponse;
 		}  catch (NoSuchAlgorithmException e) {

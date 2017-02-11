@@ -1,6 +1,7 @@
 package bd.tools;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,9 +18,11 @@ public class AmitiesTools {
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = String.format("SELECT * FROM Amities WHERE (id_ami1=\"%s\" AND id_ami2=\"%s\");", id_ami1, id_ami2);
-        Statement statement = connection.createStatement();
-        statement.executeQuery(requete);
+        String requete = "SELECT * FROM Amities WHERE (id_ami1=? AND id_ami2=?);";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id_ami1));
+        statement.setInt(2, Integer.parseInt(id_ami2));
+        statement.executeQuery();
         
         // Recuperation des donnees
         ResultSet resultSet = statement.getResultSet();
@@ -37,9 +40,11 @@ public class AmitiesTools {
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = String.format("INSERT INTO Amities Values (\"%s\", \"%s\", null);", id_ami1, id_ami2 );
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(requete);
+        String requete = "INSERT INTO Amities Values (?, ?, null);";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id_ami1));
+        statement.setInt(2, Integer.parseInt(id_ami2));
+        statement.executeUpdate();
         
         // Liberation des ressources
         statement.close();
@@ -51,9 +56,11 @@ public class AmitiesTools {
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = String.format("DELETE FROM Amities WHERE id_ami1=\"%s\" AND id_ami2=\"%s\";", id_ami1, id_ami2 );
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(requete);
+        String requete = "DELETE FROM Amities WHERE id_ami1=? AND id_ami2=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id_ami1));
+        statement.setInt(2, Integer.parseInt(id_ami2));
+        statement.executeUpdate();
         
         // Liberation des ressources
         statement.close();
@@ -81,9 +88,12 @@ public class AmitiesTools {
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = String.format("SELECT id_ami2 FROM Amities WHERE id_ami1=\"%s\" LIMIT %d OFFSET %d;", nombre_demandes, index_debut);
-        Statement statement = connection.createStatement();
-        ResultSet res = statement.executeQuery(requete);
+        String requete = "SELECT id_ami2 FROM Amities WHERE id_ami1=? LIMIT ? OFFSET ?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id_utilisateur));
+        statement.setInt(2, nombre_demandes);
+        statement.setInt(3, index_debut);
+        ResultSet res = statement.executeQuery();
         
         // creation d'un JSONObject dans lequel on met les amis
         JSONObject liste = new JSONObject();
