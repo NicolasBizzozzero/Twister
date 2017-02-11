@@ -44,6 +44,8 @@ public class ListerCommentaires {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (SQLException e) {
 			return ErrorJSON.serviceRefused("Erreur, requete SQL Incorrecte", CodesErreur.ERREUR_SQL);
+		} catch (UnknownHostException e) {
+			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.HOTE_INCONNU);
 		}
 	}
 	

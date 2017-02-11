@@ -1,4 +1,4 @@
-package services.amis;
+package services;
 
 import org.json.JSONObject;
 

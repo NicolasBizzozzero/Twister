@@ -1,3 +1,5 @@
+package services;
+
 
 public class TestCommentaires {
 
@@ -108,7 +110,7 @@ public class TestCommentaires {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		System.out.println("Fin du test de suppression d'amities");
+		System.out.println("Fin du test de listage de commentaires");
 	}
 
 
