@@ -8,7 +8,7 @@ Description du service							Permet a l'utilisateur de se deconnecter
 
 Parametres en entree							clef
 
-Format de sortie								JSON, vide ou erreur
+Format de sortie								JSON, ok ou erreur
 
 Exemple de sortie								{} si ok, {"error_code":XXX, "message":"..."} si erreur
 

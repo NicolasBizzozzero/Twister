@@ -21,6 +21,7 @@ public abstract class CodesErreur {
 	public static final int ERREUR_ID_INEXISTANT = 16;
 	public static final int ERREUR_PSEUDO_DEJA_PRIT = 17;
 	public static final int ERREUR_COMMENTAIRE_INEXISTANT = 18;
+	public static final int ERREUR_CLEF_INEXISTANTE = 19;
 	public static final int ERREUR_JSON = 100;
 	public static final int ERREUR_SQL = 1000;
 	public static final int ERREUR_JAVA = 10000;

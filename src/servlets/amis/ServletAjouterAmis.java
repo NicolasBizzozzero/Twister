@@ -10,18 +10,15 @@ import java.io.IOException;
 
 import services.amis.AjouterAmi;
 
+@SuppressWarnings("serial")
 public class ServletAjouterAmis extends HttpServlet {
+	public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {	 
+		String clef = requete.getParameter("clef"); 
+		String id_ami = requete.getParameter("id_ami"); 	
 		
-	public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-			 
-		String ami1= requete.getParameter("id_ami1"); 
-		String ami2= requete.getParameter("id_ami2"); 
-			
-		JSONObject retour = AjouterAmi.ajouterAmi(ami1,ami2);
+		JSONObject retour = AjouterAmi.ajouterAmi(clef, id_ami);
 		reponse.setContentType("application/json");
 		reponse.getWriter().print(retour);
 		
 	}
-
-
 }
