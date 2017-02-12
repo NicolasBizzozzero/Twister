@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import org.json.JSONObject;
 
 import bd.tools.SessionsTools;
-import bd.tools.UtilisateursTools;
 import services.CodesErreur;
 import services.ErrorJSON;
 
@@ -19,13 +18,15 @@ public class Logout {
 		try {
 			
 			// On verifie que l'utilisateur est bien connecte
-			//TODO:
+			boolean estConnecte = SessionsTools.estConnecte(cle);
+			if (! estConnecte){
+				return ErrorJSON.serviceRefused(String.format("L'utilisateur possedant la clef %s n'est pas connecte", cle), CodesErreur.ERREUR_UTILISATEUR_DECONNECTE);
+			}			
 			
 			// On supprime la cle de connexion
 			boolean estSupprime = SessionsTools.suppressionCle(cle);
 			if (! estSupprime){
-				return ErrorJSON.serviceRefused("Erreur lors de la deconnexion", CodesErreur.ERREUR_DECONNEXION);
-
+				return ErrorJSON.serviceRefused("Erreur lors de la deconnexion, impossible de supprimer la clef dans la Base de donnees", CodesErreur.ERREUR_DECONNEXION);
 			}
 			
 			// On genere une reponse
@@ -34,9 +35,13 @@ public class Logout {
 			return retour;
 		} catch (SQLException e) {
 			return ErrorJSON.serviceRefused("Erreur de SQL", CodesErreur.ERREUR_SQL);			
-		} catch (Exception e) {
-			return ErrorJSON.serviceRefused("Erreur Inconnue", CodesErreur.ERREUR_INCONNUE);				
-		}
+		}catch (InstantiationException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (IllegalAccessException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (ClassNotFoundException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} 
 	}
 
 	

@@ -1,11 +1,26 @@
 Nom du service Web								logout
-Lieu où se trouve le service					services/authentification/Logout
-URL du service Web								authentification/logout
-Description du service							permet à un utilisateur de se déconnecter
-Paramètres en entrée							clé, login, motDePasse
-Format de sortie								ok ou erreur
-exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
-Erreurs possibles								2: Utilisateur innexistant 3: erreur de mot de passe
-Avancement du Service							Servlet à faire
-Classes JAVA en rapport avec le service Web
+
+Lieu ou se trouve le service					services/authentification/Logout
+
+URL du service Web								/services/authentification/logout
+
+Description du service							Permet a l'utilisateur de se deconnecter
+
+Parametres en entree							clef
+
+Format de sortie								JSON, vide ou erreur
+
+Exemple de sortie								{} si ok, {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												0: Erreur connexion a la base de donnees
+												5: Impossible de supprimer la clef dans la base de donnees
+												10: L'utilisateur n'est pas connecte
+												1000: Erreur SQL
+
+Avancement du Service							Fonctionnel
+
+Classes JAVA en rapport avec le service Web		servlets.authentification.ServletLogout
+												bd.tools.SessionsTools
+
 Informations additionnelles

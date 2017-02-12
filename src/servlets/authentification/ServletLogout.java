@@ -13,10 +13,9 @@ import services.authentification.Logout;
 
 
 
+@SuppressWarnings("serial")
 public class ServletLogout extends HttpServlet {
-	
 	 public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-		 
 		String clef = requete.getParameter("clef");
 		
 		JSONObject retour = Logout.logout(clef);

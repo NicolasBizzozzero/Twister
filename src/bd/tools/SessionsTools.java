@@ -10,14 +10,14 @@ import outils.MesMethodes;
 
 public class SessionsTools {
 
-	public static boolean estConnecte(String id_utilisateur) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static boolean estConnecte(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = "SELECT * FROM Sessions WHERE id=?;";
+        String requete = "SELECT * FROM Sessions WHERE clef=?;";
         PreparedStatement statement = connection.prepareStatement(requete);
-        statement.setInt(1, Integer.parseInt(id_utilisateur));
+        statement.setString(1, clef);
         statement.executeQuery();
         
         // Recuperation des donnees

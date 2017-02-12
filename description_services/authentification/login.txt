@@ -12,8 +12,6 @@ Format de sortie								JSON, clef ou erreur
 
 Exemple de sortie								{"id": id, "pseudo": pseudo, "clef": clef} si ok, {"error_code":XXX, "message":"..."} si erreur
 
-Exemple de sortie								{} si ok , {"error_code":XXX, "message":"..."} si erreur
-
 Erreurs possibles								-1: Nombre de parametres incorrect
 												0: Erreur connexion a la base de donnees
 												2: Utilisateur inexistant
