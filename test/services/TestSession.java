@@ -14,9 +14,7 @@ public class TestSession {
 	
 	private static String testLogin(String pseudo, String mdp){
 		JSONObject retour = services.authentification.Login.login(pseudo, mdp);
-		System.out.println(retour);
 		String clef = retour.getString("clef");
-		System.out.println(clef);
 		return clef;
 	}
 	

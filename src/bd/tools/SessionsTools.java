@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import bd.Database;
+import exceptions.ClefInexistanteException;
 import outils.MesMethodes;
 
 public class SessionsTools {
@@ -161,5 +162,33 @@ public class SessionsTools {
         
         // Creation d'une reponse
         return (nombreDeLignesModifiees > 0);
+	}
+	
+	public static String getIDbyClef(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT id FROM Sessions WHERE clef=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, clef);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean contientUnResultat = resultSet.next();
+        
+        // Si la requete n'a genere aucun resultat, on leve une exception
+        if (! contientUnResultat)
+        	throw new ClefInexistanteException(String.format("La clef %s n'est pas presente dans la Base de donnees", clef));
+        
+        String id = Integer.toString(resultSet.getInt("id"));
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return id;
 	}
 }

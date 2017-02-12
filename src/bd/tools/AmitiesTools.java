@@ -35,7 +35,7 @@ public class AmitiesTools {
         
         return retour;
 	}
-	public static void ajouterAmi(String id_ami1,String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static void ajouterAmi(String id_ami1, String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         

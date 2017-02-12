@@ -1,11 +1,31 @@
 Nom du service Web								ajouterAmi
+
 Lieu ou se trouve le service					services/amis/AjouterAmi
-URL du service Web								/ami/ajouterAmi
-Description du service							creer un tuple(id_ami1, id_ami2, date) dans la base de donnée amities
-Paramètres en entrée							id_ami1,id_ami2
-Format de sortie								ok ou erreur
+
+URL du service Web								/services/ami/ajouterAmi
+
+Description du service							Permet a un utilisateur de suivre un ami
+
+Parametres en entree							clef, id_ami
+
+Format de sortie								JSON, ok ou erreur
+
 exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
-Erreurs possibles								-1: ERREUR_ARGUMENTS, 8:ERREUR_ID_IDENTIQUES, 2: ERREUR_UTILISATEUR_INEXISTANT, 7: ERREUR_DEJA_SUIVI, 1000: ERREUR_SQL
-												0:ERREUR_CONNEXION_BD_MYSQL
-Avancement du Service							terminer à tester
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												0: Erreur connexion a la base de donnees
+												2: L'utilisateur a ajouter n'existe pas
+												7: L'utilisateur suit deja l'ami a ajouter
+												8: Les deux utilisateurs sont identiques
+												10: L'utilisateur n'est pas connecte
+												19: La clef passee en parametres n'existe pas
+												1000: Erreur SQL
+											
+Classes JAVA en rapport avec le service Web		servlets.authentification.ServletLogout
+												bd.tools.SessionsTools
+												
+Avancement du Service							Fonctionnel
+
 Informations additionnelles
+
+
