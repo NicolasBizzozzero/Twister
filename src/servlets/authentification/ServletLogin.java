@@ -11,13 +11,13 @@ import org.json.JSONObject;
 
 
 
-public class ServletLogin extends HttpServlet {
-	
+@SuppressWarnings("serial")
+public abstract class ServletLogin extends HttpServlet {
 	 public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-		String login = requete.getParameter("login"); 
+		String pseudo = requete.getParameter("pseudo"); 
 		String motDePasse = requete.getParameter("motDePasse"); 
 		
-		JSONObject retour = services.authentification.Login.login(login, motDePasse);
+		JSONObject retour = services.authentification.Login.login(pseudo, motDePasse);
 		reponse.setContentType("application/json");
 		reponse.getWriter().print(retour);
 	 }

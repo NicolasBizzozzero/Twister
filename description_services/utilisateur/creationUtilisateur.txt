@@ -6,7 +6,7 @@ URL du service Web								/services/utilisateur/creation
 
 Description du service							Creer un nouvel utilisateur
 
-Paramètres en entrée							pseudo, motDePasse, email, [prenom, nom, anniversaire]
+Parametres en entree							pseudo, motDePasse, email, [prenom, nom, anniversaire]
 
 Format de sortie								JSON, ok ou erreur
 
@@ -24,8 +24,6 @@ Erreurs possibles								-1: Nombre de parametres incorrect
 Avancement du Service							Fonctionnel
 
 Classes JAVA en rapport avec le service Web		servlets.utilisateur.ServletCreationUtilisateur
-												services.ErrorJSON
-												services.CodesErreur
 												bd.tools.UtilisateursTools
-												outils.MesMethodes												
+																								
 Informations additionnelles

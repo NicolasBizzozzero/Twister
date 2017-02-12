@@ -11,20 +11,20 @@ import services.CodesErreur;
 import services.ErrorJSON;
 
 public class Login {
-	public static JSONObject login(String login, String motDePasse) {
-		if (! verificationParametres(login, motDePasse)) {
+	public static JSONObject login(String pseudo, String motDePasse) {
+		if (! verificationParametres(pseudo, motDePasse)) {
 			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
 		
 		try {
 			// On verifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistencePseudo(login);
+			boolean isUser = UtilisateursTools.verificationExistencePseudo(pseudo);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused("L'utilisateur n'existe pas", CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
 			
 			// On recupere l'identifiant de l'utilisateur
-			String identifiant = UtilisateursTools.getIdUtilisateur(login);
+			String identifiant = UtilisateursTools.getIdUtilisateur(pseudo);
 			
 			// On verifie que l'utilisateur n'est pas deja connecte
 			boolean isConnecte = SessionsTools.estConnecte(identifiant);
@@ -36,20 +36,20 @@ public class Login {
 			motDePasse = outils.MesMethodes.hasherMotDePasse(motDePasse);
 			
 			// On verifie que le couple (login, mot de passe) fonctionne
-			boolean passwordOk = UtilisateursTools.checkMotDePasseAvecPseudo(login, motDePasse);
+			boolean passwordOk = UtilisateursTools.checkMotDePasseAvecPseudo(pseudo, motDePasse);
 			if (! passwordOk) {
 				return ErrorJSON.serviceRefused("Erreur, mot de passe incorrect", CodesErreur.ERREUR_MDP_INCORRECT);
 			}
 
 			// On insere la session dans la base de donnees
-			boolean estAdministrateur = estAdministrateur(login);
+			boolean estAdministrateur = estAdministrateur(pseudo);
 			String key = SessionsTools.insertSession(identifiant, estAdministrateur);
 			
 			// On genere une reponse
 			JSONObject retour = new JSONObject();
 			retour.put("id", identifiant);
-			retour.put("login", login);
-			retour.put("key", key);
+			retour.put("pseudo", pseudo);
+			retour.put("clef", key);
 			return retour;
 
 		} catch (SQLException e) {

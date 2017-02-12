@@ -1,11 +1,30 @@
 Nom du service Web								login
-Lieu où se trouve le service					services/authentification/Login
-URL du service Web								authentification/login
-Description du service							permet de récuperer une clé de session valide pendant un certain temps
-Paramètres en entrée							login, motDePasse
-Format de sortie								clé ou erreur
-exemple de sortie								{"key":cle} si ok {"error_code":XXX, "message":"..."} si erreur
-Erreurs possibles								2: Utilisateur innexistant 3: erreur de mot de passe
-Avancement du Service							Servlet à faire
-Classes JAVA en rapport avec le service Web
+
+Lieu ou se trouve le service					services/authentification/Login
+
+URL du service Web								/services/authentification/login
+
+Description du service							Permet de recuperer une clef de session valide pendant un certain temps
+
+Parametres en entree							pseudo, motDePasse
+
+Format de sortie								JSON, clef ou erreur
+
+Exemple de sortie								{"id": id, "pseudo": pseudo, "clef": clef} si ok, {"error_code":XXX, "message":"..."} si erreur
+
+Exemple de sortie								{} si ok , {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												0: Erreur connexion a la base de donnees
+												2: Utilisateur inexistant
+												4: Mot de passe incorrect
+												13: Erreur durant le hashage du mot de passe
+												15: Utilisateur deja connecte
+												1000: Erreur SQL
+
+Avancement du Service							Fonctionnel
+
+Classes JAVA en rapport avec le service Web		servlets.authentification.ServletLogin
+												bd.tools.SessionsTools
+
 Informations additionnelles
