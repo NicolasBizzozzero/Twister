@@ -10,14 +10,13 @@ import java.io.IOException;
 
 import services.amis.SupprimerAmi;
 
+@SuppressWarnings("serial")
 public class ServletSupprimerAmi extends HttpServlet {
-		
 	public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-			 
-		String ami1= requete.getParameter("id_ami1"); 
-		String ami2= requete.getParameter("id_amis2"); 
+		String clef = requete.getParameter("clef"); 
+		String id_ami = requete.getParameter("id_ami"); 
 			
-		JSONObject retour = SupprimerAmi.supprimerAmi(ami1,ami2);
+		JSONObject retour = SupprimerAmi.supprimerAmi(clef, id_ami);
 		reponse.setContentType("application/json");
 		reponse.getWriter().print(retour);
 		

@@ -27,5 +27,3 @@ Classes JAVA en rapport avec le service Web		servlets.authentification.ServletLo
 Avancement du Service							Fonctionnel
 
 Informations additionnelles
-
-
