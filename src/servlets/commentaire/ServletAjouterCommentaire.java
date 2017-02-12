@@ -38,5 +38,4 @@ public class ServletAjouterCommentaire extends HttpServlet {
         reponse.setContentType("application/json");
         reponse.getWriter().print(retour);
      }
-
 }
