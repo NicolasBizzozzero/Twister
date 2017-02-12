@@ -1,0 +1,11 @@
+Nom du service Web								ListerCommentaire
+Lieu ou se trouve le service					services/commentaire/ListerCommentaire
+URL du service Web								/commentaire/listerCommentaire
+Description du service							liste les commentaires de l'utilisateur passé en argument, en commencant au commentaire index_debut et en comptant jusqu'à limite
+Parametres en entree							String id_auteur, int index_debut, int limite
+Format de sortie								ok ou erreur
+exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
+Erreurs possibles								-1: ERREUR_ARGUMENTS, 6: HOTE_INCONNU, 2: ERREUR_UTILISATEUR_INEXISTANT, 18: ERREUR_COMMENTAIRE_INEXISTANT, 0: ERREUR_CONNEXION_BD_MYSQL
+												1000: ERREUR_SQL
+Avancement du Service							fini a tester
+Informations additionnelles
