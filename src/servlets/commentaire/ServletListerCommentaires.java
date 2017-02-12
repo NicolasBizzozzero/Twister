@@ -13,6 +13,7 @@ import services.commentaire.ListerCommentaires;
 
 
 
+@SuppressWarnings("serial")
 public class ServletListerCommentaires extends HttpServlet {
 	    public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
 	        // Recuperation des parametres

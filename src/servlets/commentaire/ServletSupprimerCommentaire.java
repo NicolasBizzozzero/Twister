@@ -13,6 +13,7 @@ import services.commentaire.SupprimerCommentaire;
 
 
 
+@SuppressWarnings("serial")
 public class ServletSupprimerCommentaire extends HttpServlet {
      public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
 	    // Recuperation des parametres

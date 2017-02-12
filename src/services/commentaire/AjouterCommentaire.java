@@ -19,7 +19,7 @@ import exceptions.BDException;
 
 
 public class AjouterCommentaire {
-	public static JSONObject ajouterCommentaire(String clef, String contenu) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static JSONObject ajouterCommentaire(String clef, String contenu) {
 		if (! verificationParametres(contenu, clef)){
 			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
@@ -30,6 +30,7 @@ public class AjouterCommentaire {
 			if (! cleExiste){
 				return ErrorJSON.serviceRefused(String.format("La session %s n'existe pas", clef), CodesErreur.ERREUR_SESSION_INEXISTANTE);
 			}
+
 			// On recupere l'identifiant de la session
 			String id = bd.tools.SessionsTools.clefIdentifiant(clef);
 			
@@ -47,6 +48,14 @@ public class AjouterCommentaire {
 			return reponse;
 		} catch (UnknownHostException e) {
 			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.HOTE_INCONNU);
+		} catch (SQLException e) {
+			return ErrorJSON.serviceRefused("Erreur, requete SQL incorrecte", CodesErreur.ERREUR_SQL);
+		} catch (InstantiationException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (IllegalAccessException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (ClassNotFoundException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		}
 	}
 	
