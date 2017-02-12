@@ -1,7 +1,6 @@
 package services.utilisateur;
 
 import java.sql.SQLException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import org.json.JSONObject;
 
@@ -11,7 +10,7 @@ import services.CodesErreur;
 import services.ErrorJSON;
 
 
-public class CreationUtilisateur {	
+public abstract class CreationUtilisateur {	
 	public static JSONObject creationUtilisateur(String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) {
 		if (! verificationParametres(pseudo, motDePasse, email)){
 			return ErrorJSON.serviceRefused("Erreur, le pseudo, mot de passe et l'email doivent etre renseignes", CodesErreur.ERREUR_ARGUMENTS);

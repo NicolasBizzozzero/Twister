@@ -73,6 +73,11 @@ public class UtilisateursTools {
         connection.close();
 	}
 	
+	/**
+	 * Cette methode utilise l'ID comme parametre supplementaire pour ajouter un utilisateur.
+	 * Elle ne devrait etre utilisee UNIQUEMENT que par les administrateurs, et donc ne pas
+	 * etre disponible en tant que service.
+	 */
 	public static void ajouterUtilisateur(String id, String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();

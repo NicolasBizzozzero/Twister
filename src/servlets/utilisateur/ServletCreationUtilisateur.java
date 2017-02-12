@@ -12,7 +12,8 @@ import org.json.JSONObject;
 import services.utilisateur.CreationUtilisateur;
 
 
-public class ServletCreationUtilisateur extends HttpServlet {
+@SuppressWarnings("serial")
+public abstract class ServletCreationUtilisateur extends HttpServlet {
 	 public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException { 
 		String pseudo = requete.getParameter("pseudo"); 
 		String motDePasse = requete.getParameter("motDePasse");

@@ -42,39 +42,39 @@
 	
 	<servlet-mapping> 
 		<servlet-name>CreationUtilisateur</servlet-name> 
-		<url-pattern>/utilisateur/creationUtilisateur</url-pattern>
+		<url-pattern>/services/utilisateur/creationUtilisateur</url-pattern>
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>Login</servlet-name> 
-		<url-pattern>/authentification/login</url-pattern>
+		<url-pattern>/services/authentification/login</url-pattern>
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>Logout</servlet-name> 
-		<url-pattern>/authentification/logout</url-pattern>
+		<url-pattern>/services/authentification/logout</url-pattern>
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>SupprimerAmi</servlet-name> 
-		<url-pattern>/amis/supprimerAmis</url-pattern> 
+		<url-pattern>/services/amis/supprimerAmis</url-pattern> 
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>AjouterAmi</servlet-name> 
-		<url-pattern>/amis/ajouterAmis</url-pattern> 
+		<url-pattern>/services/amis/ajouterAmis</url-pattern> 
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>ListerAmis</servlet-name> 
-		<url-pattern>/amis/listerAmis</url-pattern> 
+		<url-pattern>/services/amis/listerAmis</url-pattern> 
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>AjouterCommentaire</servlet-name> 
-		<url-pattern>/commentaire/ajouterCommentaire</url-pattern> 
+		<url-pattern>/services/commentaire/ajouterCommentaire</url-pattern> 
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>SupprimerCommentaire</servlet-name> 
-		<url-pattern>/commentaire/supprimerCommentaire</url-pattern> 
+		<url-pattern>/services/commentaire/supprimerCommentaire</url-pattern> 
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ListerCommentaires</servlet-name> 
-		<url-pattern>/commentaire/listerCommentaires</url-pattern> 
+		<url-pattern>/services/commentaire/listerCommentaires</url-pattern> 
 	</servlet-mapping>
 	
 	<welcome-file-list>
