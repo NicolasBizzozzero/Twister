@@ -2,7 +2,6 @@ package bd.tools;
 
 import java.net.UnknownHostException;
 import java.util.Date;
-import java.util.List;
 
 import org.json.JSONObject;
 
@@ -10,11 +9,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 import com.mongodb.Mongo;
-
-import services.CodesErreur;
-import services.ErrorJSON;
 
 public class CommentairesTools {
 	public static void ajouterCommentaire(String contenu, String id_auteur) throws UnknownHostException {

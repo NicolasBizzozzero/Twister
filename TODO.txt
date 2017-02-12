@@ -1,5 +1,6 @@
 Services:
-
+	La suppression de l'utilisateur doit prendre la clef en parametre, pas son ID
+	
 ServicesBonus:
 	ModifierNom/Prenom/Mail
 	SupprimerCommentaire

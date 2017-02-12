@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import services.utilisateur.SuppressionUtilisateur;
 
 
-
+@SuppressWarnings("serial")
 public class ServletSuppressionUtilisateur extends HttpServlet {
      public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
         // Recuperation des parametres

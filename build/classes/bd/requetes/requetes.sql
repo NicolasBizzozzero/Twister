@@ -25,5 +25,3 @@ CREATE TABLE Sessions(
 		est_administrateur boolean,
     	primary key(id)
 )
-
-# Création de la table Messages

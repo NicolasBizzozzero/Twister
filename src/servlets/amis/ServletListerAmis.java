@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import services.amis.ListerAmis;
 
+@SuppressWarnings("serial")
 public class ServletListerAmis extends HttpServlet {
 		
 	public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {

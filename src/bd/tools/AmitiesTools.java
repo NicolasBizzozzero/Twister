@@ -4,12 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.json.JSONObject;
 
 import bd.Database;
-import exceptions.BDException;
 import exceptions.IndexInvalideException;
 
 public class AmitiesTools {

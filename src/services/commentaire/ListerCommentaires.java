@@ -2,21 +2,11 @@ package services.commentaire;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
-import java.util.Date;
-
 import org.json.JSONObject;
 
 import services.CodesErreur;
 import services.ErrorJSON;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.Mongo;
-
 import bd.tools.UtilisateursTools;
-import exceptions.BDException;
 
 public class ListerCommentaires {
 	public static JSONObject listerCommentaires(String clef, int index_debut, int limite) {

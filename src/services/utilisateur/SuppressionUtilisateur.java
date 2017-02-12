@@ -36,7 +36,16 @@ public class SuppressionUtilisateur {
 			UtilisateursTools.supprimerUtilisateurAvecId(id);
 			
 			// On supprime ses messages
-			//TODO: Faire ca
+			//TODO: Implementer
+			
+			// On supprime la relation d'amitie avec les amis qu'il suivait
+			//TODO: Implementer
+			
+			// On supprime la relation d'amitie des amis le suivant
+			//TODO: Implementer
+			
+			// On le deconnecte
+			//TODO: Implementer
 
 			// On renvoie une reponse
 			JSONObject reponse = new JSONObject();

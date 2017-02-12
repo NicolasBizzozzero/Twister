@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 
 @SuppressWarnings("serial")
-public abstract class ServletLogin extends HttpServlet {
+public class ServletLogin extends HttpServlet {
 	 public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
 		String pseudo = requete.getParameter("pseudo"); 
 		String motDePasse = requete.getParameter("motDePasse"); 

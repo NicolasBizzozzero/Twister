@@ -1,15 +1,12 @@
 package services;
 
-import java.sql.SQLException;
-
-import services.utilisateur.CreationUtilisateur;
 import exceptions.BDException;
 
 public class TestUtilisateur {
 	public static void main(String[] args) throws BDException {
 		//testCreationUtilisateur();
-		//testSuppressionUtilisateur();
-		testModificationUtilisateur();
+		testSuppressionUtilisateur();
+		//testModificationUtilisateur();
 	}
 	
 	private static void testCreationUtilisateur() {

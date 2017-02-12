@@ -1,0 +1,23 @@
+Nom du service Web								creationUtilisateur
+
+Lieu ou se trouve le service					services/utilisateur/SuppressionUtilisateur
+
+URL du service Web								/services/utilisateur/suppression
+
+Description du service							Supprimer un utilisateur ainsi que ses donnees
+
+Parametres en entree							clef, motDePasse
+
+Format de sortie								JSON, ok ou erreur
+
+Exemple de sortie								{} si ok , {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												
+												
+Avancement du Service							Fonctionnel, mais ne supprime pas les donnees
+
+Classes JAVA en rapport avec le service Web		servlets.utilisateur.ServletSuppressionUtilisateur
+												bd.tools.UtilisateursTools
+																								
+Informations additionnelles
