@@ -10,14 +10,14 @@ import outils.MesMethodes;
 
 public class SessionsTools {
 
-	public static boolean estConnecte(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static boolean estConnecte(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = "SELECT * FROM Sessions WHERE clef=?;";
+        String requete = "SELECT * FROM Sessions WHERE id=?;";
         PreparedStatement statement = connection.prepareStatement(requete);
-        statement.setString(1, clef);
+        statement.setInt(1, Integer.parseInt(id));
         statement.executeQuery();
         
         // Recuperation des donnees
@@ -50,7 +50,7 @@ public class SessionsTools {
         statement.setInt(2, Integer.parseInt(identifiant));
         statement.setBoolean(3, isAdmin);
         statement.executeUpdate();
-        
+
         // Liberation des ressources
         statement.close();
         connection.close();
@@ -59,7 +59,7 @@ public class SessionsTools {
 		return cle;
 	}
 
-	static boolean clefExiste(String cle) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static boolean clefExiste(String cle) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 			// Connection a la base de donnees
 	        Connection connection = Database.getMySQLConnection();
 	        
@@ -101,20 +101,16 @@ public class SessionsTools {
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = "DELETE FROM Session WHERE clef=?;";
+        String requete = "DELETE FROM Sessions WHERE clef=?;";
         PreparedStatement statement = connection.prepareStatement(requete);
         statement.setString(1, clef);
-        statement.executeUpdate();
-        
-        // Recuperation des donnees
-        ResultSet resultSet = statement.getResultSet();
-        boolean retour = resultSet.next();
+        int nombreDeLignesModifiees = statement.executeUpdate();
         
         // Liberation des ressources
-        resultSet.close();
         statement.close();
         connection.close();
         
-        return retour;
+        // Creation d'une reponse
+        return (nombreDeLignesModifiees > 0);
 	}
 }

@@ -16,12 +16,11 @@ public class Logout {
 		}
 
 		try {
-			
 			// On verifie que l'utilisateur est bien connecte
-			boolean estConnecte = SessionsTools.estConnecte(cle);
+			boolean estConnecte = SessionsTools.clefExiste(cle);
 			if (! estConnecte){
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur possedant la clef %s n'est pas connecte", cle), CodesErreur.ERREUR_UTILISATEUR_DECONNECTE);
-			}			
+			}
 			
 			// On supprime la cle de connexion
 			boolean estSupprime = SessionsTools.suppressionCle(cle);
@@ -31,7 +30,6 @@ public class Logout {
 			
 			// On genere une reponse
 			JSONObject retour = new JSONObject();
-			retour.put("Deconnexion realisee", cle);
 			return retour;
 		} catch (SQLException e) {
 			return ErrorJSON.serviceRefused("Erreur de SQL", CodesErreur.ERREUR_SQL);			
