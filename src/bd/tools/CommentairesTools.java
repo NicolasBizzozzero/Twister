@@ -17,7 +17,7 @@ import services.CodesErreur;
 import services.ErrorJSON;
 
 public class CommentairesTools {
-	public static void ajouterCommentaire(String contenu, String id_auteur, String pseudo) throws UnknownHostException {
+	public static void ajouterCommentaire(String contenu, String id_auteur) throws UnknownHostException {
 		// On se connecte à la BDD puis on recupere les commentaires
 		DBCollection commentaires = getCollectionCommentaires();
 		
@@ -25,7 +25,6 @@ public class CommentairesTools {
 		BasicDBObject commentaire = new BasicDBObject();
 		commentaire.put("id_auteur", id_auteur);
 		commentaire.put("contenu", contenu);
-		commentaire.put("pseudo", pseudo);
 		commentaire.put("date", new Date());
 		
 		// On ajoute le commentaire

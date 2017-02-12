@@ -19,12 +19,21 @@ import bd.tools.UtilisateursTools;
 import exceptions.BDException;
 
 public class ListerCommentaires {
-	public static JSONObject listerCommentaires(String id_utilisateur, int index_debut, int limite) {
-		if (! verificationParametres(id_utilisateur)){
-			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
+	public static JSONObject listerCommentaires(String clef, int index_debut, int limite) {
+		if (! verificationParametres(clef)){
+			return ErrorJSON.serviceRefused("La cle de session est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
 		
 		try {
+			//on verifie que la clef de connexion existe
+			boolean cleExiste=bd.tools.SessionsTools.clefExiste(clef);
+			if (! cleExiste){
+				return ErrorJSON.serviceRefused(String.format("La session %s n'existe pas", clef), CodesErreur.ERREUR_SESSION_INEXISTANTE);
+			}
+			
+			// On recupere l'identifiant de la session
+			String id_utilisateur = bd.tools.SessionsTools.clefIdentifiant(clef);
+			
 			// On verifie que l'utilisateur existe
 			boolean isUser = UtilisateursTools.verificationExistenceId(id_utilisateur);
 			if (! isUser) {
@@ -53,7 +62,7 @@ public class ListerCommentaires {
     * Verification de la validite des parametres
     * @return : Un booleen a true si les paramatres sont valides.
     */
-	private static boolean verificationParametres(String id_utilisateur) {
-		return (id_utilisateur != null);
+	private static boolean verificationParametres(String cle) {
+		return (cle != null);
 	}
 }
