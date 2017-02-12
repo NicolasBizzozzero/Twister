@@ -10,7 +10,7 @@ import services.CodesErreur;
 import services.ErrorJSON;
 
 public class AjouterAmi {
-	public static JSONObject ajouterAmi(String id_ami1, String id_ami2) {
+	public static JSONObject ajouterAmi(String clef, String id_ami2) {
 		if (! verificationParametres(id_ami1, id_ami2)){
 			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
@@ -21,11 +21,10 @@ public class AjouterAmi {
 				return ErrorJSON.serviceRefused(String.format("Les identifiants sont identiques : %s.", id_ami1), CodesErreur.ERREUR_ID_IDENTIQUES);
 			}
 			
-			// On verifieque les deux utilisateurs existent
-			boolean isUser = UtilisateursTools.verificationExistenceId(id_ami1);
-			if (! isUser) {
-				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_ami1), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
-			}
+			// On verifie que l'utilisateur ajoutant est connecte
+			//TODO:
+			
+			// On verifie que id_ami2 existe
 			isUser = UtilisateursTools.verificationExistenceId(id_ami2);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_ami2), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);

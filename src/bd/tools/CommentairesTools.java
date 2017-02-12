@@ -88,7 +88,9 @@ public class CommentairesTools {
 		DBCursor curseur = commentaires.find();
 		JSONObject reponse = new JSONObject();
 		while (curseur.hasNext()) {
-			reponse.accumulate("comments", curseur.next());
+			//reponse.accumulate("comments", curseur.next());
+			Object o = curseur.next();
+			System.out.println(o);
 		}
 		
 		return reponse;

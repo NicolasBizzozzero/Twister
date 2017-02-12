@@ -17,10 +17,9 @@ public class ServletLogout extends HttpServlet {
 	
 	 public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
 		 
-		String login= requete.getParameter("login"); 
-		String motDePasse= requete.getParameter("motDePasse"); 
+		String clef = requete.getParameter("clef");
 		
-		JSONObject retour = Logout.logout(login,motDePasse);
+		JSONObject retour = Logout.logout(clef);
 		reponse.setContentType("application/json");
 		reponse.getWriter().print(retour);
 	

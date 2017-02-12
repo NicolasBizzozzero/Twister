@@ -34,13 +34,16 @@ public class SuppressionUtilisateur {
 
 			// On supprime l'utilisateur
 			UtilisateursTools.supprimerUtilisateurAvecId(id);
+			
+			// On supprime ses messages
+			//TODO: Faire ca
 
 			// On renvoie une reponse
 			JSONObject reponse = new JSONObject();
 			return reponse;
 		} catch (NoSuchAlgorithmException e) {
 			return ErrorJSON.serviceRefused("Erreur lors du hashage du mot de passe", CodesErreur.ERREUR_HASHAGE);
-		}   catch (InstantiationException e) {
+		} catch (InstantiationException e) {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (IllegalAccessException e) {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);

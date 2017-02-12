@@ -47,6 +47,8 @@ public class Login {
 			
 			// On genere une reponse
 			JSONObject retour = new JSONObject();
+			retour.put("id", identifiant);
+			retour.put("login", login);
 			retour.put("key", key);
 			return retour;
 

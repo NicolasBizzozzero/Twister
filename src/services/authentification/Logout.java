@@ -11,17 +11,15 @@ import services.ErrorJSON;
 
 
 public class Logout {
-	public static JSONObject logout(String login, String cle) {
-		if (! verificationParametres(login, cle)) {
+	public static JSONObject logout(String cle) {
+		if (! verificationParametres(cle)) {
 			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
 
 		try {
-			// On verifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistencePseudo(login);
-			if (! isUser) {
-				return ErrorJSON.serviceRefused("L'utilisateur n'existe pas", CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
-			}
+			
+			// On verifie que l'utilisateur est bien connecte
+			//TODO:
 			
 			// On supprime la cle de connexion
 			boolean estSupprime = SessionsTools.suppressionCle(cle);
@@ -42,8 +40,8 @@ public class Logout {
 	}
 
 	
-	private static boolean verificationParametres(String login, String cle) {
-		return (login != null&& cle != null);
+	private static boolean verificationParametres(String cle) {
+		return (cle != null);
 	}
 }
 	
