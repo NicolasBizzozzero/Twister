@@ -106,31 +106,8 @@ public class SessionsTools {
         connection.close();
         
         return identifiant;
-} 
-	public static String IdentifiantClef(String identifiant) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		// Connection a la base de donnees
-        Connection connection = Database.getMySQLConnection();
-        
-        // Creation et execution de la requete
-        String requete = "SELECT clef FROM Sessions WHERE identifiant=?;";
-        PreparedStatement statement = connection.prepareStatement(requete);
-        statement.setString(1, identifiant);
-        statement.executeQuery();
-        
-        // Recuperation des donnees
-        ResultSet resultSet = statement.getResultSet();
-        String cle="";
-        if (resultSet.next()){
-        	cle = resultSet.getString("identifiant");
-        }
-        
-        // Liberation des ressources
-        resultSet.close();
-        statement.close();
-        connection.close();
-        
-        return cle;
-} 
+}
+
 	public static void updateTempsCle(String cle) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();

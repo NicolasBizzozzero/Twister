@@ -1,27 +1,27 @@
 package services;
 
+import java.net.UnknownHostException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+
+import exceptions.ClefInexistanteException;
 
 public class TestCommentaires {
 
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, UnknownHostException, ClefInexistanteException {
 		testAjouterCommentaire();
 		testSupprimerCommentaire();
 		testListerCommentaires();
 
 	}
-	private static void testAjouterCommentaire() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		
+
+	private static void testAjouterCommentaire() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException, NoSuchAlgorithmException, UnknownHostException {
 		System.out.println("Debut du test d'ajout de commentaires");
 		String clef ="";
 		//on commence par ajouter une personne dans notre base de donnees
-		try {
-			bd.tools.UtilisateursTools.ajouterUtilisateur("5", "Test_utilisateur_5", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
-			bd.tools.SessionsTools.insertSession("Test_utilisateur_5", false);
-			clef = bd.tools.SessionsTools.IdentifiantClef("Test_utilisateur_5");
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+		bd.tools.UtilisateursTools.ajouterUtilisateur("5", "Test_utilisateur_5", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
+		bd.tools.SessionsTools.insertSession("5", false);
+		clef = bd.tools.SessionsTools.getIDbyClef("5");
 
 		System.out.println("Un utilisateur inexistant ne peut pas ajouter de commentaire:");
 		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef,"Je suis un joli commentaire") );
@@ -36,17 +36,12 @@ public class TestCommentaires {
 		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef,"Je suis le message numero quatre"));
 
 		//  Suppression des commentaires et de l'utilisateur 
-		try {
-			bd.tools.CommentairesTools.supprimerCommentaire("5","Je suis le message numero un");
-			bd.tools.CommentairesTools.supprimerCommentaire("5","Je suis le message numero deux");
-			bd.tools.CommentairesTools.supprimerCommentaire("5","Je suis le message numero trois");
-			bd.tools.CommentairesTools.supprimerCommentaire("5","Je suis le message numero quatre");
-			bd.tools.SessionsTools.suppressionCle(clef);
-			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("Test_utilisateur_5");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+		bd.tools.CommentairesTools.supprimerCommentaire("5","Je suis le message numero un");
+		bd.tools.CommentairesTools.supprimerCommentaire("5","Je suis le message numero deux");
+		bd.tools.CommentairesTools.supprimerCommentaire("5","Je suis le message numero trois");
+		bd.tools.CommentairesTools.supprimerCommentaire("5","Je suis le message numero quatre");
+		bd.tools.SessionsTools.suppressionCle(clef);
+		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("Test_utilisateur_5");
 		System.out.println("Fin du test d'ajout de Commentaires");
 	}
 
@@ -60,8 +55,8 @@ public class TestCommentaires {
 		//Ajout d'utilisateurs et creation de messages
 		try {
 			bd.tools.UtilisateursTools.ajouterUtilisateur("5", "Test_utilisateur_5", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
-			bd.tools.SessionsTools.insertSession("Test_utilisateur_5", false);
-			clef = bd.tools.SessionsTools.IdentifiantClef("Test_utilisateur_5");
+			bd.tools.SessionsTools.insertSession("5", false);
+			clef = bd.tools.SessionsTools.getIDbyClef("5");
 			bd.tools.CommentairesTools.ajouterCommentaire(clef,"Je suis le message numero un");
 			bd.tools.CommentairesTools.ajouterCommentaire(clef,"Je suis le message numero deux");
 		} catch (Exception e) {
@@ -96,8 +91,8 @@ public class TestCommentaires {
 		
 		//Ajout d'utilisateurs et de commentaires
 		try {
-			bd.tools.SessionsTools.insertSession("Test_utilisateur_5", false);
-			clef = bd.tools.SessionsTools.IdentifiantClef("Test_utilisateur_5");
+			bd.tools.SessionsTools.insertSession("5", false);
+			clef = bd.tools.SessionsTools.getIDbyClef("5");
 			bd.tools.UtilisateursTools.ajouterUtilisateur("5", "Test_utilisateur_5", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
 			bd.tools.CommentairesTools.ajouterCommentaire(clef,"Je suis le message numero un");
 			bd.tools.CommentairesTools.ajouterCommentaire(clef,"Je suis le message numero deux");

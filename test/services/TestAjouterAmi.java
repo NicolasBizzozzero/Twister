@@ -11,9 +11,9 @@ import exceptions.BDException;
 public class TestAjouterAmi {
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
-		//testAjouterAmis();
+		testAjouterAmis();
 		testSupprimerAmi();
-		//testListerAmis();
+		testListerAmis();  // Ne fonctionne pas
 	}
 	
 	private static void testAjouterAmis() throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
@@ -159,6 +159,6 @@ public class TestAjouterAmi {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		System.out.println("Fin du test de suppression d'amities");
+		System.out.println("Fin du test de l'affichage de la liste d'amis");
 	}
 }
