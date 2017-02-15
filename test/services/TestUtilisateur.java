@@ -4,8 +4,8 @@ import exceptions.BDException;
 
 public class TestUtilisateur {
 	public static void main(String[] args) throws BDException {
-		//testCreationUtilisateur();
-		testSuppressionUtilisateur();
+		testCreationUtilisateur();
+		//testSuppressionUtilisateur();
 		//testModificationUtilisateur();
 	}
 	

@@ -8,12 +8,14 @@ public class TestSession {
 	public static void main(String[] args) throws BDException {
 		String pseudo = "MegaPizzaSansOlives";
 		String mdp = "MonSuperMotDePasse";
+		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, mdp, "truc@gmail.com", null, null, null);
 		String clef = testLogin(pseudo, mdp);
 		testLogout(clef);
 	}
 	
 	private static String testLogin(String pseudo, String mdp){
 		JSONObject retour = services.authentification.Login.login(pseudo, mdp);
+		System.out.print(retour.toString());
 		String clef = retour.getString("clef");
 		return clef;
 	}
