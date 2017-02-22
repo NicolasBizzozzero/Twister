@@ -1,8 +1,54 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>Twister</title>
-	</head>
-	<body>
-		<h1> Bonjour monde !</h1>
-	</body>
-</html>
+    <head>
+      <title> Titre </title>
+      <link rel="stylesheet" type="text/css" href="css_inscription.css"/>
+  </head>
+  <body>
+    <div id="div_inscription">
+      <h1> Inscription </h1>
+    	<form method="post"  action="" onSubmit="javascript : inscription(this)">
+          <div class="ids_haut">
+            <label for=" prenom"> Prénom </label>            
+            <div>
+            <input type="text" name="prenom" id="prenom"/>
+            </div>
+          </div>
+          <div class="ids_haut">
+            <label for= "nom"> Nom</label>
+            <div>
+            <input type="text" name="nom" id="nom"/>
+            </div>
+          </div>
+          <div class ="ids" >
+            <label for= "anniversaire">Anniversaire</label>
+            <input type="text" name="anniversaire" id="anniversaire"/>
+          </div>
+          <div class ="ids" >
+            <label for= "pseudo"> Pseudo*</label>
+          	<input type="text" name="pseudo" id="pseudo"/>
+          </div>
+          <div class ="ids" >
+            <label for= "email"> Email*</label>
+          	<input type="text" name="email" id="email"/>
+          </div>
+          <div class ="ids" >
+            <label for= "mdp">Mot de passe*</label>
+          	<input type="password" name="mdp" id="mdp"/>
+          </div>
+          <div class ="ids" >
+            <label for= "mdp2"> Répéter le mot de passe</label>
+          	<input type="password" name="mdp2" id="mdp2"/>
+          </div>
+          
+          <div class ="boutons" >
+          	<input type="submit" name="enregistrer" id="enregistrer" value="Inscription"/>
+            <input type="submit" name="annuler" id="annuler" value="Annuler"/>
+          </div>
+          <div class="champs_ob">
+           <text> * Champs obligatoires</text>
+          </div>
+      </form>
+    </div>
+    </body>
+<html>

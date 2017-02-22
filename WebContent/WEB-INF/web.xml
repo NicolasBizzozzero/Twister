@@ -58,7 +58,7 @@
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>AjouterAmi</servlet-name> 
-		<url-pattern>/services/amis/ajouterAmis</url-pattern> 
+		<url-pattern>/services/amis/ajouterAmi</url-pattern> 
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>ListerAmis</servlet-name> 
