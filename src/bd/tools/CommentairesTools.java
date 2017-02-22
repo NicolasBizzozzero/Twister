@@ -13,7 +13,7 @@ import com.mongodb.Mongo;
 
 public class CommentairesTools {
 	public static void ajouterCommentaire(String contenu, String id_auteur) throws UnknownHostException {
-		// On se connecte à la BDD puis on recupere les commentaires
+		// On se connecte ï¿½ la BDD puis on recupere les commentaires
 		DBCollection commentaires = getCollectionCommentaires();
 		
 		// Creation du commentaire
@@ -27,7 +27,7 @@ public class CommentairesTools {
 	}
 	
 	public static void supprimerCommentaire(String id_auteur, String contenu) throws UnknownHostException {
-		// On se connecte à la BDD puis on recupere les commentaires
+		// On se connecte ï¿½ la BDD puis on recupere les commentaires
 		DBCollection commentaires = getCollectionCommentaires();
 		
 		// Creation du commentaire
@@ -38,10 +38,18 @@ public class CommentairesTools {
 		// On retire le commentaire
 		commentaires.remove(commentaire);
 	}
+	
+	public static void viderMongoDB() throws UnknownHostException {
+		// On se connecte ï¿½ la BDD puis on recupere les commentaires
+		DBCollection commentaires = getCollectionCommentaires();
+
+		// On retire le commentaire
+		commentaires.remove(new BasicDBObject());
+	}
 
 
 	public static boolean commentaireExistant( String id_auteur, String contenu) throws UnknownHostException {
-		// On se connecte à la BDD puis on recupere les commentaires
+		// On se connecte ï¿½ la BDD puis on recupere les commentaires
 		DBCollection commentaires = getCollectionCommentaires();
 		
 		// Creation du commentaire
@@ -57,7 +65,7 @@ public class CommentairesTools {
 	
 	
 	public static JSONObject listerCommentaires(String id_utilisateur, int index_debut, int limite) throws UnknownHostException {
-		// On se connecte à la BDD puis on recupere les commentaires
+		// On se connecte ï¿½ la BDD puis on recupere les commentaires
 		DBCollection commentaires = getCollectionCommentaires();
 		
 		// Creation du commentaire
@@ -70,23 +78,22 @@ public class CommentairesTools {
 		while (curseur.hasNext()) {
 			reponse.accumulate("comments", curseur.next());
 		}
-		
+				
 		return reponse;
 	}
 	
 	public static JSONObject getTousLesCommentaires() throws UnknownHostException {
-		// On se connecte à la BDD puis on recupere les commentaires
+		// On se connecte ï¿½ la BDD puis on recupere les commentaires
 		DBCollection commentaires = getCollectionCommentaires();
 
 		// On itere sur les resultats
 		DBCursor curseur = commentaires.find();
 		JSONObject reponse = new JSONObject();
 		while (curseur.hasNext()) {
-			//reponse.accumulate("comments", curseur.next());
+			reponse.accumulate("comments", curseur.next());
 			Object o = curseur.next();
-			System.out.println(o);
 		}
-		
+	
 		return reponse;
 	}
 	

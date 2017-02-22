@@ -12,6 +12,7 @@ import services.ErrorJSON;
 
 public class CreationUtilisateur {	
 	public static JSONObject creationUtilisateur(String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) {
+	
 		if (! verificationParametres(pseudo, motDePasse, email)){
 			return ErrorJSON.serviceRefused("Erreur, le pseudo, mot de passe et l'email doivent etre renseignes", CodesErreur.ERREUR_ARGUMENTS);
 		}

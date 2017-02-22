@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.json.JSONObject;
 
+import exceptions.ClefInexistanteException;
 import bd.tools.UtilisateursTools;
 import services.CodesErreur;
 import services.ErrorJSON;
@@ -24,7 +25,7 @@ public class SupprimerCommentaire {
 				}
 				
 				// On recupere l'identifiant de la session
-				String id = bd.tools.SessionsTools.clefIdentifiant(cle);
+				String id = bd.tools.SessionsTools.getIDbyClef(cle);
 				
 				// On verifie que l'utilisateur existe
 				boolean isUser = UtilisateursTools.verificationExistenceId(id);
@@ -37,7 +38,7 @@ public class SupprimerCommentaire {
 					return ErrorJSON.serviceRefused(String.format("Le commentaire %s n'existe pas", contenu), CodesErreur.ERREUR_COMMENTAIRE_INEXISTANT);
 				}
 				
-				// On supprime le commentaire à la BDD
+				// On supprime le commentaire ï¿½ la BDD
 				bd.tools.CommentairesTools.supprimerCommentaire( id,contenu);
 		
 				// On renvoie une reponse
@@ -54,6 +55,8 @@ public class SupprimerCommentaire {
 				return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 			} catch (SQLException e) {
 				return ErrorJSON.serviceRefused("Erreur, requete SQL Incorrecte", CodesErreur.ERREUR_SQL);
+			} catch (ClefInexistanteException e) {
+				return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", cle), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 			} 
 		}
 		

@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 import org.json.JSONObject;
 
+import exceptions.ClefInexistanteException;
 import services.CodesErreur;
 import services.ErrorJSON;
-
 import bd.tools.UtilisateursTools;
 
 
@@ -25,7 +25,7 @@ public class AjouterCommentaire {
 			}
 
 			// On recupere l'identifiant de la session
-			String id = bd.tools.SessionsTools.clefIdentifiant(clef);
+			String id = bd.tools.SessionsTools.getIDbyClef(clef);
 			
 			//On verifie que l'utilisateur existe
 			boolean isUser = UtilisateursTools.verificationExistenceId(id);
@@ -33,7 +33,7 @@ public class AjouterCommentaire {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
 			
-			// On ajoute le commentaire à la BDD
+			// On ajoute le commentaire ï¿½ la BDD
 			bd.tools.CommentairesTools.ajouterCommentaire(contenu, id);
 	
 			// On renvoie une reponse
@@ -49,6 +49,8 @@ public class AjouterCommentaire {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (IllegalAccessException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (ClassNotFoundException e) {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
+		} catch (ClefInexistanteException e) {
+			return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 		}
 	}
 	

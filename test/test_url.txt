@@ -1,0 +1,42 @@
+Creation utilisateur
+li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/utilisateur/creationUtilisateur?pseudo="alexiaB"&motDePasse="365mkjdgft"&email="truc@machin.fr"
+li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/utilisateur/creationUtilisateur?pseudo="alexiaB2"&motDePasse="365mkjdgft"&email="truc@machin.fr"&prenom="Alexia"&nom="Bourmaud"
+
+
+Connexion:
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/authentification/login?pseudo="alexiaB2"&motDePasse="365mkjdgft"
+reponse: {"clef":"57Y2U0H3NP9Y3M0AIU8TWF0R1EYT57FO","id":"802","pseudo":"\"alexiaB2\""}
+
+
+Déconnexion:
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/authentification/logout?clef=57Y2U0H3NP9Y3M0AIU8TWF0R1EYT57FO
+
+
+Ajout ami:
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/amis/ajouterAmi?clef=ZU7TJSDS597PPEY57TX26Q863H0A62P2&id_ami=10
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/amis/ajouterAmi?clef=ZU7TJSDS597PPEY57TX26Q863H0A62P2&id_ami=9
+
+
+Lister amis:
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/amis/listerAmis?id_utilisateur=802&index_debut=0&nombre_demandes=500
+reponse: {"Amis":["9","10"]}
+
+
+Supprimer amis:
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/amis/supprimerAmis?clef=ZU7TJSDS597PPEY57TX26Q863H0A62P2&id_ami=9
+
+
+Ajouter commentaire:
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/commentaire/ajouterCommentaire?cle=ZU7TJSDS597PPEY57TX26Q863H0A62P2&contenu=%22joli%20message%22
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/commentaire/ajouterCommentaire?cle=ZU7TJSDS597PPEY57TX26Q863H0A62P2&contenu=%22joli%20message%202%22
+
+
+Lister commentaires:
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/commentaire/listerCommentaires?cle=ZU7TJSDS597PPEY57TX26Q863H0A62P2&index_debut=0&limite=500
+reponse: {"comments":[{"contenu":"\"joli message 2\"","_id":{"currentInc":-1481270901,"new":false,"time":1487159291000,"inc":-1481270903,"timeSecond":1487159291,"genMachineId":-458209217,"machine":-458209217},"id_auteur":"802","date":"Wed Feb 15 12:48:11 CET 2017"},
+{"contenu":"\"joli message\"","_id":{"currentInc":-1481270901,"new":false,"time":1487159320000,"inc":-1481270902,"timeSecond":1487159320,"genMachineId":-458209217,"machine":-458209217},"id_auteur":"802","date":"Wed Feb 15 12:48:40 CET 2017"}]}
+
+
+supprimer Commentaire:
+http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/commentaire/supprimerCommentaire?cle=ZU7TJSDS597PPEY57TX26Q863H0A62P2&contenu=%22joli%20message%202%22
+

@@ -12,18 +12,18 @@ public class TestAjouterAmi {
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
 		//testAjouterAmis();
-		testSupprimerAmi();
-		//testListerAmis();
+		//testSupprimerAmi();
+		testListerAmis();
 	}
 	
 	private static void testAjouterAmis() throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
 		System.out.println("Debut du test d'ajout d'amis");
 	
 		// On commence par ajouter des personnes dans notre base de donnees
-		String pseudo1 = "TEST_utilisateur_5";
-		String pseudo2 = "TEST_utilisateur_6";
-		String pseudo3 = "TEST_utilisateur_7";
-		String pseudo4 = "TEST_utilisateur_8";
+		String pseudo1 = "TEST_utilisateur_500";
+		String pseudo2 = "TEST_utilisateur_600";
+		String pseudo3 = "TEST_utilisateur_700";
+		String pseudo4 = "TEST_utilisateur_800";
 		String mdp1 = outils.MesMethodes.hasherMotDePasse("jesuisUnMotDePasseValidelalala");
 		String mdp2 = outils.MesMethodes.hasherMotDePasse("MotDePasse2");
 		String mdp3 = outils.MesMethodes.hasherMotDePasse("MotDePasse3");
@@ -77,9 +77,9 @@ public class TestAjouterAmi {
 		
 		// Ajout d'utilisateurs et de relations d'amities
 		// On commence par ajouter des personnes dans notre base de donnees
-		String pseudo1 = "TEST_utilisateur_5";
-		String pseudo2 = "TEST_utilisateur_6";
-		String pseudo3 = "TEST_utilisateur_7";
+		String pseudo1 = "TEST_utilisateur_500";
+		String pseudo2 = "TEST_utilisateur_600";
+		String pseudo3 = "TEST_utilisateur_700";
 		String mdp1 = outils.MesMethodes.hasherMotDePasse("jesuisUnMotDePasseValidelalala");
 		String mdp2 = outils.MesMethodes.hasherMotDePasse("MotDePasse2");
 		String mdp3 = outils.MesMethodes.hasherMotDePasse("MotDePasse3");
@@ -123,42 +123,48 @@ public class TestAjouterAmi {
 		System.out.println("Debut du test de l'affichage de la liste d'amis");
 		System.out.println("On ne peut pas afficher les amis d'un utilisateur qui n'existe pas:");
 		System.out.println(services.amis.ListerAmis.listerAmis("-500",0,30));
-		
+		String cle1 = "",cle2="";
 		//Ajout d'utilisateurs et de relations d'amities
 		try {
-			bd.tools.UtilisateursTools.ajouterUtilisateur("5", "TEST_utilisateur_5", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
-			bd.tools.UtilisateursTools.ajouterUtilisateur("6", "TEST_utilisateur_6", outils.MesMethodes.hasherMotDePasse("MotDePasse2"), "mail2@gmail.com", null, null, null);
-			bd.tools.UtilisateursTools.ajouterUtilisateur("7", "TEST_utilisateur_7", outils.MesMethodes.hasherMotDePasse("MotDePasse3"), "mail3@gmail.com", null, null, null);
-			bd.tools.UtilisateursTools.ajouterUtilisateur("8", "TEST_utilisateur_8", outils.MesMethodes.hasherMotDePasse("MotDePasse3"), "mail3@gmail.com", null, null, null);
-			bd.tools.AmitiesTools.ajouterAmi("5","6");
-			bd.tools.AmitiesTools.ajouterAmi("6","5");
-			bd.tools.AmitiesTools.ajouterAmi("5","7");
-			bd.tools.AmitiesTools.ajouterAmi("5","8");
+			bd.tools.UtilisateursTools.ajouterUtilisateur("100", "TEST_utilisateur_100", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
+			bd.tools.UtilisateursTools.ajouterUtilisateur("600", "TEST_utilisateur_600", outils.MesMethodes.hasherMotDePasse("MotDePasse2"), "mail2@gmail.com", null, null, null);
+			bd.tools.UtilisateursTools.ajouterUtilisateur("700", "TEST_utilisateur_700", outils.MesMethodes.hasherMotDePasse("MotDePasse3"), "mail3@gmail.com", null, null, null);
+			bd.tools.UtilisateursTools.ajouterUtilisateur("800", "TEST_utilisateur_800", outils.MesMethodes.hasherMotDePasse("MotDePasse3"), "mail3@gmail.com", null, null, null);
+			bd.tools.SessionsTools.insertSession("100",false);
+			bd.tools.SessionsTools.insertSession("600",false);
+			cle1= bd.tools.SessionsTools.getClefbyId("100");
+			cle2= bd.tools.SessionsTools.getClefbyId("600");		
+			bd.tools.AmitiesTools.ajouterAmi("100","600");
+			bd.tools.AmitiesTools.ajouterAmi("600","100");
+			bd.tools.AmitiesTools.ajouterAmi("100","700");
+			bd.tools.AmitiesTools.ajouterAmi("100","800");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 		//suite des tests
 		System.out.println("On affiche la liste des amis de l'utilisateur en disant combien on souhaite en afficher ici 30:");
-		System.out.println(services.amis.ListerAmis.listerAmis("5", 1,30));
+		System.out.println(services.amis.ListerAmis.listerAmis("100", 1,30));
 		System.out.println("On affiche la liste des amis de l'utilisateur en disant combien on souhaite en afficher ici 1:");
-		System.out.println(services.amis.ListerAmis.listerAmis("5", 1,1));
+		System.out.println(services.amis.ListerAmis.listerAmis("100", 1,1));
 		
 		
 		// Nettoyage des relations d'amities et des utilisateurs crees 
 		try {
-			bd.tools.AmitiesTools.supprimerAmi("5","6");
-			bd.tools.AmitiesTools.supprimerAmi("5","7");
-			bd.tools.AmitiesTools.supprimerAmi("5","8");
-			bd.tools.AmitiesTools.supprimerAmi("6","5");
-			bd.tools.AmitiesTools.supprimerAmi("7","8");
-			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_5");
-			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_6");
-			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_7");
-			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_8");
+			bd.tools.AmitiesTools.supprimerAmi("100","600");
+			bd.tools.AmitiesTools.supprimerAmi("100","700");
+			bd.tools.AmitiesTools.supprimerAmi("100","800");
+			bd.tools.AmitiesTools.supprimerAmi("600","100");
+			bd.tools.AmitiesTools.supprimerAmi("700","800");
+			bd.tools.SessionsTools.suppressionCle(cle1);
+			bd.tools.SessionsTools.suppressionCle(cle2);
+			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_100");
+			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_600");
+			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_700");
+			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_800");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		System.out.println("Fin du test de suppression d'amities");
+		System.out.println("Fin du test de l'affichage de la liste d'amis");
 	}
 }

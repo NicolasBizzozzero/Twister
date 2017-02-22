@@ -106,31 +106,8 @@ public class SessionsTools {
         connection.close();
         
         return identifiant;
-} 
-	public static String IdentifiantClef(String identifiant) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		// Connection a la base de donnees
-        Connection connection = Database.getMySQLConnection();
-        
-        // Creation et execution de la requete
-        String requete = "SELECT clef FROM Sessions WHERE identifiant=?;";
-        PreparedStatement statement = connection.prepareStatement(requete);
-        statement.setString(1, identifiant);
-        statement.executeQuery();
-        
-        // Recuperation des donnees
-        ResultSet resultSet = statement.getResultSet();
-        String cle="";
-        if (resultSet.next()){
-        	cle = resultSet.getString("identifiant");
-        }
-        
-        // Liberation des ressources
-        resultSet.close();
-        statement.close();
-        connection.close();
-        
-        return cle;
-} 
+}
+
 	public static void updateTempsCle(String cle) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
@@ -190,5 +167,33 @@ public class SessionsTools {
         connection.close();
         
         return id;
+	}
+	
+	public static String getClefbyId(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT clef FROM Sessions WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id));
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean contientUnResultat = resultSet.next();
+        
+        // Si la requete n'a genere aucun resultat, on leve une exception
+        if (! contientUnResultat)
+        	throw new ClefInexistanteException(String.format("L'indentifiant %s n'est pas presente dans la Base de donnees", id));
+        
+        String cle = resultSet.getString("clef");
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return cle;
 	}
 }

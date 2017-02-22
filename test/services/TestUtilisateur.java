@@ -5,8 +5,8 @@ import exceptions.BDException;
 public class TestUtilisateur {
 	public static void main(String[] args) throws BDException {
 		testCreationUtilisateur();
-		//testSuppressionUtilisateur();
-		//testModificationUtilisateur();
+		testSuppressionUtilisateur();
+		testModificationUtilisateur();
 	}
 	
 	private static void testCreationUtilisateur() {
@@ -65,6 +65,7 @@ public class TestUtilisateur {
 		System.out.println("On ne peut pas modifier d'utilisateur avec le mauvais mot de passe:");
 		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "mauvaisMotDePasse", "TEST_utilisateur_mieux", null, null, null, null, null));
 		System.out.println("On ne peut pas modifier d'utilisateur si le nouveau pseudo est deja prit:");
+		//TODO: Valider ce test
 		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "motDePasseEnClair", "SuperNicolas", null, null, null, null, null));
 		System.out.println("On ne peut pas modifier d'utilisateur si le nouveau mot de passe est pas assez securise:");
 		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "motDePasseEnClair", null, "mdp", null, null, null, null));

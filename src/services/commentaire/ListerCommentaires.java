@@ -2,8 +2,10 @@ package services.commentaire;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
+
 import org.json.JSONObject;
 
+import exceptions.ClefInexistanteException;
 import services.CodesErreur;
 import services.ErrorJSON;
 import bd.tools.UtilisateursTools;
@@ -22,7 +24,7 @@ public class ListerCommentaires {
 			}
 			
 			// On recupere l'identifiant de la session
-			String id_utilisateur = bd.tools.SessionsTools.clefIdentifiant(clef);
+			String id_utilisateur = bd.tools.SessionsTools.getIDbyClef(clef);
 			
 			// On verifie que l'utilisateur existe
 			boolean isUser = UtilisateursTools.verificationExistenceId(id_utilisateur);
@@ -45,6 +47,8 @@ public class ListerCommentaires {
 			return ErrorJSON.serviceRefused("Erreur, requete SQL Incorrecte", CodesErreur.ERREUR_SQL);
 		} catch (UnknownHostException e) {
 			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.HOTE_INCONNU);
+		} catch (ClefInexistanteException e) {
+			return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 		}
 	}
 	
