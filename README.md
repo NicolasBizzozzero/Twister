@@ -3,7 +3,8 @@
 
 ## Sites utiles
 http://www-connex.lip6.fr/~soulier/content/TechnoWeb/TechnoWeb.html<br>
-http://www.cssdesk.com/
+http://www.cssdesk.com/<br>
+http://www.freeformatter.com/html-formatter.html
 
 #### Tomcat
 http://li328.lip6.fr:8280/manager/html<br>
