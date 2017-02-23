@@ -2,17 +2,16 @@
 3I017 Projet Web
 
 ## Sites utiles
-http://www-connex.lip6.fr/~soulier/content/TechnoWeb/TechnoWeb.html
-
+http://www-connex.lip6.fr/~soulier/content/TechnoWeb/TechnoWeb.html<br>
 http://www.cssdesk.com/
 
 #### Tomcat
 http://li328.lip6.fr:8280/manager/html<br>
 Login: admin<br>
-Mdp:   admin.li328$
+Mdp: admin.li328$
 
 #### PHPMyAdmin
-li328.lip6.fr/phpmyadmin<br>
+http://li328.lip6.fr/phpmyadmin<br>
 Login: gr2_bourmaud_biz<br>
 Mdp: nz5QcHdRLNHCPpjK
 
