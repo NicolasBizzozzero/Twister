@@ -1,0 +1,30 @@
+header{
+  border:solid #b2e6cc;
+
+}
+header .entete{
+  display:inline-block;
+  padding:10px;
+
+}
+#titre{
+  color:#256c50;
+  padding-left:50px;
+  padding-right:50px;
+}
+#titre h1{
+  font-family:"Courier New";
+}
+div.corp{
+  display:inline-block;
+  padding:30px;
+}
+#cote{
+   border:solid;
+   padding-bottom:50%;
+}
+section{
+   border:solid;
+   padding:50px;
+}
+  
