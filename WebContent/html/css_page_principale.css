@@ -1,11 +1,9 @@
 header{
   border:solid #b2e6cc;
-
 }
 header .entete{
   display:inline-block;
   padding:10px;
-
 }
 #titre{
   color:#256c50;
@@ -16,15 +14,27 @@ header .entete{
   font-family:"Courier New";
 }
 div.corp{
+  vertical-align: top;
   display:inline-block;
-  padding:30px;
+  padding:5px;
+  margin-top:20px;
+  width :40%;
 }
+
 #cote{
-   border:solid;
-   padding-bottom:50%;
+  border:solid #256c50;
+  padding-bottom:55%;
+  width :20%;
 }
 section{
-   border:solid;
-   padding:50px;
+  border:solid #b2e6cc;
+  margin:10px;
+  padding:30px;
+  width :140%;
 }
-  
+section>text{
+  font-family:"Courier New";
+}
+#messages{
+  padding-bottom:100%;
+}
