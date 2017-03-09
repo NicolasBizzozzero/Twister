@@ -6,10 +6,9 @@ import exceptions.BDException;
 
 public class TestSession {
 	public static void main(String[] args) throws BDException {
-
 		String pseudo = "MegaPizzaSansOlives";
 		String mdp = "MonSuperMotDePasse";
-		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, mdp, "mail1@gmail.com", null, null, null);
+		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, mdp, "mail1@gmail.com", null, null, null);		
 		String clef = testLogin(pseudo, mdp);
 		testLogout(clef);
 	}

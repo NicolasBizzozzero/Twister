@@ -10,7 +10,7 @@ Parametres en entree							pseudo, motDePasse
 
 Format de sortie								JSON, ok ou erreur
 
-Exemple de sortie								{"id": id, "pseudo": pseudo, "clef": clef} si ok, {"error_code":XXX, "message":"..."} si erreur
+Exemple de sortie								{"id": id, "pseudo": pseudo, "clef": clef, "suivis": ["457", "223"]} si ok, {"error_code":XXX, "message":"..."} si erreur
 
 Erreurs possibles								-1: Nombre de parametres incorrect
 												0: Erreur connexion a la base de donnees

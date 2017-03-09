@@ -1,0 +1,82 @@
+------------------ Service GetMessages -----------------------------------------
+
+Le service GetMessages attend les paramètres suivants:
+      - key: clé de session
+      - query: les mots clé de la recherche (vide si ne pas de filtre par mot-clé)
+      - from: l'identifiant de l'utilisateur duquel on souhaite voir les messages associés (les siens et ceux des personnes qu'il suit). -1 si on est sur la page principale et que l'on souhaite avoir les messages de tout le monde
+      - id_max: l'identifiant de chaque message retourné doit être inférieur à id_max (-1 si  pas de limite)
+      - id_min: l'identifiant de chaque message retourné doit être supérieur à id_min (-1 si  pas de limite)
+      - nb: nombre de messages à retourner (-1 si pas de limite)
+
+L'objectif de id_max est de permettre un chargement progressif des messages. Au chargement initial, on récupère les messages 10 par 10 tant que l'on ne dépasse pas de la page. Ensuite, lorsque le dernier message apparaît par défilement vertical de l'utilisateur, on charge les messages suivants 10 par 10 tant que l'on ne dépasse pas de la page. On appelle à chaque nouveau chargement le service search avec id_max=l'identifiant maximal parmi les messages déjà récupérés (en supposant que les identifiants soient attribués dans l'ordre et que donc un plus grand identifiant reflète d'un message plus récent).
+
+L'objectif  de id_min est de permettre un rechargement du début de la liste affichée, si des nouveaux messages ont été publiés depuis le dernier affichage. Cela est utile lorsque l'on recharge la page ou lorsque l'on publie un nouveau message.
+
+
+Le service GetMessages retourne (sous forme de chaîne de caractères - text/plain) une liste de messages resultats ordonnée du plus au moins pertinent (ou récent si pas de filtre par mot-clé).
+Chaque message resultat est alors un objet tel que:
+
+{"id":i, "auteur":a, "texte":t, "date":d, "comments":c}
+
+Avec
+      - i: l'identifiant du message
+      - a: l'auteur du message
+      - t: le texte du message
+      - d: la date du message
+      - c: la liste des commentaires associés au message
+
+Chaque commentaire d'un message est un objet tel que:
+
+{"id":i, "auteur":a, "texte":t, "date":d}
+
+Avec
+      - i: l'identifiant du commentaire
+      - a: l'auteur du commentaire
+      - t: le texte du commentaire
+      - d: la date du commentaire
+
+Chaque auteur est un objet:
+
+{"id":i,"login":l}
+
+Avec
+       - i: l'identifiant de l'utilisateur
+       - l: le login de l'utilisateur
+
+
+------------------ Service PostMessage ------------------------
+
+Le service PostMessage attend les paramètres suivants:
+        - key : la clé de session
+        - text : le texte du nouveau message
+
+Le service retourne un json vide si tout va bien (avec un champ erreur si il y a eu un soucis)
+
+------------------ Service PostComment ------------------------
+
+Le service PostComment permet de poster un nouveau commentaire en rapport à un message donné. 
+Il attend les paramètres suivants:
+        - key : la clé de session
+        - id_message : l'identifiant du message concerné par le commentaire
+        - text : le texte du nouveau commentaire
+
+Le service retourne un texte (text/plain) au format suivant si tout va bien (ou avec un champ erreur si il y a eu un soucis):
+{"id":i, "auteur":a, "texte":t, "date":d}
+
+Avec
+      - i: l'identifiant du commentaire
+      - a: l'auteur du commentaire
+      - t: le texte du commentaire
+      - d: la date du commentaire
+
+
+------------------ Service GetPass (optionnel) -----------------------------------------
+
+Le service GetPass permet d'obtenir son mot de passe sur la boîte mail renseignée lors de l'inscription.
+Il attend les paramètres suivants:
+        - mail : le mail de l'utilisateur voulant obtenir son mot de passe
+
+Le service retourne un json vide si tout va bien (avec un champ erreur si il y a eu un soucis)
+
+
+
