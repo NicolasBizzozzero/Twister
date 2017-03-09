@@ -2,9 +2,12 @@ package services.authentification;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Iterator;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import bd.tools.AmitiesTools;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import services.CodesErreur;
@@ -45,11 +48,18 @@ public class Login {
 			boolean estAdministrateur = estAdministrateur(pseudo);
 			String key = SessionsTools.insertSession(identifiant, estAdministrateur);
 			
+			// On recupere la liste des id des gens suivis par l'utilisateur
+			JSONObject jsonIDSuivis = AmitiesTools.listerTousLesAmis(identifiant);
+			
+			// On transforme le JSONObject en JSONArray
+			JSONArray listeIDSuivis = jsonIDSuivis.getJSONArray("Amis");
+
 			// On genere une reponse
 			JSONObject retour = new JSONObject();
 			retour.put("id", identifiant);
 			retour.put("pseudo", pseudo);
 			retour.put("clef", key);
+			retour.put("suivis", listeIDSuivis);
 			return retour;
 
 		} catch (SQLException e) {
