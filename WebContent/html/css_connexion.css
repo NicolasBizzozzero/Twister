@@ -1,0 +1,45 @@
+#div_connexion h1{ 
+  color: #369765; 
+  text-align:center;
+  margin-bottom:30px;
+}
+#div_connexion{
+  width : 350px; 
+  margin-left: 30%;
+}
+
+#div_connexion form {
+  border: solid #b2e6cc;
+  padding: 15px;
+  position:relative;
+}
+#div_connexion .ids{
+  margin-top:20px;
+  margin-left:20px;
+  position:relative;
+}
+
+#div_connexion .ids>input{
+  left:40%;
+  width:60%;
+  position:absolute;
+}
+#div_connexion .boutons{
+  display: inline-block;
+  margin:20px;
+  margin-left : 50px;
+  
+}
+
+#div_connexion .links{
+  display: inline-block;
+  margin-top: 20px;
+  cursor:pointer;
+  text-decoration:underline;
+  color:#256c50;
+}
+
+#msg_err_connexion{
+  color:red;
+  font-weight: bold;
+}

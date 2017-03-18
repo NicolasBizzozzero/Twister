@@ -1,0 +1,47 @@
+#div_inscription h1{
+  text-align: center;
+  color: #369765;
+  margin-bottom: 30px;
+}
+
+#div_inscription { 
+  position:relative;
+  width: 40%; 
+  margin-left: 30%;
+  margin-right: 30%;
+  min-width:400px;
+}
+
+#div_inscription form {
+  border: solid #b2e6cc;
+  border-radius: 10px;
+  border-width: 3px;
+  padding: 20px;
+}
+
+#div_inscription .ids_haut {
+    display : inline-block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width:45%;
+    margin-bottom: 18px;
+}
+#div_inscription .ids{
+  margin-bottom: 18px;
+}
+
+#div_inscription .ids>input{
+  position: absolute;
+  left: 30%;
+  margin-left: 10%;
+  width:55%;
+
+}
+  
+#div_inscription .boutons{
+ margin-top: 10px;
+ margin-bottom: 10px; 
+}
+
+
