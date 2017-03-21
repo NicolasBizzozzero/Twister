@@ -140,7 +140,7 @@ public class MessagesTools {
 	public static boolean messageExistant(String id_message) throws UnknownHostException {
 		//TODO: verifier si elle fonctionne
 		// On se connecte a la BDD puis on recupere les messages
-		DBCollection messages = getCollectionCompteurs();
+		DBCollection messages = getCollectionMessages();
 		
 		// Creation du message
 		BasicDBObject message = new BasicDBObject();

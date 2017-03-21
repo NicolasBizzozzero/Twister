@@ -34,7 +34,7 @@ public class SupprimerMessage {
 				}
 				
 				// On verifie que le message existe
-				if(! bd.tools.MessagesTools.messageExistant(id_message)){
+				if (! bd.tools.MessagesTools.messageExistant(id_message)){
 					return ErrorJSON.serviceRefused(String.format("Le message %s n'existe pas", id_message), CodesErreur.ERREUR_MESSAGE_INEXISTANT);
 				}
 				

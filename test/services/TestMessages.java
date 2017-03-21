@@ -26,8 +26,8 @@ public class TestMessages {
 		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
 		
 		//testAjouterMessage();
-		testSupprimerMessage();
-//		testListerMessages();
+		//testSupprimerMessage();
+		testListerMessages();
 		
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
@@ -108,54 +108,50 @@ public class TestMessages {
 	}
 
 	private static void testListerMessages() throws JSONException, UnknownHostException {
-		/*
-		System.out.println("Debut du test de l'affichage de la liste des messages");
-		System.out.println("On ne peut pas afficher les messages d'un utilisateur qui n'existe pas:");
-		System.out.println(services.message.ListerMessages.listerMessages("-500",0,30));
-		String clef="";
-		
-		//Ajout d'utilisateurs et de messages
-		try {
-			bd.tools.SessionsTools.insertSession("500", false);
-			clef = bd.tools.SessionsTools.getClefbyId("500");
-			bd.tools.UtilisateursTools.ajouterUtilisateur("500", "Test_utilisateur_500", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
-			bd.tools.MessagesTools.ajouterMessage("Je suis le message numero un", "500");
-			bd.tools.MessagesTools.ajouterMessage("Je suis le message numero deux", "500");
-			bd.tools.MessagesTools.ajouterMessage("Je suis le message numero trois", "500");
-			bd.tools.MessagesTools.ajouterMessage("Je suis le message numero quatre", "500");
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		//suite des tests
-		System.out.println("Un utilisateur ne peut pas afficher de messages si sa cle n'existe pas:");
-		System.out.println(services.message.ListerMessages.listerMessages("ygdhzdz!dzyg54", 0, 500) );
-		//TODO verifier les trois tests ci-dessous
-		System.out.println("On affiche la liste des messages de l'utilisateur en partant du premier et en allant jusqu'au 4 em:");
-		System.out.println(services.message.ListerMessages.listerMessages(clef, 0,4).toString(4));
-		System.out.println("On affiche la liste des messages de l'utilisateur en partant du premier et en allant jusqu'au 2 em:");
-		System.out.println(services.message.ListerMessages.listerMessages(clef, 0,2).toString(4));
-		System.out.println("On affiche la liste des messages de l'utilisateur en partant du 2em et en allant jusqu'au 2 em:");
-		System.out.println(services.message.ListerMessages.listerMessages(clef, 1,1).toString(4));
-
-		
-		
-		// Suppression des messages et de l'utilisateur 
-		try {
-			bd.tools.MessagesTools.supprimerMessage("500","Je suis le message numero un");
-			bd.tools.MessagesTools.supprimerMessage("500","Je suis le message numero deux");
-			bd.tools.MessagesTools.supprimerMessage("500","Je suis le message numero trois");
-			bd.tools.MessagesTools.supprimerMessage("500","Je suis le message numero quatre");
-			bd.tools.SessionsTools.suppressionCle(clef);
-			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("Test_utilisateur_500");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		System.out.println("Fin du test de listage de messages");
-		*/
-
+//		System.out.println("Debut du test de l'affichage de la liste des messages");
+//		System.out.println("On ne peut pas afficher les messages d'un utilisateur qui n'existe pas:");
+//		System.out.println(services.message.ListerMessages.listerMessages("-500", 0, 30));
+//		String clef="";
+//		
+//		//Ajout d'utilisateurs et de messages
+//		try {
+//			bd.tools.SessionsTools.insertSession("500", false);
+//			clef = bd.tools.SessionsTools.getClefbyId("500");
+//			bd.tools.UtilisateursTools.ajouterUtilisateur("500", "Test_utilisateur_500", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
+//			bd.tools.MessagesTools.ajouterMessage("Je suis le message numero un", "500");
+//			bd.tools.MessagesTools.ajouterMessage("Je suis le message numero deux", "500");
+//			bd.tools.MessagesTools.ajouterMessage("Je suis le message numero trois", "500");
+//			bd.tools.MessagesTools.ajouterMessage("Je suis le message numero quatre", "500");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} 
+//		//suite des tests
+//		System.out.println("Un utilisateur ne peut pas afficher de messages si sa cle n'existe pas:");
+//		System.out.println(services.message.ListerMessages.listerMessages("ygdhzdz!dzyg54", 0, 500) );
+//		//TODO verifier les trois tests ci-dessous
+//		System.out.println("On affiche la liste des messages de l'utilisateur en partant du premier et en allant jusqu'au 4 em:");
+//		System.out.println(services.message.ListerMessages.listerMessages(clef, 0,4).toString(4));
+//		System.out.println("On affiche la liste des messages de l'utilisateur en partant du premier et en allant jusqu'au 2 em:");
+//		System.out.println(services.message.ListerMessages.listerMessages(clef, 0,2).toString(4));
+//		System.out.println("On affiche la liste des messages de l'utilisateur en partant du 2em et en allant jusqu'au 2 em:");
+//		System.out.println(services.message.ListerMessages.listerMessages(clef, 1,1).toString(4));
+//
+//		
+//		
+//		// Suppression des messages et de l'utilisateur 
+//		try {
+//			bd.tools.MessagesTools.supprimerMessage("500","Je suis le message numero un");
+//			bd.tools.MessagesTools.supprimerMessage("500","Je suis le message numero deux");
+//			bd.tools.MessagesTools.supprimerMessage("500","Je suis le message numero trois");
+//			bd.tools.MessagesTools.supprimerMessage("500","Je suis le message numero quatre");
+//			bd.tools.SessionsTools.suppressionCle(clef);
+//			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("Test_utilisateur_500");
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} 
+//		System.out.println("Fin du test de listage de messages");
 	}
 
 
-	}
-
+}
