@@ -71,3 +71,7 @@ Le service retourne un json vide si tout va bien (avec un champ erreur si il y a
 
 
 
+Service ListerMessages
+Service SupprimerCommentaire
+Service ListerCommentaires
+Supprimer la clef de session si elle est inactive depuis trop longtemps

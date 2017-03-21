@@ -39,7 +39,7 @@ public class TestMessages {
 		// On commence par ajouter une personne dans notre base de donnees
 		bd.tools.UtilisateursTools.ajouterUtilisateur("500", "Test_utilisateur_500", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
 		bd.tools.SessionsTools.insertSession("500", false);
-		clef = bd.tools.SessionsTools.getClefbyId("500");
+		clef = bd.tools.SessionsTools.getClefById("500");
 
 		System.out.println("S'il manque un des parametres (message, identifiant, pseudo) de l'utilisateur, il ne peut pas ajouter de messages:");
 		System.out.println(services.message.AjouterMessage.ajouterMessage(clef, null));
@@ -75,7 +75,7 @@ public class TestMessages {
 		try {
 			bd.tools.UtilisateursTools.ajouterUtilisateur("500", "Test_utilisateur_500", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
 			bd.tools.SessionsTools.insertSession("500", false);
-			clef = bd.tools.SessionsTools.getClefbyId("500");
+			clef = bd.tools.SessionsTools.getClefById("500");
 			services.message.AjouterMessage.ajouterMessage(clef, "Je suis le message numero un");
 			services.message.AjouterMessage.ajouterMessage(clef, "Je suis le message numero deux");
 		} catch (Exception e) {

@@ -19,7 +19,7 @@ public class AjouterAmi {
 
 		try {
 			// On recupere l'ID de l'ajoutant
-			String id_ajoutant = SessionsTools.getIDbyClef(clef);
+			String id_ajoutant = SessionsTools.getIDByClef(clef);
 
 			// On verifie que l'utilisateur ajoutant est connecte
 			boolean estConnecte = SessionsTools.estConnecte(id_ajoutant);

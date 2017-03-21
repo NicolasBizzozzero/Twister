@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import bd.Database;
 import exceptions.ClefInexistanteException;
 import outils.MesMethodes;
 
 public class SessionsTools {
+	public static final int tempsInactiviteMax = 60;
 
 	public static boolean estConnecte(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
@@ -141,7 +144,7 @@ public class SessionsTools {
         return (nombreDeLignesModifiees > 0);
 	}
 	
-	public static String getIDbyClef(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
+	public static String getIDByClef(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -169,7 +172,7 @@ public class SessionsTools {
         return id;
 	}
 	
-	public static String getClefbyId(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
+	public static String getClefById(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -195,5 +198,46 @@ public class SessionsTools {
         connection.close();
         
         return cle;
+	}
+
+	
+	/**
+	 * Retourne, en minutes, le temps d'inactivite d'une session
+	 * @param clef La session dont on cherche a calculer le temps d'inactivite
+	 * @return Le temps d'inactivite, en minutes
+	 */
+	public static int getTempsDInactivite(String clef) {
+		Date derniereActiviteSession = getDateByClef(clef);
+	    long diffInMillies = (new Date()).getTime() - derniereActiviteSession.getTime();
+	    return (int) TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	}
+	
+	
+	public static Date getDateByClef(String clef) {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT timestamp FROM Sessions WHERE clef=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, clef);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean contientUnResultat = resultSet.next();
+        
+        // Si la requete n'a genere aucun resultat, on leve une exception
+        if (! contientUnResultat)
+        	throw new ClefInexistanteException(String.format("La clef %s n'est pas presente dans la Base de donnees", clef));
+        
+        Date date = new Date(resultSet.getDate("timestamp"));
+
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return date;
 	}
 }

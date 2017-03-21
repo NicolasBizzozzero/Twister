@@ -28,7 +28,7 @@ public class TestCommentaires {
 		String clef ="";
 		bd.tools.UtilisateursTools.ajouterUtilisateur("500", "Test_utilisateur_500", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
 		bd.tools.SessionsTools.insertSession("500", false);
-		clef = bd.tools.SessionsTools.getClefbyId("500");
+		clef = bd.tools.SessionsTools.getClefById("500");
 		// Puis par ajouter des messages
 		System.out.println(services.message.AjouterMessage.ajouterMessage(clef, "Je suis le message numero un"));
 

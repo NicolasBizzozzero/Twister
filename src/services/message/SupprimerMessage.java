@@ -25,7 +25,7 @@ public class SupprimerMessage {
 				}
 				
 				// On recupere l'identifiant de la session
-				String id = bd.tools.SessionsTools.getIDbyClef(clef);
+				String id = bd.tools.SessionsTools.getIDByClef(clef);
 				
 				// On verifie que l'utilisateur existe
 				boolean isUser = UtilisateursTools.verificationExistenceId(id);

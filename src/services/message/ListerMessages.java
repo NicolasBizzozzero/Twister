@@ -36,7 +36,7 @@ public class ListerMessages {
 			}
 			
 			// On recupere l'identifiant de la session
-			String id_session = bd.tools.SessionsTools.getIDbyClef(clef);
+			String id_session = bd.tools.SessionsTools.getIDByClef(clef);
 			
 			// On verifie que l'utilisateur existe
 			boolean isUser = UtilisateursTools.verificationExistenceId(id_session);

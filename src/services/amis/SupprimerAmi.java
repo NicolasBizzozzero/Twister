@@ -19,7 +19,7 @@ public class SupprimerAmi {
 
 		try {
 			// On recupere l'ID du supprimant
-			String id_supprimant = SessionsTools.getIDbyClef(clef);
+			String id_supprimant = SessionsTools.getIDByClef(clef);
 			
 			// On verifie que l'utilisateur supprimant est connecte
 			boolean estConnecte = SessionsTools.estConnecte(id_supprimant);

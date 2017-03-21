@@ -132,8 +132,8 @@ public class TestAmities {
 			bd.tools.UtilisateursTools.ajouterUtilisateur("800", "TEST_utilisateur_800", outils.MesMethodes.hasherMotDePasse("MotDePasse3"), "mail3@gmail.com", null, null, null);
 			bd.tools.SessionsTools.insertSession("100",false);
 			bd.tools.SessionsTools.insertSession("600",false);
-			cle1= bd.tools.SessionsTools.getClefbyId("100");
-			cle2= bd.tools.SessionsTools.getClefbyId("600");		
+			cle1= bd.tools.SessionsTools.getClefById("100");
+			cle2= bd.tools.SessionsTools.getClefById("600");		
 			bd.tools.AmitiesTools.ajouterAmi("100","600");
 			bd.tools.AmitiesTools.ajouterAmi("600","100");
 			bd.tools.AmitiesTools.ajouterAmi("100","700");
