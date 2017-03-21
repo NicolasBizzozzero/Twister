@@ -1,4 +1,4 @@
-package services.commentaires;
+package services.commentaire;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
@@ -18,8 +18,9 @@ public class AjouterCommentaire {
 	/**
 	 * Ajoute un commentaire par rapport à un message donne
 	 * @param clef : La clef de session de l'utilisateur ajoutant le message
+	 * @param id_message: L'ID du message sur lequel on ajoute le commentaire
 	 * @param contenu : Le contenu du message a ajouter
-	 * @return Un JSONObject vide si tout va bien, ou avec un champ d'erreur sinon
+	 * @return Un JSONObject avec des infos si tout va bien, ou avec un champ d'erreur sinon
 	 */
 	public static JSONObject ajouterCommentaire(String clef, String id_message, String contenu) {
 		if (! verificationParametres(contenu, id_message, clef)){
@@ -48,7 +49,7 @@ public class AjouterCommentaire {
 			}
 			
 			// On ajoute le commentaire au message
-			JSONObject reponse = CommentairesTools.ajouterCommentaire(clef, id_message, contenu);
+			JSONObject reponse = CommentairesTools.ajouterCommentaire(id_auteur, id_message, contenu);
 	
 			// On renvoie une reponse
 			return reponse;

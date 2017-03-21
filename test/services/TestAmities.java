@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import bd.tools.SessionsTools;
 import exceptions.BDException;
 
-public class TestAjouterAmi {
+public class TestAmities {
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
 		//testAjouterAmis();

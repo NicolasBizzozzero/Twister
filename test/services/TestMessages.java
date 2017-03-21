@@ -25,13 +25,12 @@ public class TestMessages {
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
 		
-		//testAjouterMessage();
+		testAjouterMessage();
 		//testSupprimerMessage();
 		//testListerMessages();
 		
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
-
 	}
 
 	private static void testAjouterMessage() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException, NoSuchAlgorithmException, UnknownHostException {
