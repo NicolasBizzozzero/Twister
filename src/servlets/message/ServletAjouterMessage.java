@@ -1,4 +1,4 @@
-package servlets.commentaire;
+package servlets.message;
 
 import java.io.IOException;
 
@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import services.commentaire.AjouterCommentaire;
+import services.message.AjouterMessage;
 
 
 @SuppressWarnings("serial")
-public class ServletAjouterCommentaire extends HttpServlet {
+public class ServletAjouterMessage extends HttpServlet {
      public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
 	    // Recuperation des parametres
         String cle = requete.getParameter("cle");
@@ -22,7 +22,7 @@ public class ServletAjouterCommentaire extends HttpServlet {
 
         // Utilisation du service approprie
         JSONObject retour=new JSONObject();
-		retour = AjouterCommentaire.ajouterCommentaire(cle, contenu);
+		retour = AjouterMessage.ajouterMessage(cle, contenu);
 		
         reponse.setContentType("application/json");
         reponse.getWriter().print(retour);

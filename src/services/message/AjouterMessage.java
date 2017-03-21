@@ -1,4 +1,4 @@
-package services.commentaire;
+package services.message;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
@@ -9,32 +9,41 @@ import exceptions.ClefInexistanteException;
 import services.CodesErreur;
 import services.ErrorJSON;
 import bd.tools.UtilisateursTools;
+import bd.tools.MessagesTools;
 
 
-public class AjouterCommentaire {
-	public static JSONObject ajouterCommentaire(String clef, String contenu) {
+public class AjouterMessage {
+	
+	
+	/**
+	 * Ajoute le message d'un utilisateur dans la BDD MongoDB
+	 * @param clef : La clef de session de l'utilisateur ajoutant le message
+	 * @param contenu : Le contenu du message a ajouter
+	 * @return Un JSONObject vide si tout va bien, ou avec un champ d'erreur sinon
+	 */
+	public static JSONObject ajouterMessage(String clef, String contenu) {
 		if (! verificationParametres(contenu, clef)){
 			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
 		
 		try {
-			//on verifie que la clef de connexion existe
-			boolean cleExiste=bd.tools.SessionsTools.clefExiste(clef);
+			// On verifie que la clef de connexion existe
+			boolean cleExiste = bd.tools.SessionsTools.clefExiste(clef);
 			if (! cleExiste){
 				return ErrorJSON.serviceRefused(String.format("La session %s n'existe pas", clef), CodesErreur.ERREUR_SESSION_INEXISTANTE);
 			}
 
 			// On recupere l'identifiant de la session
-			String id = bd.tools.SessionsTools.getIDbyClef(clef);
+			String id_auteur = bd.tools.SessionsTools.getIDbyClef(clef);
 			
 			//On verifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistenceId(id);
+			boolean isUser = UtilisateursTools.verificationExistenceId(id_auteur);
 			if (! isUser) {
-				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
+				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_auteur), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
 			
-			// On ajoute le commentaire � la BDD
-			bd.tools.CommentairesTools.ajouterCommentaire(contenu, id);
+			// On ajoute le message a la BDD
+			MessagesTools.ajouterMessage(id_auteur, contenu);
 	
 			// On renvoie une reponse
 			JSONObject reponse = new JSONObject();
@@ -53,6 +62,7 @@ public class AjouterCommentaire {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 		}
 	}
+	
 	
    /**
     * Verification de la validite des parametres

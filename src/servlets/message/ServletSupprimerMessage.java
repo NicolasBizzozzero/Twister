@@ -1,4 +1,4 @@
-package servlets.commentaire;
+package servlets.message;
 
 import java.io.IOException;
 
@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import services.commentaire.SupprimerCommentaire;
+import services.message.SupprimerMessage;
 
 
 
 @SuppressWarnings("serial")
-public class ServletSupprimerCommentaire extends HttpServlet {
+public class ServletSupprimerMessage extends HttpServlet {
      public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
 	    // Recuperation des parametres
         String cle = requete.getParameter("cle");
         String contenu = requete.getParameter("contenu"); 
 
         // Utilisation du service approprie
-        JSONObject retour = SupprimerCommentaire.supprimerCommentaire(cle, contenu);
+        JSONObject retour = SupprimerMessage.supprimerMessage(cle, contenu);
         reponse.setContentType("application/json");
         reponse.getWriter().print(retour);
     

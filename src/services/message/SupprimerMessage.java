@@ -1,4 +1,4 @@
-package services.commentaire;
+package services.message;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
@@ -10,22 +10,22 @@ import bd.tools.UtilisateursTools;
 import services.CodesErreur;
 import services.ErrorJSON;
 
-public class SupprimerCommentaire {
+public class SupprimerMessage {
 
-	public static JSONObject supprimerCommentaire(String cle, String contenu) {
-			if (! verificationParametres( cle, contenu)){
+	public static JSONObject supprimerMessage(String clef, String id_message) {
+			if (! verificationParametres(clef, id_message)){
 				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 			}
 			
 			try {
-				//on verifie que la clef de connexion existe
-				boolean cleExiste=bd.tools.SessionsTools.clefExiste(cle);
+				// On verifie que la clef de connexion existe
+				boolean cleExiste = bd.tools.SessionsTools.clefExiste(clef);
 				if (! cleExiste){
-					return ErrorJSON.serviceRefused(String.format("La session %s n'existe pas", cle), CodesErreur.ERREUR_SESSION_INEXISTANTE);
+					return ErrorJSON.serviceRefused(String.format("La session %s n'existe pas", clef), CodesErreur.ERREUR_SESSION_INEXISTANTE);
 				}
 				
 				// On recupere l'identifiant de la session
-				String id = bd.tools.SessionsTools.getIDbyClef(cle);
+				String id = bd.tools.SessionsTools.getIDbyClef(clef);
 				
 				// On verifie que l'utilisateur existe
 				boolean isUser = UtilisateursTools.verificationExistenceId(id);
@@ -33,13 +33,13 @@ public class SupprimerCommentaire {
 					return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 				}
 				
-				// on verifie que le commentaire existe
-				if(! commentaireExistant(id,contenu)){
-					return ErrorJSON.serviceRefused(String.format("Le commentaire %s n'existe pas", contenu), CodesErreur.ERREUR_COMMENTAIRE_INEXISTANT);
+				// On verifie que le message existe
+				if(! bd.tools.MessagesTools.messageExistant(id_message)){
+					return ErrorJSON.serviceRefused(String.format("Le message %s n'existe pas", id_message), CodesErreur.ERREUR_MESSAGE_INEXISTANT);
 				}
 				
-				// On supprime le commentaire � la BDD
-				bd.tools.CommentairesTools.supprimerCommentaire( id,contenu);
+				// On supprime le message de la BDD
+				bd.tools.MessagesTools.supprimerMessage(clef, id_message);
 		
 				// On renvoie une reponse
 				JSONObject reponse = new JSONObject();
@@ -56,18 +56,16 @@ public class SupprimerCommentaire {
 			} catch (SQLException e) {
 				return ErrorJSON.serviceRefused("Erreur, requete SQL Incorrecte", CodesErreur.ERREUR_SQL);
 			} catch (ClefInexistanteException e) {
-				return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", cle), CodesErreur.ERREUR_CLEF_INEXISTANTE);
+				return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 			} 
 		}
 		
+	
 	   /**
 	    * Verification de la validite des parametres
 	    * @return : Un booleen a true si les paramatres sont valides.
 	    */
-		private static boolean verificationParametres( String cle, String contenu) {
-			return (contenu != null && cle != null);
-		}
-		private static boolean commentaireExistant(String id_auteur, String contenu)throws UnknownHostException{
-			return bd.tools.CommentairesTools.commentaireExistant(id_auteur,contenu);
+		private static boolean verificationParametres(String clef, String id_message) {
+			return (id_message != null && clef != null);
 		}
 	}

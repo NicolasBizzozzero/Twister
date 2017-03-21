@@ -1,4 +1,4 @@
-package services.commentaire;
+package services.message;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
@@ -10,15 +10,27 @@ import services.CodesErreur;
 import services.ErrorJSON;
 import bd.tools.UtilisateursTools;
 
-public class ListerCommentaires {
-	public static JSONObject listerCommentaires(String clef, int index_debut, int limite) {
-		if (! verificationParametres(clef)){
-			return ErrorJSON.serviceRefused("La cle de session est null", CodesErreur.ERREUR_ARGUMENTS);
+public class ListerMessages {
+	
+	
+	/**
+	 * Permet d'obtenir les messages ecrits par un utilisateur. 
+	 * @param clef : La clef de la session
+	 * @param recherche : Les mots clefs de la recherche (vide si pas de mot clef)
+	 * @param id_utilisateur : L'ID de l'utilisateur dont on veut les messages (-1 si on est sur la page principale et que l'on souhaite avoir les messages de tout le monde)
+	 * @param id_min : l'ID de chaque message retourne doit etre superieur a 'id_min'
+	 * @param id_max : l'ID de chaque message retourne doit etre inferieur a 'id_max'
+	 * @param limite : Nombre de messages a retourner (-1 si pas de limite)
+	 * @return Un JSONObject contenant les messages demandes
+	 */
+	public static JSONObject listerMessages(String clef, String[] recherche, String id_utilisateur, String id_min, String id_max, String limite) {
+		if (! verificationParametres(clef, recherche, id_utilisateur, id_min, id_max, limite)){
+			return ErrorJSON.serviceRefused("Un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
 		
 		try {
-			//on verifie que la clef de connexion existe
-			boolean cleExiste=bd.tools.SessionsTools.clefExiste(clef);
+			// On verifie que la clef de connexion existe
+			boolean cleExiste = bd.tools.SessionsTools.clefExiste(clef);
 			if (! cleExiste){
 				return ErrorJSON.serviceRefused(String.format("La session %s n'existe pas", clef), CodesErreur.ERREUR_SESSION_INEXISTANTE);
 			}
@@ -32,8 +44,8 @@ public class ListerCommentaires {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_utilisateur), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
 	
-			// On recupere les commentaires
-			JSONObject reponse = bd.tools.CommentairesTools.listerCommentaires(id_utilisateur, index_debut, limite);
+			// On recupere les messages
+			JSONObject reponse = bd.tools.MessagesTools.listerMessages(, index_debut, limite);
 	
 			// On renvoie une reponse
 			return reponse;
@@ -52,11 +64,12 @@ public class ListerCommentaires {
 		}
 	}
 	
+	
    /**
     * Verification de la validite des parametres
     * @return : Un booleen a true si les paramatres sont valides.
     */
-	private static boolean verificationParametres(String cle) {
-		return (cle != null);
+	private static boolean verificationParametres(String clef, String[] recherche, String id_utilisateur, String id_min, String id_max, String limite) {
+		return (clef != null) && (recherche != null) && (id_utilisateur != null) && (id_min != null) && (id_max != null) && (limite != null);
 	}
 }

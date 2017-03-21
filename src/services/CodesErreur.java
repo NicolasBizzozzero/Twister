@@ -20,7 +20,7 @@ public abstract class CodesErreur {
 	public static final int ERREUR_UTILISATEUR_DEJA_CONNECTE = 15;
 	public static final int ERREUR_ID_INEXISTANT = 16;
 	public static final int ERREUR_PSEUDO_DEJA_PRIT = 17;
-	public static final int ERREUR_COMMENTAIRE_INEXISTANT = 18;
+	public static final int ERREUR_MESSAGE_INEXISTANT = 18;
 	public static final int ERREUR_CLEF_INEXISTANTE = 19;
 	public static final int ERREUR_SESSION_INEXISTANTE = 20;
 	public static final int ERREUR_JSON = 100;

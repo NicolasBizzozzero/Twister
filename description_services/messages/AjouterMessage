@@ -1,0 +1,10 @@
+Nom du service Web								ajouterMessage
+Lieu ou se trouve le service					services/message/AjouterMessage
+URL du service Web								/message/ajouterMessage
+Description du service							Creer un BasicDBObject (id_auteur, contenu,date)  dans la base de MongoDB
+Parametres en entree							String cle, String contenu
+Format de sortie								ok ou erreur
+exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
+Erreurs possibles								-1: ERREUR_ARGUMENTS, 6: HOTE_INCONNU
+Avancement du Service							A ecrire
+Informations additionnelles
