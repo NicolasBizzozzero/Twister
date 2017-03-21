@@ -43,15 +43,6 @@ Avec
        - i: l'identifiant de l'utilisateur
        - l: le login de l'utilisateur
 
-
------------------- Service PostMessage ------------------------
-
-Le service PostMessage attend les paramètres suivants:
-        - key : la clé de session
-        - text : le texte du nouveau message
-
-Le service retourne un json vide si tout va bien (avec un champ erreur si il y a eu un soucis)
-
 ------------------ Service PostComment ------------------------
 
 Le service PostComment permet de poster un nouveau commentaire en rapport à un message donné. 

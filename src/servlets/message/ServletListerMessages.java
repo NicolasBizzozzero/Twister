@@ -25,7 +25,6 @@ public class ServletListerMessages extends HttpServlet {
 	        JSONObject retour = ListerMessages.listerMessages(cle, index_debut, limite);
 	        reponse.setContentType("application/json");
 	        reponse.getWriter().print(retour);
-	    
 	    }
 
 }

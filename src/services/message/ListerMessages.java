@@ -18,13 +18,13 @@ public class ListerMessages {
 	 * @param clef : La clef de la session
 	 * @param recherche : Les mots clefs de la recherche (vide si pas de mot clef)
 	 * @param id_utilisateur : L'ID de l'utilisateur dont on veut les messages (-1 si on est sur la page principale et que l'on souhaite avoir les messages de tout le monde)
-	 * @param id_min : l'ID de chaque message retourne doit etre superieur a 'id_min'
 	 * @param id_max : l'ID de chaque message retourne doit etre inferieur a 'id_max'
+	 * @param id_min : l'ID de chaque message retourne doit etre superieur a 'id_min'
 	 * @param limite : Nombre de messages a retourner (-1 si pas de limite)
 	 * @return Un JSONObject contenant les messages demandes
 	 */
-	public static JSONObject listerMessages(String clef, String[] recherche, String id_utilisateur, String id_min, String id_max, String limite) {
-		if (! verificationParametres(clef, recherche, id_utilisateur, id_min, id_max, limite)){
+	public static JSONObject listerMessages(String clef, String[] recherche, String id_utilisateur, String id_max, String id_min, String limite) {
+		if (! verificationParametres(clef, recherche, id_utilisateur, id_max, id_min, limite)){
 			return ErrorJSON.serviceRefused("Un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}
 		
@@ -36,16 +36,22 @@ public class ListerMessages {
 			}
 			
 			// On recupere l'identifiant de la session
-			String id_utilisateur = bd.tools.SessionsTools.getIDbyClef(clef);
+			String id_session = bd.tools.SessionsTools.getIDbyClef(clef);
 			
 			// On verifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistenceId(id_utilisateur);
+			boolean isUser = UtilisateursTools.verificationExistenceId(id_session);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_utilisateur), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
 	
 			// On recupere les messages
-			JSONObject reponse = bd.tools.MessagesTools.listerMessages(, index_debut, limite);
+			JSONObject reponse;
+			if (id_utilisateur.equals("-1")) {
+				reponse = bd.tools.MessagesTools.listerMessagesToutLeMonde(recherche, id_max, id_min, limite);
+			} else {
+				reponse = bd.tools.MessagesTools.listerMessagesUtilisateur(recherche, id_utilisateur, id_max, id_min, limite);
+			}
+			
 	
 			// On renvoie une reponse
 			return reponse;

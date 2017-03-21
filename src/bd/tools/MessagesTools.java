@@ -152,24 +152,44 @@ public class MessagesTools {
 	}
 	
 	
-	public static JSONObject listerMessages(String clef, String[] recherche, String id_utilisateur, int id_min, int id_max, int limite) throws UnknownHostException {
-		//TODO: FAIRE CETTE FONCTION
-		/*// On se connecte a la BDD puis on recupere les messages
-		DBCollection messages = getCollectionMessages();
-		
-		// Creation de la requete
-		BasicDBObject requete = new BasicDBObject();
-		requete.put(NOM_CHAMP_ID_AUTEUR, id_utilisateur);
-
-		// On itere sur les resultats
-		DBCursor curseur = messages.find(requete).skip(index_debut).limit(limite);
-		JSONObject reponse = new JSONObject();
-		while (curseur.hasNext()) {
-			reponse.accumulate(NOM_CHAMP_MESSAGES, curseur.next());
-		}
-				
-		return reponse;
-		*/
+	public static JSONObject listerMessagesUtilisateur(String[] recherche, String id_utilisateur, String id_max, String id_min, String limite) throws UnknownHostException {
+//		// TODO: Implementer
+//		// On se connecte a la BDD puis on recupere les messages
+//		DBCollection messages = getCollectionMessages();
+//		
+//		// Creation de la requete
+//		BasicDBObject requete = new BasicDBObject();
+//		requete.put(NOM_CHAMP_ID_AUTEUR, id_utilisateur);
+//
+//		// On itere sur les resultats
+//		DBCursor curseur = messages.find(requete).skip(index_debut).limit(limite);
+//		JSONObject reponse = new JSONObject();
+//		while (curseur.hasNext()) {
+//			reponse.accumulate(NOM_CHAMP_MESSAGES, curseur.next());
+//		}
+//				
+//		return reponse;
+		return null;
+	}
+	
+	
+	public static JSONObject listerMessagesToutLeMonde(String[] recherche, String id_max, String id_min, String limite) throws UnknownHostException {
+//		// TODO: Implementer
+//		// On se connecte a la BDD puis on recupere les messages
+//		DBCollection messages = getCollectionMessages();
+//		
+//		// Creation de la requete
+//		BasicDBObject requete = new BasicDBObject();
+//		requete.put(NOM_CHAMP_ID_AUTEUR, id_utilisateur);
+//
+//		// On itere sur les resultats
+//		DBCursor curseur = messages.find(requete).skip(index_debut).limit(limite);
+//		JSONObject reponse = new JSONObject();
+//		while (curseur.hasNext()) {
+//			reponse.accumulate(NOM_CHAMP_MESSAGES, curseur.next());
+//		}
+//				
+//		return reponse;
 		return null;
 	}
 	

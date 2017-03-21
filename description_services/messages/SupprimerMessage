@@ -1,11 +1,24 @@
 Nom du service Web								SupprimerMessage
+
 Lieu ou se trouve le service					services/message/SupprimerMessage
+
 URL du service Web								/message/supprimerMessage
+
 Description du service							Supprime le message de la collection "Messages" de la base de MongoDB
-Parametres en entree							String id_auteur, String contenu
+
+Parametres en entree							String clef, String id_auteur
+
 Format de sortie								ok ou erreur
+
 exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
-Erreurs possibles								-1: ERREUR_ARGUMENTS, 6: HOTE_INCONNU, 2: ERREUR_UTILISATEUR_INEXISTANT, 18: ERREUR_MESSAGE_INEXISTANT, 0: ERREUR_CONNEXION_BD_MYSQL
-												1000: ERREUR_SQL
-Avancement du Service							A ecrire
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												0: Erreur connexion a la base de donnees
+												2: L'utilisateur a ajouter n'existe pas
+												6: Connexion avec MongoDB impossible
+												19: Clef inexistante
+												1000: Erreur de requete SQL
+												
+Avancement du Service							Fonctionnel
+
 Informations additionnelles

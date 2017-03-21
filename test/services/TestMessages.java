@@ -27,7 +27,7 @@ public class TestMessages {
 		
 		//testAjouterMessage();
 		//testSupprimerMessage();
-		testListerMessages();
+		//testListerMessages();
 		
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
