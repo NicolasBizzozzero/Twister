@@ -1,0 +1,23 @@
+Nom du service Web								ajouterCommentaire
+
+Lieu ou se trouve le service					services/commentaire/AjouterCommentaire
+
+URL du service Web								/commentaire/ajouterCommentaire
+
+Description du service							Ajoute un commentaire a un message
+
+Parametres en entree							String clef, String id_message, String contenu
+
+Format de sortie								ok ou erreur
+
+Exemple de sortie								{"id":i, "auteur":a, "texte":t, "date":d} si ok {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												 0: Connexion avec MySQL impossible
+											     6: Connexion avec MongoDB impossible
+											     19: Clef inexistante
+											     1000: Erreur de requete SQL
+
+Avancement du Service							Fonctionnel
+
+Informations additionnelles

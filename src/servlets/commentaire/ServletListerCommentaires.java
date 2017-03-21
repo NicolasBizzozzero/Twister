@@ -1,4 +1,4 @@
-package servlets.message;
+package servlets.commentaire;
 
 import java.io.IOException;
 
@@ -11,13 +11,9 @@ import org.json.JSONObject;
 
 import services.message.ListerMessages;
 
-
-
 @SuppressWarnings("serial")
-public class ServletListerMessages extends HttpServlet {
+public class ServletListerCommentaires extends HttpServlet{
     public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
         return;
     }
 }
-
-

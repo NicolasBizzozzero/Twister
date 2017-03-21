@@ -17,14 +17,12 @@ import services.message.SupprimerMessage;
 public class ServletSupprimerMessage extends HttpServlet {
      public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
 	    // Recuperation des parametres
-        String cle = requete.getParameter("cle");
-        String contenu = requete.getParameter("contenu"); 
+        String clef = requete.getParameter("clef");
+        String id_auteur = requete.getParameter("id_auteur"); 
 
         // Utilisation du service approprie
-        JSONObject retour = SupprimerMessage.supprimerMessage(cle, contenu);
+        JSONObject retour = SupprimerMessage.supprimerMessage(clef, id_auteur);
         reponse.setContentType("application/json");
         reponse.getWriter().print(retour);
-    
-     }
-
+    }
 }

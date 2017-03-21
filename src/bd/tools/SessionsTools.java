@@ -205,15 +205,20 @@ public class SessionsTools {
 	 * Retourne, en minutes, le temps d'inactivite d'une session
 	 * @param clef La session dont on cherche a calculer le temps d'inactivite
 	 * @return Le temps d'inactivite, en minutes
+	 * @throws ClefInexistanteException 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public static int getTempsDInactivite(String clef) {
+	public static int getTempsDInactivite(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
 		Date derniereActiviteSession = getDateByClef(clef);
 	    long diffInMillies = (new Date()).getTime() - derniereActiviteSession.getTime();
 	    return (int) TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
 	
 	
-	public static Date getDateByClef(String clef) {
+	public static Date getDateByClef(String clef) throws SQLException, ClefInexistanteException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -231,7 +236,7 @@ public class SessionsTools {
         if (! contientUnResultat)
         	throw new ClefInexistanteException(String.format("La clef %s n'est pas presente dans la Base de donnees", clef));
         
-        Date date = new Date(resultSet.getDate("timestamp"));
+        Date date = resultSet.getDate("timestamp");
 
         // Liberation des ressources
         resultSet.close();

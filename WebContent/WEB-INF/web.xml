@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd"> 
 <web-app> 
-	<display-name>Bonjour :)</display-name> 
+	<display-name>Twister</display-name> 
 	<servlet> 
 		<servlet-name>CreationUtilisateur</servlet-name> 
 		<servlet-class>servlets.utilisateur.ServletCreationUtilisateur</servlet-class>
@@ -37,6 +37,30 @@
 	<servlet> 
 		<servlet-name>ListerCommentaires</servlet-name> 
 		<servlet-class>servlets.commentaire.ServletListerCommentaires</servlet-class> 
+	</servlet>
+	<servlet> 
+		<servlet-name>AjouterMessage</servlet-name> 
+		<servlet-class>servlets.message.ServletAjouterMessage</servlet-class> 
+	</servlet>
+	<servlet> 
+		<servlet-name>SupprimerMessage</servlet-name> 
+		<servlet-class>servlets.message.ServletSupprimerMessage</servlet-class> 
+	</servlet>
+	<servlet> 
+		<servlet-name>ListerMessages</servlet-name> 
+		<servlet-class>servlets.message.ServletListerMessages</servlet-class> 
+	</servlet>
+	<servlet> 
+		<servlet-name>AjouterLike</servlet-name> 
+		<servlet-class>servlets.like.ServletAjouterLike</servlet-class> 
+	</servlet>
+	<servlet> 
+		<servlet-name>SupprimerMessage</servlet-name> 
+		<servlet-class>servlets.like.ServletSupprimerLike</servlet-class> 
+	</servlet>
+	<servlet> 
+		<servlet-name>ListerMessages</servlet-name> 
+		<servlet-class>servlets.like.ServletListerLikes</servlet-class> 
 	</servlet>
 	
 	
@@ -76,6 +100,31 @@
 		<servlet-name>ListerCommentaires</servlet-name> 
 		<url-pattern>/services/commentaire/listerCommentaires</url-pattern> 
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AjouterMessage</servlet-name> 
+		<url-pattern>/services/message/ajouterMessage</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SupprimerMessage</servlet-name> 
+		<url-pattern>/services/message/supprimerMessage</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ListerMessages</servlet-name> 
+		<url-pattern>/services/message/listerMessages</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AjouterLike</servlet-name> 
+		<url-pattern>/services/like/ajouterLike</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SupprimerLike</servlet-name> 
+		<url-pattern>/services/like/supprimerLike</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ListerLike</servlet-name> 
+		<url-pattern>/services/like/listerLikes</url-pattern> 
+	</servlet-mapping>
+	
 	
 	<welcome-file-list>
         <welcome-file>html/index.html</welcome-file>
@@ -83,4 +132,3 @@
         <welcome-file>html/index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
-
