@@ -2,7 +2,7 @@ Nom du service Web								ajouterAmi
 
 Lieu ou se trouve le service					services/amis/AjouterAmi
 
-URL du service Web								/services/ami/ajouterAmi
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/ami/ajouterAmi
 
 Description du service							Permet a un utilisateur de suivre un ami
 
@@ -21,8 +21,8 @@ Erreurs possibles								-1: Nombre de parametres incorrect
 												19: La clef passee en parametres n'existe pas
 												1000: Erreur SQL
 											
-Classes JAVA en rapport avec le service Web		servlets.authentification.ServletLogout
-												bd.tools.SessionsTools
+Classes JAVA en rapport avec le service Web		servlets.amis.ServletAjouterAmi
+												bd.tools.AmitiesTools
 												
 Avancement du Service							Fonctionnel
 
