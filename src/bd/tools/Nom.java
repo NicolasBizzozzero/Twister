@@ -12,6 +12,8 @@ public abstract class Nom {
 	public final static String CHAMP_ID_MESSAGE = "id_message";
 	public final static String CHAMP_ID_AUTEUR = "id_auteur";
 	public final static String CHAMP_ID_COMMENTAIRE = "id_commentaire";
+	public static final String CHAMP_PSEUDO_AUTEUR = "pseudo_auteur";
+	public static final String CHAMP_AUTEUR = "auteur";
 	public final static String CHAMP_MESSAGES = "messages";
 	public final static String CHAMP_COMMENTAIRES = "commentaires";
 	public final static String CHAMP_DATE = "date";

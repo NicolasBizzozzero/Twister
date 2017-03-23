@@ -1,0 +1,35 @@
+Nom du service Web								modificationUtilisateur
+
+Lieu ou se trouve le service					services/utilisateur/ModificationUtilisateur
+
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/utilisateur/modificationUtilisateur
+
+Description du service							Modifier les informations d'un utilisateur existant
+
+Parametres en entree							clef, motDePasse, [nouveauPseudo, nouveauMotDePasse, nouvelEmail, nouveauPrenom, nouveauNom, nouvelAnniversaire]
+
+Format de sortie								JSON, ok ou erreur
+
+Exemple de sortie								{} si ok , {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												0: Erreur connexion a la base de donnees
+												1: Pseudo deja prit
+												3: Mot de passe non-securise
+												10: Utilisateur non-connecte
+												11: Mot de passe trop court
+												12: Mot de passe trop long
+												13: Erreur durant le hashage du mot de passe
+												17: Pseudo deja prit
+												19: Erreur clef inexistante
+												22: Erreur dans le parsing de la date d'anniversaire
+												23: Date d'annniversaire entree invalide
+												24: Email deja prit
+												1000: Erreur SQL
+												
+Avancement du Service							Fonctionnel
+
+Classes JAVA en rapport avec le service Web		servlets.utilisateur.ServletCreationUtilisateur
+												bd.tools.UtilisateursTools
+																								
+Informations additionnelles

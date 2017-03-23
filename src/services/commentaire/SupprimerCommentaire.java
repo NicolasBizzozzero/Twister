@@ -2,10 +2,12 @@ package services.commentaire;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import org.json.JSONObject;
 
 import bd.tools.CommentairesTools;
+import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import exceptions.ClefInexistanteException;
 import services.CodesErreur;
@@ -22,11 +24,12 @@ public class SupprimerCommentaire {
 	 * @return Un JSONObject avec des infos si tout va bien, ou avec un champ d'erreur sinon
 	 */
 	public static JSONObject supprimerCommentaire(String clef, String id_message, String id_commentaire) {
-		if (! verificationParametres(clef, id_message, id_commentaire)){
-			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
-		}
-		
 		try {
+			// On verifie qu'un des parametres obligatoire n'est pas null
+			if (! verificationParametres(clef, id_message, id_commentaire)){
+				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
+			}
+			
 			// On verifie que la clef de connexion existe
 			boolean cleExiste = bd.tools.SessionsTools.clefExiste(clef);
 			if (! cleExiste){
@@ -35,6 +38,13 @@ public class SupprimerCommentaire {
 
 			// On recupere l'identifiant de la session
 			String id_auteur = bd.tools.SessionsTools.getIDByClef(clef);
+			
+			// On verifie que l'utilisateur n'a pas ete inactif trop longtemps
+			boolean isInactif = SessionsTools.estInactifDepuisTropLongtemps(clef);
+			if (isInactif) {
+				SessionsTools.suppressionCle(clef);
+				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s est inactif depuis trop longtemps", id_auteur), CodesErreur.ERREUR_UTILISATEUR_INACTIF);
+			}
 			
 			//On verifie que l'utilisateur existe
 			boolean isUser = UtilisateursTools.verificationExistenceId(id_auteur);
@@ -49,11 +59,14 @@ public class SupprimerCommentaire {
 			
 			// On supprime le commentaire du message
 			 JSONObject reponse = CommentairesTools.supprimerCommentaire(id_message, id_commentaire);
+				
+			// On met a jour le temps d'inactivite
+			SessionsTools.updateTempsCle(clef);
 	
 			// On renvoie une reponse
 			return reponse;
 		} catch (UnknownHostException e) {
-			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.HOTE_INCONNU);
+			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.ERREUR_HOTE_INCONNU);
 		} catch (SQLException e) {
 			return ErrorJSON.serviceRefused("Erreur, requete SQL incorrecte", CodesErreur.ERREUR_SQL);
 		} catch (InstantiationException e) {
@@ -64,6 +77,8 @@ public class SupprimerCommentaire {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (ClefInexistanteException e) {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
+		}  catch (ParseException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur lors du parsing de la date du jour", clef), CodesErreur.ERREUR_PARSE_DATE);
 		}
 	}
 	

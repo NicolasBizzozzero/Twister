@@ -22,7 +22,7 @@ public class TestUtilisateur {
 		System.out.println("On ne peut pas creer d'utilisateur avec un mot de passe trop long:");
 		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_4", "CeMotDePasseEstDrolementLong,JemedemandejusquaOuPeutIlaller,SurementresLoin,EnToutCasilDoitEtreVraimentTresLongDeManiereASassurerQuilNePassePas...VousEtesEncoreEnTrainDeLire?", "mail@gmail.com", null, null, null));
 		System.out.println("On peut creer un utilisateur avec un mot de passe contenant des caracteres speciaux:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_5", "AAzs\"\"\\\\//!@#😁😈'DROP TABLE Utilisateurs", "mail@gmail.com", null, null, null));
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_5", "AAzs\"\"\\\\//!@#😁😈'\";DROP TABLE Utilisateurs", "mail@gmail.com", null, null, null));
 		
 		// Nettoyage des utilisateurs crees
 		try {

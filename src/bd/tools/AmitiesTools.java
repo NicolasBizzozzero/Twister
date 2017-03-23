@@ -74,7 +74,7 @@ public class AmitiesTools {
 	}
 	
 	
-	public static void supprimerAmi(String id_ami1,String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static void supprimerAmitie(String id_ami1, String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -83,6 +83,23 @@ public class AmitiesTools {
         PreparedStatement statement = connection.prepareStatement(requete);
         statement.setInt(1, Integer.parseInt(id_ami1));
         statement.setInt(2, Integer.parseInt(id_ami2));
+        statement.executeUpdate();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+	
+	
+	public static void supprimerAmitiesConcernant(String id_ami) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "DELETE FROM Amities WHERE id_ami1=? OR id_ami2=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id_ami));
+        statement.setInt(2, Integer.parseInt(id_ami));
         statement.executeUpdate();
         
         // Liberation des ressources

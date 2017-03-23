@@ -2,12 +2,14 @@ package services.message;
 
 import java.net.UnknownHostException;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import org.json.JSONObject;
 
 import exceptions.ClefInexistanteException;
 import services.CodesErreur;
 import services.ErrorJSON;
+import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 
 public class ListerMessages {
@@ -24,11 +26,12 @@ public class ListerMessages {
 	 * @return Un JSONObject contenant les messages demandes
 	 */
 	public static JSONObject listerMessages(String clef, String recherche, String id_utilisateur, String id_max, String id_min, String limite) {
-		if (! verificationParametres(clef, recherche, id_utilisateur, id_max, id_min, limite)){
-			return ErrorJSON.serviceRefused("Un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
-		}
-		
 		try {
+			// On verifie qu'un des parametres obligatoire n'est pas null
+			if (! verificationParametres(clef, recherche, id_utilisateur, id_max, id_min, limite)){
+				return ErrorJSON.serviceRefused("Un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
+			}
+			
 			// On verifie que la clef de connexion existe
 			boolean cleExiste = bd.tools.SessionsTools.clefExiste(clef);
 			if (! cleExiste){
@@ -37,6 +40,13 @@ public class ListerMessages {
 			
 			// On recupere l'identifiant de la session
 			String id_session = bd.tools.SessionsTools.getIDByClef(clef);
+			
+			// On verifie que l'utilisateur n'a pas ete inactif trop longtemps
+			boolean isInactif = SessionsTools.estInactifDepuisTropLongtemps(clef);
+			if (isInactif) {
+				SessionsTools.suppressionCle(clef);
+				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s est inactif depuis trop longtemps", id_session), CodesErreur.ERREUR_UTILISATEUR_INACTIF);
+			}
 			
 			// On verifie que l'utilisateur existe
 			boolean isUser = UtilisateursTools.verificationExistenceId(id_session);
@@ -50,8 +60,10 @@ public class ListerMessages {
 				reponse = bd.tools.MessagesTools.listerMessagesToutLeMonde(recherche, id_max, id_min, limite);
 			} else {
 				reponse = bd.tools.MessagesTools.listerMessagesUtilisateur(recherche, id_utilisateur, id_max, id_min, limite);
-			}
+			}			
 			
+			// On met a jour le temps d'inactivite
+			SessionsTools.updateTempsCle(clef);
 	
 			// On renvoie une reponse
 			return reponse;
@@ -64,9 +76,11 @@ public class ListerMessages {
 		} catch (SQLException e) {
 			return ErrorJSON.serviceRefused("Erreur, requete SQL Incorrecte", CodesErreur.ERREUR_SQL);
 		} catch (UnknownHostException e) {
-			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.HOTE_INCONNU);
+			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.ERREUR_HOTE_INCONNU);
 		} catch (ClefInexistanteException e) {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
+		}  catch (ParseException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur lors du parsing de la date du jour", clef), CodesErreur.ERREUR_PARSE_DATE);
 		}
 	}
 	
@@ -75,7 +89,7 @@ public class ListerMessages {
     * Verification de la validite des parametres
     * @return : Un booleen a true si les paramatres sont valides.
     */
-	private static boolean verificationParametres(String clef, String[] recherche, String id_utilisateur, String id_min, String id_max, String limite) {
+	private static boolean verificationParametres(String clef, String recherche, String id_utilisateur, String id_min, String id_max, String limite) {
 		return (clef != null) && (recherche != null) && (id_utilisateur != null) && (id_min != null) && (id_max != null) && (limite != null);
 	}
 }

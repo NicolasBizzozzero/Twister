@@ -2,6 +2,7 @@ package services.utilisateur;
 
 import java.sql.SQLException;
 import java.security.NoSuchAlgorithmException;
+
 import org.json.JSONObject;
 
 import bd.tools.UtilisateursTools;
@@ -12,17 +13,23 @@ import services.ErrorJSON;
 
 public class CreationUtilisateur {	
 	public static JSONObject creationUtilisateur(String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) {
-	
-		if (! verificationParametres(pseudo, motDePasse, email)){
-			return ErrorJSON.serviceRefused("Erreur, le pseudo, mot de passe et l'email doivent etre renseignes", CodesErreur.ERREUR_ARGUMENTS);
-		}
-
 		try {
+			// On verifie qu'un des parametres obligatoire n'est pas null
+			if (! verificationParametres(pseudo, motDePasse, email)){
+				return ErrorJSON.serviceRefused("Erreur, le pseudo, mot de passe et l'email doivent etre renseignes", CodesErreur.ERREUR_ARGUMENTS);
+			}
+			
 			// On verifie que l'utilisateur n'existe pas deja
 			boolean isUser = UtilisateursTools.verificationExistencePseudo(pseudo);
 			if (isUser) {
 				return ErrorJSON.serviceRefused("Erreur, l'utilisateur existe deja", CodesErreur.ERREUR_UTILISATEUR_EXISTANT);
 			}
+			
+			// On verifie que l'email n'existe pas deja
+			boolean emailExiste = UtilisateursTools.verificationExistenceEmail(email);
+			if (emailExiste) {
+				return ErrorJSON.serviceRefused(String.format("Erreur, l'email \"%s\" est deja prit.", email), CodesErreur.ERREUR_EMAIL_DEJA_PRIT);
+			} 
 
 			// On verifie que le mot de passe est securise
 			StatutMotDePasse statutMotDePasse = outils.MesMethodes.verifierSecuriteMotDePasse(motDePasse);
@@ -61,6 +68,7 @@ public class CreationUtilisateur {
 		}
 	}
 
+	
    /**
     * Verification de la validite des parametres
     * @return : Un booleen a true si les paramatres sont valides.

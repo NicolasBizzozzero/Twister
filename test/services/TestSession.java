@@ -13,14 +13,6 @@ public class TestSession {
 		String mdp = "MonSuperMotDePasse";
 		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, mdp, "mail1@gmail.com", null, null, null);		
 		String clef = testLogin(pseudo, mdp);
-		
-		//java.util.concurrent.TimeUnit.MINUTES.sleep(1);
-		System.out.println(bd.tools.SessionsTools.getTempsDInactivite(clef));
-		System.out.println(bd.tools.SessionsTools.getTempsDInactivite(clef));
-		//java.util.concurrent.TimeUnit.MINUTES.sleep(2);
-		System.out.println(bd.tools.SessionsTools.getTempsDInactivite(clef));
-		System.out.println(bd.tools.SessionsTools.getTempsDInactivite(clef));
-
 		testLogout(clef);
 	}
 	

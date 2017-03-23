@@ -39,6 +39,5 @@ public class ServletCreationUtilisateur extends HttpServlet {
 		
 		reponse.setContentType("application/json");
 		reponse.getWriter().print(file.getAbsolutePath() + "\nWWW\n");
-		
 	 }
 }

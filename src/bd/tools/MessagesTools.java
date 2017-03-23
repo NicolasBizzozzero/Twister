@@ -1,6 +1,7 @@
 package bd.tools;
 
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
@@ -8,6 +9,7 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -22,8 +24,12 @@ public class MessagesTools {
 	 * @param clef : La clef de session de l'utilisateur ajoutant le message
 	 * @param contenu : Le contenu du message a ajouter
 	 * @throws UnknownHostException
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public static void ajouterMessage(String id_auteur, String contenu) throws UnknownHostException {
+	public static void ajouterMessage(String id_auteur, String contenu) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// On se connecte a la BDD puis on recupere la collection
 		DBCollection messages = getCollectionMessages();
 		
@@ -32,12 +38,16 @@ public class MessagesTools {
 		
 		// Creation du message
 		BasicDBObject message = new BasicDBObject();
-		message.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
 		message.put(Nom.CHAMP_CONTENU, contenu);
 		message.put(Nom.CHAMP_DATE, new Date());
 		message.put(Nom.CHAMP_ID_MESSAGE, id_message);
 		message.put(Nom.CHAMP_NOMBRE_DE_COMMENTAIRES, 0);
 		message.put(Nom.CHAMP_COMMENTAIRES, new ArrayList<BasicDBObject>());
+		// Ajout de l'auteur
+		BasicDBObject auteur = new BasicDBObject();
+		auteur.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
+		auteur.put(Nom.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
+		message.put(Nom.CHAMP_AUTEUR, auteur);
 		
 		// On ajoute le message
 		messages.insert(message);
@@ -71,14 +81,14 @@ public class MessagesTools {
 	public static void supprimerMessage(String clef, String id_message) throws UnknownHostException {
 		//TODO: Ajouter plus de verifications (utilisateur bien l'auteur du message, message existant)
 		// On se connecte a la BDD puis on recupere les messages
-		DBCollection messages = getCollectionMessages();
+		DBCollection collectionMessages = getCollectionMessages();
 		
 		// Creation du message
-		BasicDBObject message = new BasicDBObject();
-		message.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		BasicDBObject query = new BasicDBObject();
+		query.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
 
 		// On retire le message
-		messages.remove(message);
+		collectionMessages.remove(query);
 	}
 	
 	
@@ -87,15 +97,22 @@ public class MessagesTools {
 	 * Utilisee lors de la suppression du compte de l'utilisateur.
 	 * @param id_auteur : l'ID de l'utilisateur dont on doit supprimer les messages
 	 * @throws UnknownHostException
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public static void supprimerMessagesUtilisateur(String id_auteur) throws UnknownHostException {
+	public static void supprimerMessagesUtilisateur(String id_auteur) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		//TODO: tester
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 		
 		// Creation de la requete
 		BasicDBObject requete = new BasicDBObject();
-		requete.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
+		BasicDBObject auteur = new BasicDBObject();
+		auteur.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
+		auteur.put(Nom.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
+		requete.put(Nom.CHAMP_AUTEUR, auteur);
 
 		// On retire les messages correspondants a la requete
 		messages.remove(requete);
@@ -137,7 +154,7 @@ public class MessagesTools {
 	}
 	
 	
-	public static JSONObject listerMessagesUtilisateur(String[] recherche, String id_utilisateur, String id_max, String id_min, String limite) throws UnknownHostException {
+	public static JSONObject listerMessagesUtilisateur(String recherche, String id_utilisateur, String id_max, String id_min, String limite) throws UnknownHostException {
 //		// TODO: Implementer
 //		// On se connecte a la BDD puis on recupere les messages
 //		DBCollection messages = getCollectionMessages();
@@ -158,7 +175,7 @@ public class MessagesTools {
 	}
 	
 	
-	public static JSONObject listerMessagesToutLeMonde(String[] recherche, String id_max, String id_min, String limite) throws UnknownHostException {
+	public static JSONObject listerMessagesToutLeMonde(String recherche, String id_max, String id_min, String limite) throws UnknownHostException {
 //		// TODO: Implementer
 //		// On se connecte a la BDD puis on recupere les messages
 //		DBCollection messages = getCollectionMessages();
@@ -258,8 +275,7 @@ public class MessagesTools {
 	 * @throws UnknownHostException 
 	 */
 	public static void creerCollectionMessages() throws UnknownHostException {
-		DB db = seConnecterAMongoDB();
-		db.getCollection(Nom.COLLECTION_MESSAGES).insert(new BasicDBObject());
+		seConnecterAMongoDB().getCollection(Nom.COLLECTION_MESSAGES);
 	}
 	
 	

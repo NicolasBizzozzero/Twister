@@ -2,6 +2,7 @@ package bd.tools;
 
 import java.net.UnknownHostException;
 import java.security.Provider.Service;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,7 +20,7 @@ import bd.tools.Nom;
 
 public class CommentairesTools {
 	
-	public static JSONObject ajouterCommentaire(String id_auteur, String id_message, String contenu) throws UnknownHostException {
+	public static JSONObject ajouterCommentaire(String id_auteur, String id_message, String contenu) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// On se connecte a la BDD puis on recupere la collection
 		DBCollection messages = MessagesTools.getCollectionMessages();
 		
@@ -29,10 +30,14 @@ public class CommentairesTools {
 		// Creation du commentaire
 		Date date = new Date();
 		BasicDBObject commentaire = new BasicDBObject();
-		commentaire.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
 		commentaire.put(Nom.CHAMP_CONTENU, contenu);
 		commentaire.put(Nom.CHAMP_DATE, date);
 		commentaire.put(Nom.CHAMP_ID_COMMENTAIRE, id_commentaire);
+		// Ajout de l'auteur
+		BasicDBObject auteur = new BasicDBObject();
+		auteur.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
+		auteur.put(Nom.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
+		commentaire.put(Nom.CHAMP_AUTEUR, auteur);
 		
 		// On ajoute le commentaire
 		BasicDBObject searchQuery = new BasicDBObject(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
@@ -118,5 +123,31 @@ public class CommentairesTools {
 		}
 		
 		return false;
+	}
+
+
+	public static JSONObject listerCommentaires(String id_message) throws UnknownHostException {
+		// On se connecte a la BDD puis on recupere les messages
+		DBCollection messages = bd.tools.MessagesTools.getCollectionMessages();
+		
+		// Creation du message
+		BasicDBObject message = new BasicDBObject();
+		message.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+
+		// On verifie si le message existe
+		DBCursor curseur = messages.find(message);
+		if (! curseur.hasNext()) {
+			// Le message n'existe pas, donc le commentaire non plus
+			return new JSONObject();
+		}
+		
+		// On recupere la liste des commentaires
+		JSONObject reponse_message = new JSONObject(JSON.serialize(curseur.next()));
+		JSONArray commentaires = reponse_message.getJSONArray(Nom.CHAMP_COMMENTAIRES);
+		
+		// On retourne cette liste des commentaires
+		JSONObject reponse = new JSONObject();
+		reponse.put(Nom.CHAMP_COMMENTAIRES, commentaires);
+		return reponse;
 	}
 }

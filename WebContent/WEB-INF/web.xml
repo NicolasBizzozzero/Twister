@@ -7,6 +7,14 @@
 		<servlet-class>servlets.utilisateur.ServletCreationUtilisateur</servlet-class>
 	</servlet>
 	<servlet> 
+		<servlet-name>ModificationUtilisateur</servlet-name> 
+		<servlet-class>servlets.utilisateur.ServletModificationUtilisateur</servlet-class>
+	</servlet>
+	<servlet> 
+		<servlet-name>SuppressionUtilisateur</servlet-name> 
+		<servlet-class>servlets.utilisateur.ServletSuppressionUtilisateur</servlet-class>
+	</servlet>
+	<servlet> 
 		<servlet-name>Login</servlet-name> 
 		<servlet-class>servlets.authentification.ServletLogin</servlet-class>
 	</servlet>
@@ -67,6 +75,14 @@
 	<servlet-mapping> 
 		<servlet-name>CreationUtilisateur</servlet-name> 
 		<url-pattern>/services/utilisateur/creationUtilisateur</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping> 
+		<servlet-name>ModificationUtilisateur</servlet-name> 
+		<url-pattern>/services/utilisateur/modificationUtilisateur</url-pattern>
+	</servlet-mapping> 
+	<servlet-mapping> 
+		<servlet-name>SuppressionUtilisateur</servlet-name> 
+		<url-pattern>/services/utilisateur/suppressionUtilisateur</url-pattern>
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>Login</servlet-name> 

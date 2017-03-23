@@ -1,6 +1,7 @@
 package services.amis;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import org.json.JSONObject;
 
@@ -22,11 +23,12 @@ public class SupprimerAmi {
 	 * @return Un JSONObject representant le statut de la reponse
 	 */
 	public static JSONObject supprimerAmi(String clef, String id_ami) {
-		if (! verificationParametres(clef, id_ami)){
-			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
-		}
-
 		try {
+			// On verifie qu'un des parametres obligatoire n'est pas null
+			if (! verificationParametres(clef, id_ami)){
+				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
+			}
+
 			// On recupere l'ID du supprimant
 			String id_supprimant = SessionsTools.getIDByClef(clef);
 			
@@ -34,6 +36,13 @@ public class SupprimerAmi {
 			boolean estConnecte = SessionsTools.estConnecte(id_supprimant);
 			if (! estConnecte) {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'est pas connecte", id_supprimant), CodesErreur.ERREUR_UTILISATEUR_DECONNECTE);
+			}
+			
+			// On verifie que l'utilisateur n'a pas ete inactif trop longtemps
+			boolean isInactif = SessionsTools.estInactifDepuisTropLongtemps(clef);
+			if (isInactif) {
+				SessionsTools.suppressionCle(clef);
+				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s est inactif depuis trop longtemps", id_supprimant), CodesErreur.ERREUR_UTILISATEUR_INACTIF);
 			}
 			
 			// On verifie que les deux ID sont differents
@@ -54,7 +63,10 @@ public class SupprimerAmi {
 			}
 			
 			// On retire une relation d'amitiee a la base de donnees
-			AmitiesTools.supprimerAmi(id_supprimant, id_ami);
+			AmitiesTools.supprimerAmitie(id_supprimant, id_ami);
+			
+			// On met a jour le temps d'inactivite
+			SessionsTools.updateTempsCle(clef);
 
 			// On renvoie une reponse
 			JSONObject reponse = new JSONObject();
@@ -69,6 +81,8 @@ public class SupprimerAmi {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (ClefInexistanteException e) {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'est pas presente dans la Base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
+		}  catch (ParseException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur lors du parsing de la date du jour", clef), CodesErreur.ERREUR_PARSE_DATE);
 		}
 	}
 

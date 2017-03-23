@@ -15,9 +15,9 @@ public class TestCommentaires {
 		bd.tools.MessagesTools.creerCollectionMessages();
 		bd.tools.MessagesTools.creerCollectionCompteurs();
 		
-//		testAjouterCommentaire();
+		testAjouterCommentaire();
 		testSupprimerCommentaire();
-//		testListerCommentaires();
+		testListerCommentaires();
 		
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
@@ -85,9 +85,33 @@ public class TestCommentaires {
 	}
 	
 	
-	private static void testListerCommentaires() {
+	private static void testListerCommentaires() throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException, JSONException, UnknownHostException, ClefInexistanteException {
 		System.out.println("Debut du test de l'affichage de la liste de commentaires");
+		
+		// On commence par ajouter une personne dans notre base de donnees
+		String clef ="";
+		bd.tools.UtilisateursTools.ajouterUtilisateur("500", "Test_utilisateur_500", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
+		bd.tools.SessionsTools.insertSession("500", false);
+		clef = bd.tools.SessionsTools.getClefById("500");
+		// Puis par ajouter des messages
+		System.out.println(services.message.AjouterMessage.ajouterMessage(clef, "Je suis le message numero un"));
+		// Puis des commentaires
+		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef, "1", "Coucou c'est moi le commentaire 1."));
+		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef, "1", "Et moi je suis le commentaire 2 !"));
+		
+		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
+		
+		// On commence le test
+		System.out.println("On liste les commentaires d'un message");
+		System.out.println(services.commentaire.ListerCommentaires.listerCommentaires(clef, "1").toString(4));
+		
+		//System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 
+		//  Suppression des messages et de l'utilisateur 
+		bd.tools.MessagesTools.supprimerMessage(clef, "1");
+		bd.tools.SessionsTools.suppressionCle(clef);
+		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("Test_utilisateur_500");
+		
 		System.out.println("Fin du test de l'affichage de la liste de commentaires");
 	}
 }

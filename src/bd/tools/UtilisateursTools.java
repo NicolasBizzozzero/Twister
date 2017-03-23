@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import exceptions.AnniversaireInvalideException;
 import bd.Database;
 
 public class UtilisateursTools {
@@ -277,7 +278,9 @@ public class UtilisateursTools {
         connection.close();
 	}
 
-	public static void modifierAnniversaire(String id, String nouvelAnniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static void modifierAnniversaire(String id, String nouvelAnniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, AnniversaireInvalideException {
+		throw new AnniversaireInvalideException(String.format("L'anniversaire \"%s\" est invalide.", nouvelAnniversaire));
+		/*
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -291,5 +294,51 @@ public class UtilisateursTools {
         // Liberation des ressources
         statement.close();
         connection.close();
+        */
+	}
+
+	public static boolean verificationExistenceEmail(String nouvelEmail) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+
+        // Creation et execution de la requete
+        String requete = "SELECT id FROM Utilisateurs WHERE mail=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, nouvelEmail);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean retour = resultSet.next();
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return retour;
+	}
+
+	public static String getPseudoUtilisateur(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT pseudo FROM Utilisateurs WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, id);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        resultSet.next();
+        String pseudo = resultSet.getString("pseudo");
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return pseudo;
 	}
 }
