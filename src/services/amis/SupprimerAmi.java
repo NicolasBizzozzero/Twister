@@ -12,6 +12,15 @@ import services.CodesErreur;
 import services.ErrorJSON;
 
 public class SupprimerAmi {
+	
+	
+	/**
+	 * Supprime un utilisateur de la liste d'ami de celui identifie
+	 * par la clef.
+	 * @param clef : Clef de session de l'utilisateur supprimant son (ex) ami
+	 * @param id_ami : ID de l'ami supprime
+	 * @return Un JSONObject representant le statut de la reponse
+	 */
 	public static JSONObject supprimerAmi(String clef, String id_ami) {
 		if (! verificationParametres(clef, id_ami)){
 			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
@@ -62,6 +71,7 @@ public class SupprimerAmi {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'est pas presente dans la Base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 		}
 	}
+
 
    /**
     * Verification de la validite des parametres

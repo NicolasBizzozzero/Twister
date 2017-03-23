@@ -18,11 +18,8 @@ public class ServletSupprimerAmi extends HttpServlet {
 			
 		JSONObject retour = SupprimerAmi.supprimerAmi(clef, id_ami);
 		reponse.setContentType("application/json");
-		reponse.getWriter().print(retour);
-		
+		reponse.getWriter().print(retour);	
 	}
-
-
 }
 
 

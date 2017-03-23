@@ -23,7 +23,7 @@ public class ListerMessages {
 	 * @param limite : Nombre de messages a retourner (-1 si pas de limite)
 	 * @return Un JSONObject contenant les messages demandes
 	 */
-	public static JSONObject listerMessages(String clef, String[] recherche, String id_utilisateur, String id_max, String id_min, String limite) {
+	public static JSONObject listerMessages(String clef, String recherche, String id_utilisateur, String id_max, String id_min, String limite) {
 		if (! verificationParametres(clef, recherche, id_utilisateur, id_max, id_min, limite)){
 			return ErrorJSON.serviceRefused("Un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 		}

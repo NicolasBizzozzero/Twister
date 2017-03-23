@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -211,10 +213,10 @@ public class SessionsTools {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public static int getTempsDInactivite(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
+	public static long getTempsDInactivite(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
 		Date derniereActiviteSession = getDateByClef(clef);
 	    long diffInMillies = (new Date()).getTime() - derniereActiviteSession.getTime();
-	    return (int) TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	    return TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 	}
 	
 	

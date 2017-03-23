@@ -11,8 +11,8 @@ import exceptions.BDException;
 public class TestAmities {
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
-		//testAjouterAmis();
-		//testSupprimerAmi();
+		testAjouterAmis();
+		testSupprimerAmi();
 		testListerAmis();
 	}
 	

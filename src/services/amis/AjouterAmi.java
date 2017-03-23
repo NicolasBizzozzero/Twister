@@ -12,6 +12,15 @@ import services.CodesErreur;
 import services.ErrorJSON;
 
 public class AjouterAmi {
+	
+	
+	/**
+	 * Ajoute un utilisateur dans la liste d'ami de celui identifie
+	 * par la clef.
+	 * @param clef : Clef de session de l'utilisateur ajoutant en ami
+	 * @param id_ami : ID de l'ami ajoute
+	 * @return Un JSONObject representant le statut de la reponse
+	 */
 	public static JSONObject ajouterAmi(String clef, String id_ami) {
 		if (! verificationParametres(clef, id_ami)){
 			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
@@ -63,6 +72,7 @@ public class AjouterAmi {
 		}
 	}
 
+	
    /**
     * Verification de la validite des parametres
     * @return : Un booleen a true si les paramatres sont valides.

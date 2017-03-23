@@ -15,23 +15,8 @@ import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
 public class MessagesTools {
-	private final static String NOM_SERVEUR = "li328.lip6.fr";
-	private final static int PORT_SERVEUR = 27130;
-	private final static String NOM_BDD_MONGODB = "gr2-2017-bourmaud-bizzozzero";
-	private final static String NOM_COLLECTION_MESSAGES = "Messages";
-	private final static String NOM_COLLECTION_COMPTEURS = "Compteurs";
-	private final static String NOM_CHAMP_NOM_COLLECTION = "nom_collection";
-	private final static String NOM_CHAMP_MESSAGES = "messages";
-	private final static String NOM_CHAMP_COMMENTAIRES = "commentaires";
-	private final static String NOM_CHAMP_NOMBRE_DE_COMMENTAIRES = "nb_commentaires";
-	private final static String NOM_CHAMP_NOMBRE_DE_MESSAGES = "nb_messages";
-	private final static String NOM_CHAMP_ID_AUTEUR = "id_auteur";
-	private final static String NOM_CHAMP_ID_MESSAGE = "id_message";
-	private final static String NOM_CHAMP_ID_COMMENTAIRE = "id_commentaire";
-	private final static String NOM_CHAMP_DATE = "date";
-	private final static String NOM_CHAMP_CONTENU = "contenu";
-	private final static String ID_DOCUMENT_COMPTEURS = "jesuisunidunique";
-	
+
+
 	/**
 	 * Ajoute le message d'un utilisateur dans la BDD MongoDB
 	 * @param clef : La clef de session de l'utilisateur ajoutant le message
@@ -43,16 +28,16 @@ public class MessagesTools {
 		DBCollection messages = getCollectionMessages();
 		
 		// On recupere l'ID du message a poster
-		Object id_message = getIDNouveauMessage();
+		Integer id_message = getIDNouveauMessage();
 		
 		// Creation du message
 		BasicDBObject message = new BasicDBObject();
-		message.put(NOM_CHAMP_ID_AUTEUR, id_auteur);
-		message.put(NOM_CHAMP_CONTENU, contenu);
-		message.put(NOM_CHAMP_DATE, new Date());
-		message.put(NOM_CHAMP_ID_MESSAGE, id_message);
-		message.put(NOM_CHAMP_NOMBRE_DE_COMMENTAIRES, 0);
-		message.put(NOM_CHAMP_COMMENTAIRES, new ArrayList<BasicDBObject>());
+		message.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
+		message.put(Nom.CHAMP_CONTENU, contenu);
+		message.put(Nom.CHAMP_DATE, new Date());
+		message.put(Nom.CHAMP_ID_MESSAGE, id_message);
+		message.put(Nom.CHAMP_NOMBRE_DE_COMMENTAIRES, 0);
+		message.put(Nom.CHAMP_COMMENTAIRES, new ArrayList<BasicDBObject>());
 		
 		// On ajoute le message
 		messages.insert(message);
@@ -66,14 +51,14 @@ public class MessagesTools {
 	 * @return Un ID pour un nouveau message
 	 * @throws UnknownHostException 
 	 */
-	public static int getIDNouveauMessage() throws UnknownHostException {
+	public static Integer getIDNouveauMessage() throws UnknownHostException {
 		DBCollection collectionCompteurs = getCollectionCompteurs();
 		
 		DBObject doc = collectionCompteurs.findAndModify(
-	             new BasicDBObject("_id", ID_DOCUMENT_COMPTEURS), null, null, false,
-	             new BasicDBObject("$inc", new BasicDBObject(NOM_CHAMP_NOMBRE_DE_MESSAGES, 1)),
+	             new BasicDBObject("_id", Nom.ID_DOCUMENT_COMPTEURS), null, null, false,
+	             new BasicDBObject("$inc", new BasicDBObject(Nom.CHAMP_NOMBRE_DE_MESSAGES, 1)),
 	             true, true);
-	     return (Integer) doc.get(NOM_CHAMP_NOMBRE_DE_MESSAGES);
+	     return (Integer) doc.get(Nom.CHAMP_NOMBRE_DE_MESSAGES);
 	}
 	
 	
@@ -90,7 +75,7 @@ public class MessagesTools {
 		
 		// Creation du message
 		BasicDBObject message = new BasicDBObject();
-		message.put(NOM_CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		message.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
 
 		// On retire le message
 		messages.remove(message);
@@ -110,7 +95,7 @@ public class MessagesTools {
 		
 		// Creation de la requete
 		BasicDBObject requete = new BasicDBObject();
-		requete.put(NOM_CHAMP_ID_AUTEUR, id_auteur);
+		requete.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
 
 		// On retire les messages correspondants a la requete
 		messages.remove(requete);
@@ -144,7 +129,7 @@ public class MessagesTools {
 		
 		// Creation du message
 		BasicDBObject message = new BasicDBObject();
-		message.put(NOM_CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		message.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
 
 		// On verifie si le message existe
 		DBCursor curseur = messages.find(message);
@@ -159,13 +144,13 @@ public class MessagesTools {
 //		
 //		// Creation de la requete
 //		BasicDBObject requete = new BasicDBObject();
-//		requete.put(NOM_CHAMP_ID_AUTEUR, id_utilisateur);
+//		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
 //
 //		// On itere sur les resultats
 //		DBCursor curseur = messages.find(requete).skip(index_debut).limit(limite);
 //		JSONObject reponse = new JSONObject();
 //		while (curseur.hasNext()) {
-//			reponse.accumulate(NOM_CHAMP_MESSAGES, curseur.next());
+//			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
 //		}
 //				
 //		return reponse;
@@ -180,13 +165,13 @@ public class MessagesTools {
 //		
 //		// Creation de la requete
 //		BasicDBObject requete = new BasicDBObject();
-//		requete.put(NOM_CHAMP_ID_AUTEUR, id_utilisateur);
+//		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
 //
 //		// On itere sur les resultats
 //		DBCursor curseur = messages.find(requete).skip(index_debut).limit(limite);
 //		JSONObject reponse = new JSONObject();
 //		while (curseur.hasNext()) {
-//			reponse.accumulate(NOM_CHAMP_MESSAGES, curseur.next());
+//			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
 //		}
 //				
 //		return reponse;
@@ -243,8 +228,8 @@ public class MessagesTools {
 	 */
 	public static DB seConnecterAMongoDB() throws UnknownHostException {
 		Mongo mongo = null;
-		mongo = new Mongo(NOM_SERVEUR, PORT_SERVEUR);
-		return mongo.getDB(NOM_BDD_MONGODB);
+		mongo = new Mongo(Nom.SERVEUR, Nom.PORT_SERVEUR);
+		return mongo.getDB(Nom.BDD_MONGODB);
 	}
 
 	
@@ -254,7 +239,7 @@ public class MessagesTools {
 	 * @throws UnknownHostException
 	 */
 	public static DBCollection getCollectionMessages() throws UnknownHostException {
-		return seConnecterAMongoDB().getCollection(NOM_COLLECTION_MESSAGES);
+		return seConnecterAMongoDB().getCollection(Nom.COLLECTION_MESSAGES);
 	}
 	
 	
@@ -264,7 +249,7 @@ public class MessagesTools {
 	 * @throws UnknownHostException
 	 */
 	public static DBCollection getCollectionCompteurs() throws UnknownHostException {
-		return seConnecterAMongoDB().getCollection(NOM_COLLECTION_COMPTEURS);
+		return seConnecterAMongoDB().getCollection(Nom.COLLECTION_COMPTEURS);
 	}
 	
 	
@@ -274,7 +259,7 @@ public class MessagesTools {
 	 */
 	public static void creerCollectionMessages() throws UnknownHostException {
 		DB db = seConnecterAMongoDB();
-		db.getCollection(NOM_COLLECTION_MESSAGES).insert(new BasicDBObject());
+		db.getCollection(Nom.COLLECTION_MESSAGES).insert(new BasicDBObject());
 	}
 	
 	
@@ -285,9 +270,9 @@ public class MessagesTools {
 	public static void creerCollectionCompteurs() throws UnknownHostException {
 		DB db = seConnecterAMongoDB();
 		BasicDBObject doc = new BasicDBObject();
-		doc.put("_id", ID_DOCUMENT_COMPTEURS);
-		doc.put(NOM_CHAMP_NOMBRE_DE_MESSAGES, 0);
-		db.getCollection(NOM_COLLECTION_COMPTEURS).insert(doc);
+		doc.put("_id", Nom.ID_DOCUMENT_COMPTEURS);
+		doc.put(Nom.CHAMP_NOMBRE_DE_MESSAGES, 0);
+		db.getCollection(Nom.COLLECTION_COMPTEURS).insert(doc);
 	}
 	
 	
@@ -297,8 +282,8 @@ public class MessagesTools {
 	 */
 	public static void supprimerCollectionMessages() throws UnknownHostException {
 		DB db = seConnecterAMongoDB();
-		if (db.collectionExists(NOM_COLLECTION_MESSAGES)) {
-			db.getCollection(NOM_COLLECTION_MESSAGES).drop();
+		if (db.collectionExists(Nom.COLLECTION_MESSAGES)) {
+			db.getCollection(Nom.COLLECTION_MESSAGES).drop();
 		}
 	}
 	
@@ -309,8 +294,8 @@ public class MessagesTools {
 	 */
 	public static void supprimerCollectionCompteurs() throws UnknownHostException {
 		DB db = seConnecterAMongoDB();
-		if (db.collectionExists(NOM_COLLECTION_COMPTEURS)) {
-			db.getCollection(NOM_COLLECTION_COMPTEURS).drop();
+		if (db.collectionExists(Nom.COLLECTION_COMPTEURS)) {
+			db.getCollection(Nom.COLLECTION_COMPTEURS).drop();
 		}
 	}
 	

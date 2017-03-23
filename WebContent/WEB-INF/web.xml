@@ -78,15 +78,15 @@
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>SupprimerAmi</servlet-name> 
-		<url-pattern>/services/amis/supprimerAmis</url-pattern> 
+		<url-pattern>/services/ami/supprimerAmis</url-pattern> 
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>AjouterAmi</servlet-name> 
-		<url-pattern>/services/amis/ajouterAmi</url-pattern> 
+		<url-pattern>/services/ami/ajouterAmi</url-pattern> 
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>ListerAmis</servlet-name> 
-		<url-pattern>/services/amis/listerAmis</url-pattern> 
+		<url-pattern>/services/ami/listerAmis</url-pattern> 
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>AjouterCommentaire</servlet-name> 
