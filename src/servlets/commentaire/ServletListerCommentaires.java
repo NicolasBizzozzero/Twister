@@ -12,22 +12,17 @@ import org.json.JSONObject;
 import services.commentaire.ListerCommentaires;
 
 
-
 @SuppressWarnings("serial")
 public class ServletListerCommentaires extends HttpServlet {
-	    public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-	        // Recuperation des parametres
-	        String cle = requete.getParameter("cle");
-	        int limite = Integer.parseInt(requete.getParameter("limite"));
-	        int index_debut = Integer.parseInt(requete.getParameter("index_debut"));
+    public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
+        // Recuperation des parametres
+	String cle = requete.getParameter("cle");
+	int limite = Integer.parseInt(requete.getParameter("limite"));
+	int index_debut = Integer.parseInt(requete.getParameter("index_debut"));
 
-	        // Utilisation du service approprie
-	        JSONObject retour = ListerCommentaires.listerCommentaires(cle, index_debut, limite);
-	        reponse.setContentType("application/json");
-	        reponse.getWriter().print(retour);
-	    
-	    }
-
+	// Utilisation du service approprie
+	JSONObject retour = ListerCommentaires.listerCommentaires(cle, index_debut, limite);
+	reponse.setContentType("text/plain");
+	reponse.getWriter().print(retour);
+    }
 }
-
-
