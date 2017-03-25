@@ -18,6 +18,11 @@ div .liens{
 #recherche :nth-child(2){
   width:20px;
 }
+#image_plus{
+  width:20px;
+  cursor:pointer;
+}
+
 #titre{
   color:#256c50;
   padding-left:50px;
@@ -67,4 +72,11 @@ section>text{
 }
 #messages{
   padding-bottom:100%;
+
 }
+.messageUtilisateur{
+  border:solid #256c50;
+  padding: 20px;
+  margin: 30px;
+}
+

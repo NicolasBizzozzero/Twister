@@ -23,7 +23,7 @@ function makeConnexionPanel() {
 }
 
 function connexionF(formulaire) {
-	
+	event.preventDefault();
 	var login = formulaire.pseudo.value;
 	var password = formulaire.mdp.value;
 	var ok = verif_formulaire_connexion(login, password);
@@ -104,7 +104,7 @@ function connect(login, password) {
 	var id_user = 1;
 	var key = 8546515;
 	if (!env.noConnection) {
-		// TODO: REMPLIR QUAND ON POURRA PARLER AU SERVEUR
+		$ajax({type:"POST", url:"/services/authentification/login", data:"pseudo="+login+"&motDePasse="+password, dataType:"json",success:function(res){ reponseConnection(res);},error:function(xhr,status,err){func_erreur(status);}});
 	} else {
 		reponseConnection({"key": key, "id": id_user, "login": login, "follows": [2, 3]});
 	}

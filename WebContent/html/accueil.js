@@ -26,10 +26,10 @@ function Commentaire(id, auteur, texte, date){
         this.date = date;
 }
 Message.prototype.getHtml=function(){
-        var retour="<div id=\"message_"+this.id+"\" class=\"message\">\n\
+        var retour="<div id=\"message_"+this.id+"\" class=\"messageUtilisateur\">\n\
                         <div class=\"text_message\">"+this.texte+"</div>\n\
                         <div class=\"info_mesage\">\n\
-                                <span>Posté par <span class=\"links\" onCliks=\"javascrpit: pageUser("+this.auteur.id+","+this.auteur.login+")\">"+this.auteur.login+"</span><span>le"+this.date+"</span><img src=\"Images/image_plus.jpg\" title=\"Afficher les messages\" alt=\"Afficher les messages\" onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
+                                <span>Posté par <span class=\"links\" onCliks=\"javascrpit: pageUser("+this.auteur.id+","+this.auteur.login+")\">"+this.auteur.login+"</span><span> le "+this.date+"</span><img src=\"images/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\"  onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
                                 </span>\n\
                         </div>\n\
                         <div class=\"comments\">\n\
@@ -37,17 +37,19 @@ Message.prototype.getHtml=function(){
                         <div class=\"new_comments\">\n\
                         </div>\n\
                      </div>";
+	return retour;
 }
 
 
 Commentaire.prototype.getHtml=function(){
-        var retour="<div id=\"message_"+this.id+"\" class=\"message\">\n\
+        var retour="<div id=\"message_"+this.id+"\" class=\"commentaireUtilisateur\">\n\
                         <div class=\"text_message\">"+this.texte+"</div>\n\
                         <div class=\"info_mesage\">\n\
-                                <span>Posté par <span class=\"links\" onCliks=\"javascrpit: pageUser("+this.auteur.id+","+this.auteur.login+")\">"+this.auteur.login+"</span><span>le"+this.date+"</span><img src=\"Images/image_plus.jpg\" title=\"Afficher les messages\" alt=\"Afficher les messages\" onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
+                                <span>Posté par <span class=\"links\" onCliks=\"javascrpit: pageUser("+this.auteur.id+","+this.auteur.login+")\">"+this.auteur.login+"</span><span> le "+this.date+"</span><img src=\"images/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\" onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
 				</span>\n\
                         </div>\n\
                      </div>";
+	return retour;
 }
 
 
@@ -67,7 +69,9 @@ function revival(key,value){
         else if(key=="date"){
                 var d=new Date(value);
                 return d;
-        }
+        }else{
+		return value;
+	}
 }
 
 function setVirtualMessages(){
@@ -100,14 +104,14 @@ function makeMainPanel(fromId, fromLogin, query){
 
         var s="<header>\n\
                 <div id=\"logo\" class=\"entete\">\n\
- 			<img src=\"logo.pgn\" alt=\"logo de notre site\"/> \n\
+ 			<img src=\"images/logo.pgn\" alt=\"logo de notre site\"/> \n\
                 </div>\n\
                 <div id=\"titre\" class=\"entete\">\n\
                         <h1> TWISTER </h1>\n\
                 </div>\n\
                 <form id= \"recherche\" class=\"entete\">\n\
                         <input type=\"text\" id=\"recherche\" name=\"recherche\" value=\"Recherche\"/>\n\
-                        <input type=\"image\" src=\"loupe.jpg\" alt=\"rechercher\"/>\n\
+                        <input type=\"image\" src=\"images/loupe.jpg\" alt=\"rechercher\"/>\n\
                 </form>\n\
                 <div id=\"deconnexion\" class=\"entete\">\n\
                         <div class=\"liens\" onclick=\"javascript:makeConnexionPanel()\">Se déconnecter</div>\n\
@@ -118,7 +122,7 @@ function makeMainPanel(fromId, fromLogin, query){
         if (env.fromId < 0){
                 s += "<div id=\"cote\" class=\"corp\">\n\
                         <div id=\"photo\">\n\
-                                <img src=\"image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                                <img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         </div>\n\
  			<div id=\"profil\">\n\
                                 <div id=\"link1\" onClick=\"javascript:makeMainPanel(env.id,env.login,4)\">Mon profil</div>\n\
@@ -133,7 +137,7 @@ function makeMainPanel(fromId, fromLogin, query){
        			</section>\n\
                         <section id=\"messages\">\n\
 				<script type=\"text/javascript\">\n\
-					$(CompleteMessages);\n\
+					$(completeMessages);\n\
 				</script>\n\
                         </section>\n\
                      </div>";
@@ -143,7 +147,7 @@ function makeMainPanel(fromId, fromLogin, query){
                 if (env.fromId == env.id){
                         s+= "<div id=\"cote\" class=\"corp\">\n\
                         	<div id=\"photo\">\n\
-                                	<img src=\"image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                                	<img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         	</div>\n\
  				<div id=\"informations\">\n\
         				Nom :\n\
@@ -158,7 +162,7 @@ function makeMainPanel(fromId, fromLogin, query){
                                 		<input type=\"submit\" value=\"Poster\"/> \n\
                         		</form >\n\
 				</section>\n\
-                            	<section id=\"messages\" onload=\"javascript: CompleteMessages()\">\n\
+                            	<section id=\"messages\" onload=\"javascript: completeMessages()\">\n\
                             	</section>\n\
    		    	    </div>\n\
     			    <div id=\"cote\" class=\"corp\">\n\
@@ -168,7 +172,7 @@ function makeMainPanel(fromId, fromLogin, query){
                 } else if(!env.follows[env.fromId].has(env.id)){
                         s+= "<div id=\"cote\" class=\"corp\">\n\
                         	<div id=\"photo\">\n\
-                                	<img src=\"image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                                	<img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         	</div>\n\
 				<button type=\"button\" onclick=\"javascript:ajouter_ami()\" >Suivre</button>\n\
  				<div id=\"informations\">\n\
@@ -184,7 +188,7 @@ function makeMainPanel(fromId, fromLogin, query){
                                 		<input type=\"submit\" value=\"Poster\"/> \n\
                         		</form >\n\
 				</section>\n\
-                            	<section id=\"messages\" onload=\"javascript: CompleteMessages()\">\n\
+                            	<section id=\"messages\" onload=\"javascript: completeMessages()\">\n\
                             	</section>\n\
    		    	    </div>\n\
     			    <div id=\"cote\" class=\"corp\">\n\
@@ -194,7 +198,7 @@ function makeMainPanel(fromId, fromLogin, query){
  		} else{
                         s+=  "<div id=\"cote\" class=\"corp\">\n\
                         	<div id=\"photo\">\n\
-                                	<img src=\"image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                                	<img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         	</div>\n\
 				<button type=\"button\" onclick=\"javascript:supprimer_ami()\" >Suivre</button>\n\
  				<div id=\"informations\">\n\
@@ -210,7 +214,7 @@ function makeMainPanel(fromId, fromLogin, query){
                                 		<input type=\"submit\" value=\"Poster\"/> \n\
                         		</form >\n\
 				</section>\n\
-                            	<section id=\"messages\" onload=\"javascript: CompleteMessages()\">\n\
+                            	<section id=\"messages\" onload=\"javascript: completeMessages()\">\n\
                             	</section>\n\
    		    	    </div>\n\
     			    <div id=\"cote\" class=\"corp\">\n\
@@ -225,24 +229,25 @@ function makeMainPanel(fromId, fromLogin, query){
 }
 
 
-function CompleteMessages(){
+function completeMessages(){
 	console.log("test0");
-	if(!env.noConnection){}
+	if(!env.noConnection){
+		//$ajax({type:"POST", url:"/services/messages/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="env.fromId+"&limite=10&id_min=-1&id_max="+env.idmin, dataType:"json",success:function(res){ completeMessagesReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
+	}
 	else {
-		$("#messages").html("<div>test0</div>");
 		var tab = getFromLocalDb(env.fromId,env.minId,env.maxId, tab=[],10);
-		CompleteMessagesReponse(JSON.stringify(tab));
+		completeMessagesReponse(JSON.stringify(tab));
 	}
 }
 
-function CompleteMessagesReponse(rep){
+function completeMessagesReponse(rep){
 	console.log("test2");
 	console.log(rep);
  	var tab=JSON.parse(rep,revival);
 	console.log(tab);
 	for(i=0;i<tab.length;i++){
 		var m=tab[i];
-		$("#messages").appendTo(m.getHtml());
+		$("#messages").prepend(m.getHtml());
 		env.msg[m.id]=m;
 		if(m.id>env.maxId){env.maxId=m.id;}
 		if(m.id<env.minId){env.minId=m.id;}
@@ -250,7 +255,6 @@ function CompleteMessagesReponse(rep){
 }
 
 function getFromLocalDb(from,minId,maxId, tab=[],nbmax){
-	console.log("test1");
 	var rep=[];
 	console.log(localdb.length);
 	if(from<0){
@@ -278,5 +282,108 @@ function getFromLocalDb(from,minId,maxId, tab=[],nbmax){
 	}
 	return rep;
 }
+
+
+function refreshMessages(){
+	if(!env.noConnection){
+		//$ajax({type:"POST", url:"/services/messages/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="env.maxId+"&limite=-1&id_min="+env.maxId+"&id_max=-1", dataType:"json",success:function(res){ refreshMessagesReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
+	}
+	else {
+		var tab = getFromLocalDb(env.fromId,env.minId,env.maxId, tab=[],10);
+		refreshMessagesReponse(JSON.stringify(tab));
+	}
+}
+
+
+function refreshMessagesReponse(rep){
+	console.log("rep="+rep);
+	var tab=JSON.parse(rep,revival);
+	for(var i=tab.length-1;i>=0;i--){
+		var m=tab[i];
+		$("#messages").prepend(m.getHtml());
+		env.msg[m.id]=m;
+		if(m.id>env.maxId){ env.maxId=m.id;}
+		if(env.minId<0 || m.id<env.minId){ env.minId=m.id;}
+	}
+}
+
+function newMessage(){
+	var texte=$("#nv_message").val();
+	//$ajax({type:"POST", url:"/services/messages/AjouterMessage", data:"key="+env.key+"&texte="+texte, dataType:"json";success:function(res){ newMessageReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
+}
+
+
+
+function newMessageReponse(rep){
+	var msg=JSON.parse(rep,revival);
+	if(key!=undefined && msg.erreur==undefined ){
+		refreshMessages();
+	}
+	else{
+		alert("erreur lors de la création du nouveau message");
+	}
+}
+
+
+function func_erreur(message) {
+	var s = "<div id=\"msg_err_connexion\">" + message + "</div>";
+	var old_mess = $("#msg_err_connexion");
+
+	// Cas où il n'y avait pas de message d'erreur
+	if (old_mess.length == 0) {
+		$("form").prepend(s);
+	} 
+
+	// Cas où il y'avait déjà un message d'erreur
+	else {
+		old_mess.replaceWith(s);
+	}
+}
+function developpeMessage(id){
+	var m=env.msg[id];
+	var el = $("message_"+id+".comments");
+	for(var i=0;i<m.comments.length ;i++){
+		var c=m.comments[i];
+		el.append(c.getHtml());
+	}
+	el=$("message_"+id+".new_comment");
+	el.append("<form  id=\"nv_commentaire\" method=\"post\" action=\"\" onSubmit=\"javascript : ecrire_commentaire(this)\">\n\
+                               <textarea form=\"nv_commentaire\"> Poster un nouveau commentaire </textarea>\n\
+                               <input type=\"submit\" value=\"Poster\"/> \n\
+                   </form >\n\"");
+
+	$("#message_"+id+"img").repaceWith("<img src=\"images/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\" onClick=\"javascript:replieMessage("+this.id+")\"/>");
+}
+
+
+function replieMessage(id){
+var m=env.msg[id];
+	var el = $("message_"+id+".comments");
+	for(var i=0;i<m.comments.length ;i++){
+		var c=m.comments[i];
+		el.remove(c.getHtml());
+	}
+
+	$("#message_"+id+"img").repaceWith("<img src=\"images/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\" onClick=\"javascript:developpeMessage("+this.id+")\"/>");
+
+}
+
+function newComment(id){
+if(!noConection){
+
+}else{
+	new_comment_response(id,JSON.stringify(new Commantaire(env.msg[i].comments.length+1,{"id": env.id,"login":env.login}, "je suis un texte",this.date);
+}
+//JSON.parse(...) ?
+}
+
+
+
+
+
+
+
+
+
 
 

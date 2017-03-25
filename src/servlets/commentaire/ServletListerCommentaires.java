@@ -8,12 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import services.commentaire.ListerCommentaires;
 
-import services.message.ListerMessages;
 
 @SuppressWarnings("serial")
-public class ServletListerCommentaires extends HttpServlet{
+public class ServletListerCommentaires extends HttpServlet {
     public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-        return;
+        // Recuperation des parametres
+	String cle = requete.getParameter("cle");
+	int limite = Integer.parseInt(requete.getParameter("limite"));
+	int index_debut = Integer.parseInt(requete.getParameter("index_debut"));
+
+	// Utilisation du service approprie
+	JSONObject retour = ListerCommentaires.listerCommentaires(cle, index_debut, limite);
+	reponse.setContentType("text/plain");
+	reponse.getWriter().print(retour);
     }
 }

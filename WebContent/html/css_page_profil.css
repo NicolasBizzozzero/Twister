@@ -44,6 +44,11 @@ div.corp{
   width:70%;
 }
 
+#image_plus{
+  width:20px;
+  cursor:pointer;
+}
+
 #cote{
   border:solid #256c50;
   padding-bottom:60%;
@@ -68,4 +73,9 @@ section>text{
 }
 #messages{
   padding-bottom:100%;
+}
+.messageUtilisateur{
+  border:solid #256c50;
+  padding: 20px;
+  margin: 30px;
 }
