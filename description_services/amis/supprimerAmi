@@ -2,7 +2,7 @@ Nom du service Web								supprimerAmi
 
 Lieu ou se trouve le service					services/amis/SupprimerAmi
 
-URL du service Web								/services/ami/supprimerAmi
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/ami/supprimerAmi
 
 Description du service							Permet a un utilisateur de supprimer un de ses amis
 
@@ -21,8 +21,8 @@ Erreurs possibles								-1: Nombre de parametres incorrect
 												19: La clef passee en parametres n'existe pas
 												1000: Erreur SQL
 											
-Classes JAVA en rapport avec le service Web		servlets.authentification.ServletLogout
-												bd.tools.SessionsTools
+Classes JAVA en rapport avec le service Web		servlets.amis.ServletSupprimerAmi
+												bd.tools.AmitiesTools
 												
 Avancement du Service							Fonctionnel
 

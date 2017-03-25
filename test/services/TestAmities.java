@@ -8,11 +8,11 @@ import org.json.JSONObject;
 import bd.tools.SessionsTools;
 import exceptions.BDException;
 
-public class TestAjouterAmi {
+public class TestAmities {
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
-		//testAjouterAmis();
-		//testSupprimerAmi();
+		testAjouterAmis();
+		testSupprimerAmi();
 		testListerAmis();
 	}
 	
@@ -59,11 +59,11 @@ public class TestAjouterAmi {
 		System.out.println(services.amis.AjouterAmi.ajouterAmi("1g7r81ez31fefe1!f2qsdf1", id3));
 		
 		// Nettoyage des utilisateurs et des amitiees crees
-		bd.tools.AmitiesTools.supprimerAmi(id1, id2);
-		bd.tools.AmitiesTools.supprimerAmi(id3, id4);
-		bd.tools.AmitiesTools.supprimerAmi(id2, id1);
-		bd.tools.AmitiesTools.supprimerAmi(id1, id3);
-		bd.tools.AmitiesTools.supprimerAmi(id1, id4);
+		bd.tools.AmitiesTools.supprimerAmitie(id1, id2);
+		bd.tools.AmitiesTools.supprimerAmitie(id3, id4);
+		bd.tools.AmitiesTools.supprimerAmitie(id2, id1);
+		bd.tools.AmitiesTools.supprimerAmitie(id1, id3);
+		bd.tools.AmitiesTools.supprimerAmitie(id1, id4);
 		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo(pseudo1);
 		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo(pseudo2);
 		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo(pseudo3);
@@ -121,8 +121,6 @@ public class TestAjouterAmi {
 	
 	private static void testListerAmis() {
 		System.out.println("Debut du test de l'affichage de la liste d'amis");
-		System.out.println("On ne peut pas afficher les amis d'un utilisateur qui n'existe pas:");
-		System.out.println(services.amis.ListerAmis.listerAmis("-500",0,30));
 		String cle1 = "",cle2="";
 		//Ajout d'utilisateurs et de relations d'amities
 		try {
@@ -132,8 +130,8 @@ public class TestAjouterAmi {
 			bd.tools.UtilisateursTools.ajouterUtilisateur("800", "TEST_utilisateur_800", outils.MesMethodes.hasherMotDePasse("MotDePasse3"), "mail3@gmail.com", null, null, null);
 			bd.tools.SessionsTools.insertSession("100",false);
 			bd.tools.SessionsTools.insertSession("600",false);
-			cle1= bd.tools.SessionsTools.getClefbyId("100");
-			cle2= bd.tools.SessionsTools.getClefbyId("600");		
+			cle1= bd.tools.SessionsTools.getClefById("100");
+			cle2= bd.tools.SessionsTools.getClefById("600");		
 			bd.tools.AmitiesTools.ajouterAmi("100","600");
 			bd.tools.AmitiesTools.ajouterAmi("600","100");
 			bd.tools.AmitiesTools.ajouterAmi("100","700");
@@ -142,19 +140,21 @@ public class TestAjouterAmi {
 			e.printStackTrace();
 		} 
 		//suite des tests
+		System.out.println("On ne peut pas afficher les amis d'un utilisateur qui n'existe pas:");
+		System.out.println(services.amis.ListerAmis.listerAmis("", "-500", "0", "30"));
 		System.out.println("On affiche la liste des amis de l'utilisateur en disant combien on souhaite en afficher ici 30:");
-		System.out.println(services.amis.ListerAmis.listerAmis("100", 1,30));
+		System.out.println(services.amis.ListerAmis.listerAmis(cle1, "100", "1","30"));
 		System.out.println("On affiche la liste des amis de l'utilisateur en disant combien on souhaite en afficher ici 1:");
-		System.out.println(services.amis.ListerAmis.listerAmis("100", 1,1));
+		System.out.println(services.amis.ListerAmis.listerAmis(cle1, "100", "1","1"));
 		
 		
 		// Nettoyage des relations d'amities et des utilisateurs crees 
 		try {
-			bd.tools.AmitiesTools.supprimerAmi("100","600");
-			bd.tools.AmitiesTools.supprimerAmi("100","700");
-			bd.tools.AmitiesTools.supprimerAmi("100","800");
-			bd.tools.AmitiesTools.supprimerAmi("600","100");
-			bd.tools.AmitiesTools.supprimerAmi("700","800");
+			bd.tools.AmitiesTools.supprimerAmitie("100","600");
+			bd.tools.AmitiesTools.supprimerAmitie("100","700");
+			bd.tools.AmitiesTools.supprimerAmitie("100","800");
+			bd.tools.AmitiesTools.supprimerAmitie("600","100");
+			bd.tools.AmitiesTools.supprimerAmitie("700","800");
 			bd.tools.SessionsTools.suppressionCle(cle1);
 			bd.tools.SessionsTools.suppressionCle(cle2);
 			bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_100");

@@ -19,6 +19,5 @@ public class ServletAjouterAmi extends HttpServlet {
 		JSONObject retour = AjouterAmi.ajouterAmi(clef, id_ami);
 		reponse.setContentType("application/json");
 		reponse.getWriter().print(retour);
-		
 	}
 }

@@ -44,32 +44,6 @@ Avec
        - l: le login de l'utilisateur
 
 
------------------- Service PostMessage ------------------------
-
-Le service PostMessage attend les paramètres suivants:
-        - key : la clé de session
-        - text : le texte du nouveau message
-
-Le service retourne un json vide si tout va bien (avec un champ erreur si il y a eu un soucis)
-
------------------- Service PostComment ------------------------
-
-Le service PostComment permet de poster un nouveau commentaire en rapport à un message donné. 
-Il attend les paramètres suivants:
-        - key : la clé de session
-        - id_message : l'identifiant du message concerné par le commentaire
-        - text : le texte du nouveau commentaire
-
-Le service retourne un texte (text/plain) au format suivant si tout va bien (ou avec un champ erreur si il y a eu un soucis):
-{"id":i, "auteur":a, "texte":t, "date":d}
-
-Avec
-      - i: l'identifiant du commentaire
-      - a: l'auteur du commentaire
-      - t: le texte du commentaire
-      - d: la date du commentaire
-
-
 ------------------ Service GetPass (optionnel) -----------------------------------------
 
 Le service GetPass permet d'obtenir son mot de passe sur la boîte mail renseignée lors de l'inscription.
@@ -80,3 +54,16 @@ Le service retourne un json vide si tout va bien (avec un champ erreur si il y a
 
 
 
+Verifier qu'un utilisateur ne peut pas liker deux fois le meme commentaire
+La fonction retournant le temps d'inactivite d'un utilisateur ne fonctionne pas de midi a 13h, ensuite elle refonctionne
+Tester SupprimerLike avec un utilisateur n'ayant pas like
+Service ListerMessages
+Implementer la verification de la validite de la date d'anniversaire
+Service AjouterLike
+Service SupprimerLike
+Service ListerLike
+Attention a bazard dans ServletCreationUtilisateur
+Faire un schema de la BDD MongoDB
+Faire un schema de la BDD MySQL
+Implementer toutes les fonctions liees aux emails (meme si le proxy empeche l'envoi d'email)
+On ne supprime pas les messages ou les commentaires lors de la suppression d'un utilisateur, le preciser lors de l'ecriture du CDG

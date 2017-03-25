@@ -9,22 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import services.commentaire.SupprimerCommentaire;
-
-
 
 @SuppressWarnings("serial")
 public class ServletSupprimerCommentaire extends HttpServlet {
-     public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
-	    // Recuperation des parametres
-        String cle = requete.getParameter("cle");
-        String contenu = requete.getParameter("contenu"); 
+    public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
+	   // Recuperation des parametres
+       String clef = requete.getParameter("clef");
+       String id_message = requete.getParameter("id_message");
+       String id_commentaire = requete.getParameter("id_commentaire");
 
-        // Utilisation du service approprie
-        JSONObject retour = SupprimerCommentaire.supprimerCommentaire(cle, contenu);
-        reponse.setContentType("application/json");
-        reponse.getWriter().print(retour);
-    
-     }
-
+       // Utilisation du service approprie
+       JSONObject retour = services.commentaire.SupprimerCommentaire.supprimerCommentaire(clef, id_message, id_commentaire);
+       reponse.setContentType("application/json");
+       reponse.getWriter().print(retour);
+   }
 }

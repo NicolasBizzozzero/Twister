@@ -11,11 +11,12 @@ import services.ErrorJSON;
 
 public class Logout {
 	public static JSONObject logout(String cle) {
-		if (! verificationParametres(cle)) {
-			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
-		}
-
 		try {
+			// On verifie qu'un des parametres obligatoire n'est pas null
+			if (! verificationParametres(cle)) {
+				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
+			}
+			
 			// On verifie que l'utilisateur est bien connecte
 			boolean estConnecte = SessionsTools.clefExiste(cle);
 			if (! estConnecte){

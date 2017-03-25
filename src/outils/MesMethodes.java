@@ -3,9 +3,12 @@ package outils;
 import java.lang.Math;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public abstract class MesMethodes {
 
+	
     /**
      * Retourne une chaine de caracteres aleatoires (entre A-Z et 0-9).
      * @param taille : La taille de la String generee.
@@ -33,6 +36,7 @@ public abstract class MesMethodes {
         return resultat;
     }
 
+    
     /**
      * Retourne un int compris entre minimum inclu et maximum inclu.
      * @param minimum : L'int minimum possible, inclusif.
@@ -42,6 +46,7 @@ public abstract class MesMethodes {
         return (int) ((Math.random() * (maximum + 1)) + minimum);
     }
 
+    
     /**
      * Retourne une chaine de caracteres de taille 'taille' composee uniquement d'entiers.
      * @param taille: La taille de la chaine de caracteres retournee.
@@ -55,6 +60,7 @@ public abstract class MesMethodes {
         return Integer.toString(nombre);
     }
 
+    
     /**
      * Calcule et retourne le nombre de chiffres d'un entier positif passse en parametre.
      * @param nombre : L'entier positif dont on souhaite avoir le nombre de chiffres.
@@ -67,8 +73,9 @@ public abstract class MesMethodes {
         return (int) (Math.log10(Math.abs(nombre)) + 1);
     }
     
+    
 	/**
-	 * Utilise l'algorithme SHA-521 pour hasher un mot de passe.
+	 * Utilise l'algorithme SHA-512 pour hasher un mot de passe.
 	 * @param motDePasse: Le mot de passe en clair a hasher.
 	 * @return : Une string hashee correspondant au mot de passe passe en parametre.
 	 * @throws NoSuchAlgorithmException 
@@ -79,6 +86,7 @@ public abstract class MesMethodes {
          motDePasse = new String(messageDigest.digest());
  		return motDePasse;
  	}
+ 	
  	
     /**
  	* Verifie que le mot de passe entre par l'utilisateur est assez fort selon nos criteres de securite.
@@ -99,4 +107,16 @@ public abstract class MesMethodes {
 
  		return StatutMotDePasse.SECURISE;
  	}
+ 	
+ 	
+	/**
+	 * Retourne Le temps d'inactivite d'un utilisateur
+	 * en fonction de sa date de derniere activite.
+	 * @param derniereActivite : Date de la derniere activite de l'utilisateur
+	 * @return En millisecondes, le temps d'inactivite de l'utilisateur
+	 */
+	public static long getTempsInactivite(Date derniereActivite) {
+		Date maintenant = new GregorianCalendar().getTime();
+		return maintenant.getTime() - derniereActivite.getTime();
+	}
 }

@@ -12,6 +12,18 @@ import bd.Database;
 import exceptions.IndexInvalideException;
 
 public class AmitiesTools {
+	
+	
+	/**
+	 * Retourne true si id_ami1 a deja ajoute id_ami2 en ami, false sinon.
+	 * @param id_ami1 : L'ID de l'ami ajoutant
+	 * @param id_ami2 : L'ID de l'ami ajoute
+	 * @return Un booleen a true si id_ami1 suit deja id_ami2, false sinon
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public static boolean suitDeja(String id_ami1, String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
@@ -34,6 +46,17 @@ public class AmitiesTools {
         
         return retour;
 	}
+	
+	
+	/**
+	 * Ajoute id_ami2 dans la liste d'amis de id_ami1
+	 * @param id_ami1 : L'ami ajoutant
+	 * @param id_ami2 : L'aime ajoute
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public static void ajouterAmi(String id_ami1, String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
@@ -50,7 +73,8 @@ public class AmitiesTools {
         connection.close();
 	}
 	
-	public static void supprimerAmi(String id_ami1,String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	
+	public static void supprimerAmitie(String id_ami1, String id_ami2) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -65,10 +89,28 @@ public class AmitiesTools {
         statement.close();
         connection.close();
 	}
+	
+	
+	public static void supprimerAmitiesConcernant(String id_ami) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "DELETE FROM Amities WHERE id_ami1=? OR id_ami2=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id_ami));
+        statement.setInt(2, Integer.parseInt(id_ami));
+        statement.executeUpdate();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
 
+	
 	/**
 	 * Retourne nombre_demandes d'amis de l'utilisateur d'ID id_utilisateur en partant de index_debut.
-	 * @param id_utilisateur
+	 * @param id_utilisateur : L'ID de l'utilisateur dont on liste les amis
 	 * @param index_debut : Sa valeur initiale est zero. Indique a partir de quel index on souhaite lister les amis.
 	 * @param nombre_demandes : Indique le nombre d'amis desires.
 	 * @throws InstantiationException
@@ -77,8 +119,8 @@ public class AmitiesTools {
 	 * @throws SQLException
 	 * @throws IndexInvalideException
 	 */
-	public static JSONObject listerAmis(String id_utilisateur, int index_debut, int nombre_demandes) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, IndexInvalideException {
-    	if (index_debut < 0) {
+	public static JSONObject listerAmis(String id_utilisateur, String index_debut, String nombre_demandes) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, IndexInvalideException {
+    	if (Integer.parseInt(index_debut) < 0) {
     		throw new IndexInvalideException("L'index ne peut pas etre negatif.");
     	}
 		
@@ -89,8 +131,8 @@ public class AmitiesTools {
         String requete = "SELECT id_ami2 FROM Amities WHERE id_ami1=? LIMIT ? OFFSET ?;";
         PreparedStatement statement = connection.prepareStatement(requete);
         statement.setInt(1, Integer.parseInt(id_utilisateur));
-        statement.setInt(2, nombre_demandes);
-        statement.setInt(3, index_debut);
+        statement.setInt(2, Integer.parseInt(nombre_demandes));
+        statement.setInt(3, Integer.parseInt(index_debut));
         ResultSet res = statement.executeQuery();
         
         // creation d'un JSONObject dans lequel on met les amis

@@ -15,13 +15,14 @@ import services.ErrorJSON;
 
 public class Login {
 	public static JSONObject login(String pseudo, String motDePasse) {
-		if (! verificationParametres(pseudo, motDePasse)) {
-			return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
-		}
-		
 		try {
+			// On verifie qu'un des parametres obligatoire n'est pas null
+			if (! verificationParametres(pseudo, motDePasse)) {
+				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
+			}
+			
 			// On verifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistencePseudo(pseudo);
+			boolean isUser = UtilisateursTools.checkExistencePseudo(pseudo);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused("L'utilisateur n'existe pas", CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}

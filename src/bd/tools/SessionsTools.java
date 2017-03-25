@@ -4,13 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 
 import bd.Database;
 import exceptions.ClefInexistanteException;
 import outils.MesMethodes;
 
 public class SessionsTools {
+	public static final int TEMPS_AVANT_DECONNEXION = 3600000; // En millisecondes, = 60 minutes
 
+	
 	public static boolean estConnecte(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
@@ -32,6 +36,7 @@ public class SessionsTools {
         return retour;
 	}
 
+	
 	public static String insertSession(String identifiant, boolean isAdmin) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// On genere une clef puis on verifie si elle n'existe pas deja
 		// Tant qu'on n'obtient pas de clef unique, on recommence
@@ -60,6 +65,7 @@ public class SessionsTools {
 		return cle;
 	}
 
+	
 	public static boolean clefExiste(String cle) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 			// Connection a la base de donnees
 	        Connection connection = Database.getMySQLConnection();
@@ -108,12 +114,13 @@ public class SessionsTools {
         return identifiant;
 }
 
+	
 	public static void updateTempsCle(String cle) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
         // Creation et execution de la requete
-        String requete = "UPDATE Session SET timestamp=NOW() WHERE clef=?;";
+        String requete = "UPDATE Sessions SET timestamp=NOW() WHERE clef=?;";
         PreparedStatement statement = connection.prepareStatement(requete);
         statement.setString(1, cle);
         statement.executeUpdate();
@@ -123,6 +130,7 @@ public class SessionsTools {
         connection.close();
 	}
 
+	
 	public static boolean suppressionCle(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
@@ -141,7 +149,8 @@ public class SessionsTools {
         return (nombreDeLignesModifiees > 0);
 	}
 	
-	public static String getIDbyClef(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
+	
+	public static String getIDByClef(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -169,7 +178,8 @@ public class SessionsTools {
         return id;
 	}
 	
-	public static String getClefbyId(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
+	
+	public static String getClefById(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -185,7 +195,7 @@ public class SessionsTools {
         
         // Si la requete n'a genere aucun resultat, on leve une exception
         if (! contientUnResultat)
-        	throw new ClefInexistanteException(String.format("L'indentifiant %s n'est pas presente dans la Base de donnees", id));
+        	throw new ClefInexistanteException(String.format("L'identifiant %s n'est pas present dans la Base de donnees", id));
         
         String cle = resultSet.getString("clef");
         
@@ -195,5 +205,95 @@ public class SessionsTools {
         connection.close();
         
         return cle;
+	}
+	
+	
+	/**
+	 * Retourne true si la session est restee trop longtemps sans activite.
+	 * Si le booleen "est_administrateur" de la session est a true, cette
+	 * fonction retourne toujours false.
+	 * @param clef : Clef de la session dont on veut tester l'inactivite
+	 * @return Un boolean a true si l'utilisateur est considere comme inactif, false sinon.
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws ClefInexistanteException
+	 * @throws ParseException
+	 */
+	public static boolean estInactifDepuisTropLongtemps(String clef) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException, ParseException {
+		// Si l'utilisateur est un admin, on ne le deconnecte pas
+		if (estAdministrateur(clef)) {
+			return false;
+		}
+		
+		Date derniereActivite = getDateByClef(clef);
+		System.out.println("Date:");
+		System.out.println(derniereActivite);
+		long tempsInactivite = MesMethodes.getTempsInactivite(derniereActivite);
+		System.out.println("Temps :");
+		System.out.println(tempsInactivite);
+		
+		return (tempsInactivite > TEMPS_AVANT_DECONNEXION);
+	}
+	
+	
+	private static boolean estAdministrateur(String clef) throws SQLException, ClefInexistanteException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT est_administrateur FROM Sessions WHERE clef=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, clef);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean contientUnResultat = resultSet.next();
+        
+        // Si la requete n'a genere aucun resultat, on leve une exception
+        if (! contientUnResultat)
+        	throw new ClefInexistanteException(String.format("La clef %s n'est pas presente dans la Base de donnees", clef));
+        
+        boolean resultat = resultSet.getBoolean("est_administrateur");		
+
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return resultat;
+	}
+
+
+	public static Date getDateByClef(String clef) throws SQLException, ClefInexistanteException, InstantiationException, IllegalAccessException, ClassNotFoundException, ParseException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT timestamp FROM Sessions WHERE clef=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, clef);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean contientUnResultat = resultSet.next();
+        
+        // Si la requete n'a genere aucun resultat, on leve une exception
+        if (! contientUnResultat)
+        	throw new ClefInexistanteException(String.format("La clef %s n'est pas presente dans la Base de donnees", clef));
+        
+        String resultat = resultSet.getString("timestamp");
+        java.text.SimpleDateFormat parser = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		java.util.Date date  = parser.parse(resultat);		
+
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return date;
 	}
 }

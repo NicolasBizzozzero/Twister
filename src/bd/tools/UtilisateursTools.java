@@ -5,53 +5,24 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import exceptions.AnniversaireInvalideException;
 import bd.Database;
 
 public class UtilisateursTools {
-	public static boolean verificationExistencePseudo(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		// Connection a la base de donnees
-        Connection connection = Database.getMySQLConnection();
-
-        // Creation et execution de la requete
-        String requete = "SELECT id FROM Utilisateurs WHERE pseudo=?;";
-        PreparedStatement statement = connection.prepareStatement(requete);
-        statement.setString(1, pseudo);
-        statement.executeQuery();
-        
-        // Recuperation des donnees
-        ResultSet resultSet = statement.getResultSet();
-        boolean retour = resultSet.next();
-        
-        // Liberation des ressources
-        resultSet.close();
-        statement.close();
-        connection.close();
-        
-        return retour;
-	}
 	
-	public static boolean verificationExistenceId(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException  {
-		// Connection a la base de donnees
-        Connection connection = Database.getMySQLConnection();
-        
-        // Creation et execution de la requete
-        String requete = "SELECT id FROM Utilisateurs WHERE id=?;";
-        PreparedStatement statement = connection.prepareStatement(requete);
-        statement.setInt(1, Integer.parseInt(id));
-        statement.executeQuery();
-        
-        // Recuperation des donnees
-        ResultSet resultSet = statement.getResultSet();
-        boolean retour = resultSet.next();
-        
-        // Liberation des ressources
-        resultSet.close();
-        statement.close();
-        connection.close();
- 
-        return retour;
-	}
-	
+	/**
+	 * Ajoute un utilisateur dans la table 'Utilisateurs' de la BDD MySQL
+	 * @param pseudo : Le pseudo de l'utilisateur a ajouter
+	 * @param motDePasse : Le mot de passe de l'utilisateur a ajouter
+	 * @param email : L'email de l'utilisateur a ajouter
+	 * @param prenom : Le prenom de l'utilisateur a ajouter
+	 * @param nom : Le nom de l'utilisateur a ajouter
+	 * @param anniversaire : La date d'anniversaire de l'utilisateur a ajouter
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public static void ajouterUtilisateur(String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
@@ -72,10 +43,23 @@ public class UtilisateursTools {
         connection.close();
 	}
 	
+	
 	/**
+	 * Ajoute un utilisateur dans la table 'Utilisateurs' de la BDD MySQL
 	 * Cette methode utilise l'ID comme parametre supplementaire pour ajouter un utilisateur.
 	 * Elle ne devrait etre utilisee UNIQUEMENT que par les administrateurs, et donc ne pas
 	 * etre disponible en tant que service.
+	 * @param id : L'ID de l'utilisateur a ajouter
+	 * @param pseudo : Le pseudo de l'utilisateur a ajouter
+	 * @param motDePasse : Le mot de passe de l'utilisateur a ajouter
+	 * @param email : L'email de l'utilisateur a ajouter
+	 * @param prenom : Le prenom de l'utilisateur a ajouter
+	 * @param nom : Le nom de l'utilisateur a ajouter
+	 * @param anniversaire : La date d'anniversaire de l'utilisateur a ajouter
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
 	 */
 	public static void ajouterUtilisateur(String id, String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
@@ -98,45 +82,25 @@ public class UtilisateursTools {
         connection.close();
 	}
 	
-	public static void supprimerUtilisateurAvecId(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		// Connection a la base de donnees
-        Connection connection = Database.getMySQLConnection();
-        
-        // Creation et execution de la requete
-        String requete = "DELETE FROM Utilisateurs WHERE id=?;";
-        PreparedStatement statement = connection.prepareStatement(requete);
-        statement.setInt(1, Integer.parseInt(id));
-        statement.executeUpdate();
-
-        // Liberation des ressources
-        statement.close();
-        connection.close();
-	}
 	
-	public static void supprimerUtilisateurAvecPseudo(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	/**
+	 * Retourne un boolean correspondant a l'existence de l'email dans
+	 * la table 'Utilisateurs' de la BDD MySQL.
+	 * @param email : L'email dont on veut verifier l'existence
+	 * @return Un boolean a true si l'email est dans la BDD, false sinon
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static boolean checkExistenceEmail(String email) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
-        
-        // Creation et execution de la requete
-        String requete = "DELETE FROM Utilisateurs WHERE pseudo=?;";
-        PreparedStatement statement = connection.prepareStatement(requete);
-        statement.setString(1, pseudo);
-        statement.executeUpdate();
 
-        // Liberation des ressources
-        statement.close();
-        connection.close();
-	}
-	
-	public static boolean checkMotDePasseAvecPseudo(String pseudo, String motDePasse) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		// Connection a la base de donnees
-        Connection connection = Database.getMySQLConnection();
-        
         // Creation et execution de la requete
-        String requete = "SELECT id FROM Utilisateurs WHERE pseudo=? AND mot_de_passe=?;";
+        String requete = "SELECT id FROM Utilisateurs WHERE mail=?;";
         PreparedStatement statement = connection.prepareStatement(requete);
-        statement.setString(1, pseudo);
-        statement.setString(2, motDePasse);
+        statement.setString(1, email);
         statement.executeQuery();
         
         // Recuperation des donnees
@@ -147,10 +111,88 @@ public class UtilisateursTools {
         resultSet.close();
         statement.close();
         connection.close();
-
+        
         return retour;
 	}
 	
+	
+	/**
+	 * Retourne un boolean correspondant a l'existence de l'ID dans
+	 * la table 'Utilisateurs' de la BDD MySQL.
+	 * @param id : L'ID dont on veut verifier l'existence
+	 * @return Un boolean a true si l'ID est dans la BDD, false sinon
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static boolean checkExistenceId(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException  {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT id FROM Utilisateurs WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id));
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean retour = resultSet.next();
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+ 
+        return retour;
+	}
+	
+
+	/**
+	 * Retourne un boolean correspondant a l'existence du pseudo dans
+	 * la table 'Utilisateurs' de la BDD MySQL.
+	 * @param pseudo : Le pseudo dont on veut verifier l'existence
+	 * @return Un boolean a true si le pseudo est dans la BDD, false sinon
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static boolean checkExistencePseudo(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+
+        // Creation et execution de la requete
+        String requete = "SELECT id FROM Utilisateurs WHERE pseudo=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, pseudo);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean retour = resultSet.next();
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return retour;
+	}
+	
+
+	/**
+	 * Verifie la correspondance ID/mot-de-passe d'un utilisateur dans
+	 * la table 'Utilisateurs' de la BDD MySQL.
+	 * @param id : L'ID a verifier
+	 * @param motDePasse : Le mot de passe a verifier
+	 * @return Un boolean a true si l'ID et le mot de passe correspondent, false sinon
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public static boolean checkMotDePasseAvecId(String id, String motDePasse) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
@@ -174,6 +216,92 @@ public class UtilisateursTools {
         return retour;
 	}
 	
+	
+	/**
+	 * Verifie la correspondance pseudo/mot-de-passe d'un utilisateur dans
+	 * la table 'Utilisateurs' de la BDD MySQL.
+	 * @param pseudo : Le pseudo a verifier
+	 * @param motDePasse : Le mot de passe a verifier
+	 * @return Un boolean a true si le pseudo et le mot de passe correspondent, false sinon
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static boolean checkMotDePasseAvecPseudo(String pseudo, String motDePasse) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT id FROM Utilisateurs WHERE pseudo=? AND mot_de_passe=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, pseudo);
+        statement.setString(2, motDePasse);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean retour = resultSet.next();
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return retour;
+	}
+	
+	
+	/**
+	 * Retire un utilisateur de la table 'Utilisateurs' de la BDD MySQL
+	 * selon son ID. 
+	 * @param id : L'ID de l'utilisateur qu'on veut retirer
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static void supprimerUtilisateurAvecId(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "DELETE FROM Utilisateurs WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id));
+        statement.executeUpdate();
+
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+	
+	
+	/**
+	 * Retire un utilisateur de la table 'Utilisateurs' de la BDD MySQL
+	 * selon son pseudo. 
+	 * @param pseudo : Le pseudo de l'utilisateur qu'on veut retirer
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static void supprimerUtilisateurAvecPseudo(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "DELETE FROM Utilisateurs WHERE pseudo=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, pseudo);
+        statement.executeUpdate();
+
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+	
+
 	public static String getIdUtilisateur(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
@@ -277,7 +405,9 @@ public class UtilisateursTools {
         connection.close();
 	}
 
-	public static void modifierAnniversaire(String id, String nouvelAnniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static void modifierAnniversaire(String id, String nouvelAnniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, AnniversaireInvalideException {
+		throw new AnniversaireInvalideException(String.format("L'anniversaire \"%s\" est invalide.", nouvelAnniversaire));
+		/*
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -291,5 +421,30 @@ public class UtilisateursTools {
         // Liberation des ressources
         statement.close();
         connection.close();
+        */
+	}
+
+
+	public static String getPseudoUtilisateur(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT pseudo FROM Utilisateurs WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, id);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        resultSet.next();
+        String pseudo = resultSet.getString("pseudo");
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return pseudo;
 	}
 }

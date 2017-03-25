@@ -1,10 +1,25 @@
 Nom du service Web								listerAmis
+
 Lieu ou se trouve le service					services/amis/ListerAmis
-URL du service Web								/ami/listerAmis
-Description du service							liste les amis compris entre index_debut et nombre_demandes d'id_utilisateur 
-Paramètres en entrée							id_utilisateur, index_debut, nombre_demandes
+
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/ami/listerAmis
+
+Description du service							Liste les nombre_demandes amis d'un utilisateur tries par
+                                                date d'ajout dont l'index commence a index_debut.
+
+Parametres en entree							clef, id_utilisateur, index_debut, nombre_demandes
+
 Format de sortie								JSON contenant les amis ou erreur
-exemple de sortie								{"Amis": [{"id_ami2":123},'"id_ami2":546},....]} si ok , {"error_code":XXX, "message":"..."} si erreur
-Erreurs possibles								-1: ERREUR_ARGUMENTS, 2: ERREUR_UTILISATEUR_INEXISTANT, 1000: ERREUR_SQL, 0:ERREUR_CONNEXION_BD_MYSQL
-Avancement du Service							terminer à tester
+
+Exemple de sortie								{"Amis": [{"id_ami2":123},'"id_ami2":546}, ...]} si ok , {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Un des arguments est null
+ 												0: Erreur lors de la connexion a MySQL
+                                                2: L'id_utilisateur est inexistant
+                                                14: L'index precise en parametre est invalide
+                                                20: L'utilisateur n'est pas connecte
+                                                1000: Requete SQL Incorrecte
+
+Avancement du Service							Fonctionnel
+
 Informations additionnelles

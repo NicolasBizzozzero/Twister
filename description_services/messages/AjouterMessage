@@ -1,0 +1,23 @@
+Nom du service Web								ajouterMessage
+
+Lieu ou se trouve le service					services/message/AjouterMessage
+
+URL du service Web								/message/ajouterMessage
+
+Description du service							Ajoute un message dans la BDD MongoDB
+
+Parametres en entree							String clef, String contenu
+
+Format de sortie								ok ou erreur
+
+exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												 0: Connexion avec MySQL impossible
+											     6: Connexion avec MongoDB impossible
+											     19: Clef inexistante
+											     1000: Erreur de requete SQL
+
+Avancement du Service							Fonctionnel
+
+Informations additionnelles
