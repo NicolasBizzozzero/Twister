@@ -18,9 +18,9 @@ public class ListerCommentaires {
 	
 	/**
 	 * Liste tous les commentaires contenus dans un message
-	 * @param clef : La clef de session de l'utilisateur ajoutant le message
-	 * @param id_message: L'ID du message sur lequel on ajoute le commentaire
-	 * @return Un JSONArray avec des infos si tout va bien, ou avec un champ d'erreur sinon.
+	 * @param clef : La clef de session de l'utilisateur listant les commentaires
+	 * @param id_message: L'ID du message sur lequel on liste les commentaires
+	 * @return Un JSONObject avec des infos si tout va bien, ou avec un champ d'erreur sinon.
 	 * Chaque commentaire d'un message est un objet tel que:
 	 * {"id":i, "auteur":a, "texte":t, "date":d}
 	 * Avec :

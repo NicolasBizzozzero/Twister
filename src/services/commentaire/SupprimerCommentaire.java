@@ -47,7 +47,7 @@ public class SupprimerCommentaire {
 			}
 			
 			//On verifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistenceId(id_auteur);
+			boolean isUser = UtilisateursTools.checkExistenceId(id_auteur);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_auteur), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}

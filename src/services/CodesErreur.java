@@ -27,6 +27,7 @@ public abstract class CodesErreur {
 	public static final int ERREUR_PARSE_DATE = 22;
 	public static final int ERREUR_ANNIVERSAIRE_INVALIDE = 23;
 	public static final int ERREUR_EMAIL_DEJA_PRIT = 24;
+	public static final int ERREUR_TYPE_LIKE_INCONNU = 25;
 	public static final int ERREUR_JSON = 100;
 	public static final int ERREUR_SQL = 1000;
 	public static final int ERREUR_JAVA = 10000;

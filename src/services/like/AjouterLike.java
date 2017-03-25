@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import services.CodesErreur;
 import services.ErrorJSON;
 import bd.tools.CommentairesTools;
+import bd.tools.LikesTools;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import exceptions.ClefInexistanteException;
@@ -36,13 +37,13 @@ public class AjouterLike {
 			}
 
 			// On recupere l'identifiant de la session
-			String id_auteur = SessionsTools.getIDByClef(clef);
+			String id_likeur = SessionsTools.getIDByClef(clef);
 			
 			// On verifie que l'utilisateur n'a pas ete inactif trop longtemps
 			boolean isInactif = SessionsTools.estInactifDepuisTropLongtemps(clef);
 			if (isInactif) {
 				SessionsTools.suppressionCle(clef);
-				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s est inactif depuis trop longtemps", id_auteur), CodesErreur.ERREUR_UTILISATEUR_INACTIF);
+				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s est inactif depuis trop longtemps", id_likeur), CodesErreur.ERREUR_UTILISATEUR_INACTIF);
 			}
 			
 			// On verifie que le message sur lequel ajouter un like existe
@@ -51,16 +52,18 @@ public class AjouterLike {
 			}
 			
 			// On verifie que le type de like a ajouter existe
-			
+			if (! LikesTools.likeExiste(type_like)) {
+				return ErrorJSON.serviceRefused(String.format("Le type de like \"%s\" n'existe pas.", type_like), CodesErreur.ERREUR_TYPE_LIKE_INCONNU);
+			}
 			
 			// On ajoute le like au message
-			JSONObject reponse = LikesTools.ajouterLike(id_auteur, id_message, type_like);
+			LikesTools.ajouterLike(id_likeur, id_message, type_like);
 			
 			// On met a jour le temps d'inactivite
 			SessionsTools.updateTempsCle(clef);
 	
 			// On renvoie une reponse
-			return reponse;
+			return new JSONObject();
 		} catch (UnknownHostException e) {
 			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.ERREUR_HOTE_INCONNU);
 		} catch (SQLException e) {

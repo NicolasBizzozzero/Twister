@@ -51,7 +51,7 @@ public class ModificationUtilisateur {
 			// Changement du pseudo
 			if (nouveauPseudo != null) {
 				// On verifie que le nouveau pseudo n'est pas deja prit avant de le modifier
-				boolean pseudoExiste = UtilisateursTools.verificationExistencePseudo(nouveauPseudo);
+				boolean pseudoExiste = UtilisateursTools.checkExistencePseudo(nouveauPseudo);
 				if (pseudoExiste) {
 					return ErrorJSON.serviceRefused(String.format("Erreur, le pseudo %s est deja prit.", nouveauPseudo), CodesErreur.ERREUR_PSEUDO_DEJA_PRIT);
 				} else {
@@ -81,7 +81,7 @@ public class ModificationUtilisateur {
 			// Changement de l'email
 			if (nouvelEmail != null) {
 				// On verifie que le nouvel email est bien unique
-				boolean emailExiste = UtilisateursTools.verificationExistenceEmail(nouvelEmail);
+				boolean emailExiste = UtilisateursTools.checkExistenceEmail(nouvelEmail);
 				if (emailExiste) {
 					return ErrorJSON.serviceRefused(String.format("Erreur, l'email \"%s\" est deja prit.", nouvelEmail), CodesErreur.ERREUR_EMAIL_DEJA_PRIT);
 				} else {

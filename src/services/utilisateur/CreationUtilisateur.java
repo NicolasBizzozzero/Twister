@@ -11,7 +11,20 @@ import services.CodesErreur;
 import services.ErrorJSON;
 
 
-public class CreationUtilisateur {	
+public class CreationUtilisateur {
+	
+	
+	/**
+	 * Ajoute un utilisateur dans la table "Utilisateurs" de la BDD MySQL
+	 * @param pseudo : Le pseudo de l'utilisateur, doit etre unique
+	 * @param motDePasse : Le mot de passe de l'utilisateur
+	 * @param email : L'email de l'utilisateur, doit etre unique
+	 * @param prenom : Le prenom de l'utilisateur, facultatif
+	 * @param nom : Le nom de l'utilisateur, facultatif
+	 * @param anniversaire : L'anniversaire de l'utilisateur, facultatif
+	 * @return Un JSONObject vide en cas de succes, ou contenant un code d'erreur
+	 * en cas d'erreur
+	 */
 	public static JSONObject creationUtilisateur(String pseudo, String motDePasse, String email, String prenom, String nom, String anniversaire) {
 		try {
 			// On verifie qu'un des parametres obligatoire n'est pas null
@@ -20,13 +33,13 @@ public class CreationUtilisateur {
 			}
 			
 			// On verifie que l'utilisateur n'existe pas deja
-			boolean isUser = UtilisateursTools.verificationExistencePseudo(pseudo);
+			boolean isUser = UtilisateursTools.checkExistencePseudo(pseudo);
 			if (isUser) {
 				return ErrorJSON.serviceRefused("Erreur, l'utilisateur existe deja", CodesErreur.ERREUR_UTILISATEUR_EXISTANT);
 			}
 			
 			// On verifie que l'email n'existe pas deja
-			boolean emailExiste = UtilisateursTools.verificationExistenceEmail(email);
+			boolean emailExiste = UtilisateursTools.checkExistenceEmail(email);
 			if (emailExiste) {
 				return ErrorJSON.serviceRefused(String.format("Erreur, l'email \"%s\" est deja prit.", email), CodesErreur.ERREUR_EMAIL_DEJA_PRIT);
 			} 
@@ -53,8 +66,7 @@ public class CreationUtilisateur {
 			UtilisateursTools.ajouterUtilisateur(pseudo, motDePasse, email, prenom, nom, anniversaire);
 
 			// On renvoie une reponse
-			JSONObject reponse = new JSONObject();
-			return reponse;
+			return new JSONObject();
 		}  catch (NoSuchAlgorithmException e) {
 			return ErrorJSON.serviceRefused("Erreur lors du hashage du mot de passe", CodesErreur.ERREUR_HASHAGE);
 		}  catch (InstantiationException e) {

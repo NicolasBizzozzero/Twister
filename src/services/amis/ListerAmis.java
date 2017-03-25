@@ -48,7 +48,7 @@ public class ListerAmis {
 			}
 			
 			// On verifie que l'ID de l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistenceId(id_utilisateur);
+			boolean isUser = UtilisateursTools.checkExistenceId(id_utilisateur);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_utilisateur), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}

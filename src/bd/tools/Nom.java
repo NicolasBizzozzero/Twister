@@ -20,6 +20,7 @@ public abstract class Nom {
 	public final static String CHAMP_CONTENU = "contenu";
 	public final static String CHAMP_NOMBRE_DE_MESSAGES = "nb_messages";
 	public final static String CHAMP_NOMBRE_DE_COMMENTAIRES = "nb_commentaires";
+	public final static String CHAMP_LIKES = "likes";
 	
 	public final static String ID_DOCUMENT_COMPTEURS = "jesuisunidunique";
 }

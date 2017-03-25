@@ -51,7 +51,7 @@ public class SupprimerAmi {
 			}
 			
 			// On verifie que id_ami existe
-			boolean isUser = UtilisateursTools.verificationExistenceId(id_ami);
+			boolean isUser = UtilisateursTools.checkExistenceId(id_ami);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_ami), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}

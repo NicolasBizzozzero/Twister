@@ -49,7 +49,7 @@ public class ListerMessages {
 			}
 			
 			// On verifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistenceId(id_session);
+			boolean isUser = UtilisateursTools.checkExistenceId(id_session);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_utilisateur), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}

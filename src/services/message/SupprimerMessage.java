@@ -38,7 +38,7 @@ public class SupprimerMessage {
 				}
 				
 				// On verifie que l'utilisateur existe
-				boolean isUser = UtilisateursTools.verificationExistenceId(id);
+				boolean isUser = UtilisateursTools.checkExistenceId(id);
 				if (! isUser) {
 					return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 				}

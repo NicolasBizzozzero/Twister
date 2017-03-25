@@ -54,8 +54,9 @@ Le service retourne un json vide si tout va bien (avec un champ erreur si il y a
 
 
 
-
-
+Verifier qu'un utilisateur ne peut pas liker deux fois le meme commentaire
+La fonction retournant le temps d'inactivite d'un utilisateur ne fonctionne pas de midi a 13h, ensuite elle refonctionne
+Tester SupprimerLike avec un utilisateur n'ayant pas like
 Service ListerMessages
 Implementer la verification de la validite de la date d'anniversaire
 Service AjouterLike

@@ -16,9 +16,9 @@ public class TestCommentaires {
 		bd.tools.MessagesTools.creerCollectionCompteurs();
 		
 		testAjouterCommentaire();
-		testSupprimerCommentaire();
-		testListerCommentaires();
-		
+//		testSupprimerCommentaire();
+//		testListerCommentaires();
+//		
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
 	}
@@ -44,6 +44,14 @@ public class TestCommentaires {
 		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef, "1", "Coucou c'est moi le commentaire 1."));
 		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef, "1", "Et moi je suis le commentaire 2 !"));
 		
+		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
+		
+		System.out.println("Ajout like");
+		System.out.println(services.like.AjouterLike.ajouterLike(clef, "1", "4"));
+		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
+		
+		System.out.println("Suppression Like");
+		System.out.println(services.like.SupprimerLike.supprimerLike(clef, "1", "4"));		
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 
 		//  Suppression des messages et de l'utilisateur 

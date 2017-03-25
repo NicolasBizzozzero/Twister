@@ -16,9 +16,11 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
+import outils.TypeLike;
+
 public class MessagesTools {
-
-
+	
+	
 	/**
 	 * Ajoute le message d'un utilisateur dans la BDD MongoDB
 	 * @param clef : La clef de session de l'utilisateur ajoutant le message
@@ -48,8 +50,14 @@ public class MessagesTools {
 		auteur.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
 		auteur.put(Nom.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
 		message.put(Nom.CHAMP_AUTEUR, auteur);
-		
-		// On ajoute le message
+		// Ajout des likes
+		BasicDBObject likes = new BasicDBObject();
+		for (Integer indexLike=0; indexLike < LikesTools.NOMBRE_LIKE_DIFFERENTS; indexLike++) {
+			likes.put(indexLike.toString(), new ArrayList<BasicDBObject>());
+		}
+		message.put(Nom.CHAMP_LIKES, likes);
+
+		// On ajoute le message dans la collection
 		messages.insert(message);
 	}
 	
@@ -124,7 +132,7 @@ public class MessagesTools {
 	 * Utilisee a des fins de debugage
 	 * @throws UnknownHostException
 	 */
-	private static void viderMongoDB() throws UnknownHostException {
+	public static void viderMongoDB() throws UnknownHostException {
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 

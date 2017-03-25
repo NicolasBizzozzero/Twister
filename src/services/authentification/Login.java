@@ -22,7 +22,7 @@ public class Login {
 			}
 			
 			// On verifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.verificationExistencePseudo(pseudo);
+			boolean isUser = UtilisateursTools.checkExistencePseudo(pseudo);
 			if (! isUser) {
 				return ErrorJSON.serviceRefused("L'utilisateur n'existe pas", CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
 			}
