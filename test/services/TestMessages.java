@@ -3,14 +3,8 @@ package services;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.Set;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 
 import exceptions.ClefInexistanteException;
 

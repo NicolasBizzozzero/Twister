@@ -297,4 +297,58 @@ public class SessionsTools {
         
         return date;
 	}
+	
+	
+	/**
+	 * Vide entierement le contenu de la table 'Sessions' dans
+	 * notre BDD MySQL.
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	public static void nettoieTableSessions() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "TRUNCATE TABLE Sessions;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.executeQuery();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+	
+	
+	/**
+	 * Creer la table 'Sessions' dans notre
+	 * BDD MySQL.
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	public static void creerTableSessions() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = String.format("%s%s%s%s%s%s%s",
+        		"CREATE TABLE Sessions(",
+        			"clef Varchar(32) UNIQUE,",
+        			"id Integer UNIQUE,",
+        			"timestamp Timestamp,",
+        			"est_administrateur boolean,",
+        			"PRIMARY KEY (id)",
+        		");");
+
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.executeQuery();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
 }

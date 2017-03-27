@@ -35,7 +35,7 @@ public class Login {
 			}
 			
 			// On recupere l'identifiant de l'utilisateur
-			String identifiant = UtilisateursTools.getIdUtilisateur(pseudo);
+			String identifiant = UtilisateursTools.getIDByPseudo(pseudo);
 			
 			// On verifie que l'utilisateur n'est pas deja connecte
 			boolean isConnecte = SessionsTools.estConnecte(identifiant);

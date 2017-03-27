@@ -2,10 +2,6 @@ package services;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-
-import org.json.JSONObject;
-
-import exceptions.BDException;
 import exceptions.ClefInexistanteException;
 
 public class TestUtilisateur {
@@ -128,7 +124,7 @@ public class TestUtilisateur {
 		String mdpUtilisateur = "MotDePasseRaisonnableEtCorrect77";
 		String mail = "mailunique@77gmail.com";
 		bd.tools.UtilisateursTools.ajouterUtilisateur(pseudo, outils.MesMethodes.hasherMotDePasse(mdpUtilisateur), mail, null, null, null);
-		String idUtilisateur = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo);
+		String idUtilisateur = bd.tools.UtilisateursTools.getIDByPseudo(pseudo);
 		String clef = bd.tools.SessionsTools.insertSession(idUtilisateur, false);
 		
 		System.out.println("#####\n# Debut du test de suppression d'utilisateurs\n#####");
@@ -164,7 +160,7 @@ public class TestUtilisateur {
 		String mdpUtilisateur = "MotDePasseRaisonnableEtCorrect77";
 		String mail = "mailunique@77gmail.com";
 		bd.tools.UtilisateursTools.ajouterUtilisateur(pseudoUtilisateur, outils.MesMethodes.hasherMotDePasse(mdpUtilisateur), mail, null, null, null);
-		String idUtilisateur = bd.tools.UtilisateursTools.getIdUtilisateur(pseudoUtilisateur);
+		String idUtilisateur = bd.tools.UtilisateursTools.getIDByPseudo(pseudoUtilisateur);
 		String clef = bd.tools.SessionsTools.insertSession(idUtilisateur, false);
 		
 		System.out.println("#####\n# Debut du test de modification d'utilisateurs\n#####");

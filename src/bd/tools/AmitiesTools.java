@@ -181,5 +181,58 @@ public class AmitiesTools {
         connection.close();
         
         return liste;
-	}		
+	}
+	
+	
+	/**
+	 * Vide entierement le contenu de la table 'Amities' dans
+	 * notre BDD MySQL.
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	public static void nettoieTableSessions() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "TRUNCATE TABLE Amities;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.executeQuery();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+	
+	
+	/**
+	 * Creer la table 'Amities' dans notre
+	 * BDD MySQL.
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	public static void creerTableAmities() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = String.format("%s%s%s%s%s%s",
+        		"CREATE TABLE Amities(",
+        			"id_ami1 Integer,",
+        			"id_ami2 Integer,",
+        			"timestamp Timestamp,",
+        			"PRIMARY KEY (id_ami1, id_ami2)",
+        		");");
+
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.executeQuery();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
 }

@@ -1,3 +1,0 @@
-TRUNCATE TABLE Utilisateurs;
-TRUNCATE TABLE Sessions;
-TRUNCATE TABLE Amities;

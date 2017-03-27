@@ -24,7 +24,7 @@ public class TestSession {
 		
 		System.out.println("\n#####\n# Fin du test de Login\n#####");
 		
-		String id = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo);
+		String id = bd.tools.UtilisateursTools.getIDByPseudo(pseudo);
 		String clef = bd.tools.SessionsTools.getClefById(id);
 		bd.tools.SessionsTools.suppressionCle(clef);
 		bd.tools.UtilisateursTools.supprimerUtilisateurAvecId(id);
@@ -35,7 +35,7 @@ public class TestSession {
 		String motDePasse = "motDePasseEnClair77";
 		String email = "mail1@gmail.com";
 		bd.tools.UtilisateursTools.ajouterUtilisateur(pseudo, outils.MesMethodes.hasherMotDePasse(motDePasse), email, null, null, null);
-		String id = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo);
+		String id = bd.tools.UtilisateursTools.getIDByPseudo(pseudo);
 		bd.tools.SessionsTools.insertSession(id, false);
 		String clef = bd.tools.SessionsTools.getClefById(id);
 		
