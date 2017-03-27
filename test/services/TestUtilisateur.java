@@ -6,117 +6,221 @@ import java.sql.SQLException;
 import org.json.JSONObject;
 
 import exceptions.BDException;
+import exceptions.ClefInexistanteException;
 
 public class TestUtilisateur {
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, ClefInexistanteException {
 		testCreationUtilisateur();
 		testSuppressionUtilisateur();
 		testModificationUtilisateur();
 	}
 	
 	private static void testCreationUtilisateur() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		System.out.println("Debut du test de creation d'utilisateurs");
+		String pseudo = "TEST_utilisateur_1";
+		String motDePasse = "motDePasseEnClair77";
+		String mail = "mail1@gmail.com";
 		
-		System.out.println("On peut creer un utilisateur en remplissant tous les champs:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_1", "motDePasseEnClair",
-				                                                                        "mail1@gmail.com", "John", "Smith",
+		System.out.println("#####\n# Debut du test de creation d'utilisateurs\n#####");
+		
+		System.out.println("\nOn peut creer un utilisateur en remplissant tous les champs:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        mail, "John", "Smith",
 				                                                                        "1900-01-01"));
+		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo(pseudo);
 		
-		System.out.println("On peut creer un utilisateur en omettant des champs:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_2", "motDePasseEnClair",
+		System.out.println("\nOn peut creer un utilisateur en omettant des champs:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        mail, null, null, null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec le meme pseudo:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
 				                                                                        "mail2@gmail.com", null, null, null));
-		
-		System.out.println("On ne peut pas creer d'utilisateur avec le meme pseudo:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_2", "motDePasseEnClair",
-				                                                                        "mail3@gmail.com", null, null, null));
 
-		System.out.println("On ne peut pas creer d'utilisateur avec le meme mail:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_3", "motDePasseEnClair",
-				                                                                        "mail1@gmail.com", null, null, null));
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec le meme mail:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo + "x", motDePasse,
+				                                                                        mail, null, null, null));
+		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo(pseudo);
 		
-		System.out.println("On ne peut pas creer d'utilisateur avec un mot de passe trop court:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_3", "mdp",
-				                                                                        "mail4@gmail.com", null, null, null));
-		
-		System.out.println("On ne peut pas creer d'utilisateur avec un mot de passe trop long:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_4", "CeMotDePasseEstDrolementLong,JemedemandejusquaOuPeutIlaller,SurementresLoin,EnToutCasilDoitEtreVraimentTresLongDeManiereASassurerQuilNePassePas...VousEtesEncoreEnTrainDeLire?",
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un mot de passe pas assez securise:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, "mdpmdpmdpmdp",
 				                                                                        "mail5@gmail.com", null, null, null));
 		
-		System.out.println("On peut creer un utilisateur avec un mot de passe contenant des caracteres speciaux:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("TEST_utilisateur_5", "AAzs\"\"\\\\//!@#😁😈'\";DROP TABLE Utilisateurs",
-				                                                                        "mail6@gmail.com", null, null, null));		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un pseudo trop court:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("",
+				                                                                        motDePasse,
+				                                                                        mail, null, null, null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un pseudo trop long:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("CePseudoEstVraimentLongCePseudoEstVraimentLongCePseudoEstVraimentLongCePseudoEstVraimentLongCePseudoEstVraimentLongCePseudoEstVraimentLongCePseudoEstVraimentLongCePseudoEstVraimentLongCePseudoEstVraimentLong",
+				                                                                        motDePasse,
+				                                                                        mail, null, null, null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un mot de passe trop court:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, "mdp",
+				                                                                        mail, null, null, null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un mot de passe trop long:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, "CeMotDePasseEstDrolementLong,JemedemandejusquaOuPeutIlaller,SurementresLoin,EnToutCasilDoitEtreVraimentTresLongDeManiereASassurerQuilNePassePas...VousEtesEncoreEnTrainDeLire?77",
+				                                                                        mail, null, null, null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un email trop court:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        "",
+				                                                                        null, null, null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un email trop long:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        "adressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongue@gmail.com",
+				                                                                        null, null, null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un prenom trop court:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        mail,
+				                                                                        "",
+				                                                                        null, null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un prenom trop long:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        mail,
+				                                                                        "CeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlong",
+				                                                                        null, null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un nom trop court:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        mail, null,
+				                                                                        "",
+				                                                                        null));
+		
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un nom trop long:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        mail,  null,
+				                                                                        "CenomestdrolementlongCenomestdrolementlongCenomestdrolementlongCenomestdrolementlongCenomestdrolementlongCenomestdrolementlongCenomestdrolementlongCenomestdrolementlongCenomestdrolementlongCenomestdrolementlong",
+				                                                                        null));
+		
+		/*
+		// TODO: Valider ce test
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un anniversaire trop court:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        mail, null, null,
+				                                                                        ""));
+		
+		// TODO: Valider ce test
+		System.out.println("\nOn ne peut pas creer d'utilisateur avec un anniversaire trop long:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
+				                                                                        mail,  null, null,
+				                                                                        "CetAnniversaireEsTropLongCetAnniversaireEsTropLongCetAnniversaireEsTropLongCetAnniversaireEsTropLongCetAnniversaireEsTropLongCetAnniversaireEsTropLongCetAnniversaireEsTropLongCetAnniversaireEsTropLong"));
+		*/
+		
+		System.out.println("\nOn peut creer un utilisateur avec un mot de passe contenant des caracteres speciaux:");
+		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, "AAz3s\"\"\\\\//!@#😁😈'\";DROP TABLE Utilisateurs",
+				                                                                        mail, null, null, null));		
 		
 		// Nettoyage des utilisateurs crees
-		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_1");
-		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_2");
-		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("TEST_utilisateur_5");
+		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo(pseudo);
 		
-		System.out.println("Fin du test de creation d'utilisateurs");
+		System.out.println("\n#####\n# Fin du test de creation d'utilisateurs\n#####");
 	}
 
 	
-	private static void testSuppressionUtilisateur() throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
+	private static void testSuppressionUtilisateur() throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException, ClefInexistanteException {
 		// On ajoute un utilisateur pour des tests
-		String pseudoUtilisateur = "TEST_utilisateur_1";
-		String mdpUtilisateur = "MotDePasseRaisonnableEtCorrect";
-		bd.tools.UtilisateursTools.ajouterUtilisateur(pseudoUtilisateur, outils.MesMethodes.hasherMotDePasse(mdpUtilisateur), "mailunique@77gmail.com", null, null, null);
-		String idUtilisateur = bd.tools.UtilisateursTools.getIdUtilisateur(pseudoUtilisateur);
+		String pseudo = "TEST_utilisateur_1";
+		String mdpUtilisateur = "MotDePasseRaisonnableEtCorrect77";
+		String mail = "mailunique@77gmail.com";
+		bd.tools.UtilisateursTools.ajouterUtilisateur(pseudo, outils.MesMethodes.hasherMotDePasse(mdpUtilisateur), mail, null, null, null);
+		String idUtilisateur = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo);
+		String clef = bd.tools.SessionsTools.insertSession(idUtilisateur, false);
 		
-		System.out.println("Debut du test de suppression d'utilisateurs");
+		System.out.println("#####\n# Debut du test de suppression d'utilisateurs\n#####");
+
+		System.out.println("\nOn ne peut pas supprimer d'utilisateur avec une clef de mauvaise taille:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur("", mdpUtilisateur));
 		
-		System.out.println("On ne peut pas supprimer d'utilisateur n'existant pas:");
-		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur("-500", "MotDePassePeuImportant"));
+		System.out.println("\nOn ne peut pas supprimer d'utilisateur avec un mot de passe trop court:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur(clef, ""));
 		
-		System.out.println("On ne peut pas supprimer d'utilisateur avec le mauvais mot de passe:");
-		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur(idUtilisateur, "MauvaisMotDePasse"));
+		System.out.println("\nOn ne peut pas supprimer d'utilisateur avec un mot de passe trop long:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur(clef, "77MotDePasseTresLongMotDePasseTresLongMotDePasseTresLongMotDePasseTresLongMotDePasseTresLongMotDePasseTresLongMotDePasseTresLongMotDePasseTresLongMotDePasseTresLongMotDePasseTresLong"));
 		
-		System.out.println("On peut supprimer un utilisateur avec le bon id et le bon mot de passe:");
-		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur(idUtilisateur, mdpUtilisateur));
+		System.out.println("\nOn ne peut pas supprimer d'utilisateur sans etre connecte:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur("clefinexistanteXXXXXXXXXXXXXXXXX", "MotDePassePeuImportant"));
 		
-		System.out.println("Fin du test de suppression d'utilisateurs");
+		System.out.println("\nOn ne peut pas supprimer d'utilisateur avec le mauvais mot de passe:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur(clef, "MauvaisMotDePasse"));
+		
+		System.out.println("\nOn peut supprimer un utilisateur avec la bonne clef et le bon mot de passe:");
+		System.out.println(services.utilisateur.SuppressionUtilisateur.suppressionUtilisateur(clef, mdpUtilisateur));
+		
+		System.out.println("\n#####\n# Fin du test de suppression d'utilisateurs\n#####");
+		
+		// Nettoyage des utilisateurs crees
+		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo(pseudo);
 	}
 	
 	
-	private static void testModificationUtilisateur() {
-		System.out.println("Debut du test de modification d'utilisateurs");
-		try {
-			bd.tools.UtilisateursTools.ajouterUtilisateur("10000", "TEST_utilisateur_nul", outils.MesMethodes.hasherMotDePasse("motDePasseEnClair"), "mail@gmail.com", null, null, null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		System.out.println("On ne peut pas modifier d'utilisateur n'existant pas:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("-500", "motDePasseEnClair", "TEST_utilisateur_mieux", null, null, null, null, null));
-		System.out.println("On ne peut pas modifier d'utilisateur avec le mauvais mot de passe:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "mauvaisMotDePasse", "TEST_utilisateur_mieux", null, null, null, null, null));
-		System.out.println("On ne peut pas modifier d'utilisateur si le nouveau pseudo est deja prit:");
+	private static void testModificationUtilisateur() throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
+		// On ajoute un utilisateur pour des tests
+		String pseudoUtilisateur = "TEST_utilisateur_1";
+		String mdpUtilisateur = "MotDePasseRaisonnableEtCorrect77";
+		String mail = "mailunique@77gmail.com";
+		bd.tools.UtilisateursTools.ajouterUtilisateur(pseudoUtilisateur, outils.MesMethodes.hasherMotDePasse(mdpUtilisateur), mail, null, null, null);
+		String idUtilisateur = bd.tools.UtilisateursTools.getIdUtilisateur(pseudoUtilisateur);
+		String clef = bd.tools.SessionsTools.insertSession(idUtilisateur, false);
+		
+		System.out.println("#####\n# Debut du test de modification d'utilisateurs\n#####");
+
+		System.out.println("\nOn ne peut pas modifier d'utilisateur non connecte:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("ClefinexistanteXXXXXXXXXXXXXXXXX", mdpUtilisateur, "TEST_utilisateur_inexistant", null, null, null, null, null));
+		
+		System.out.println("\nOn peut lancer le service sans rien modifier:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, null, null, null, null, null));
+		
+		System.out.println("\nOn ne peut pas modifier d'utilisateur avec le mauvais mot de passe:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, "mauvaisMotDePasse", null, null, null, null, null, null));
+		
 		//TODO: Valider ce test
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "motDePasseEnClair", "SuperNicolas", null, null, null, null, null));
-		System.out.println("On ne peut pas modifier d'utilisateur si le nouveau mot de passe est pas assez securise:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "motDePasseEnClair", null, "mdp", null, null, null, null));
-		System.out.println("On ne peut pas modifier d'utilisateur si le nouvel anniversaire est invalide:");
+		System.out.println("\nOn ne peut pas modifier d'utilisateur si le nouveau pseudo est deja prit:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, pseudoUtilisateur, null, null, null, null, null));
+		
 		//TODO: Valider ce test
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "motDePasseEnClair", null, null, null, null, null, "1900-00-00"));
-		System.out.println("On peut modifier le pseudo d'un utilisateur:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "motDePasseEnClair", "TEST_utilisateur_mieux", null, null, null, null, null));
-		System.out.println("On peut modifier le mot de passe d'un utilisateur:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "motDePasseEnClair", null, "MotDePasseVachementMieux", null, null, null, null));
-		System.out.println("On peut modifier le mail d'un utilisateur:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "MotDePasseVachementMieux", null, null, "mailplusbeau@gmail.com", null, null, null));
-		System.out.println("On peut modifier le prenom d'un utilisateur:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "MotDePasseVachementMieux", null, null, null, "PrenomCool", null, null));
-		System.out.println("On peut modifier le nom d'un utilisateur:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "MotDePasseVachementMieux", null, null, null, null, "NomCool", null));
-		System.out.println("On peut modifier l'anniversaire d'un utilisateur:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "MotDePasseVachementMieux", null, null, null, null, null, "1900-01-01"));
-		System.out.println("On peut tout modifier d'un coup:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur("10000", "MotDePasseVachementMieux", "TEST_utilisateur_ENCORE_mieux", "MotDePasseVachementPLUSMieux", "mailENCOREplusbeau@gmail.com", "PrenomGenial", "NomSuper", "2000-01-01"));
+		System.out.println("\nOn ne peut pas modifier d'utilisateur si le nouveau mail est deja prit:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, null, mail, null, null, null));		
+		
+		System.out.println("\nOn ne peut pas modifier d'utilisateur si le nouveau mot de passe est pas assez securise:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, "mdpmdpmdp", null, null, null, null));
+		
+		//TODO: Valider ce test
+		System.out.println("\nOn ne peut pas modifier d'utilisateur si le nouvel anniversaire est invalide:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, null, null, null, null, "Anniversaire invalide"));
+		
+		System.out.println("\nOn peut modifier le pseudo d'un utilisateur:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, "TEST_utilisateur_mieux", null, null, null, null, null));
+		
+		System.out.println("\nOn peut modifier le mot de passe d'un utilisateur:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, "MotDePasseVachementMieux77", null, null, null, null));
+		bd.tools.UtilisateursTools.modifierMotDePasse(idUtilisateur, outils.MesMethodes.hasherMotDePasse(mdpUtilisateur));
+		
+		System.out.println("\nOn peut modifier le mail d'un utilisateur:");
+		String mail2 = "nouveaumailunique@77gmail.com";
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, null, mail2, null, null, null));
+		
+		System.out.println("\nOn peut modifier le prenom d'un utilisateur:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, null, null, "PrenomCool", null, null));
+		
+		System.out.println("\nOn peut modifier le nom d'un utilisateur:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, null, null, null, "NomCool", null));
+		
+		// TODO: Valider ce test
+		System.out.println("\nOn peut modifier l'anniversaire d'un utilisateur:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, null, null, null, null, "1900-01-01"));
+		
+		// TODO: Valider ce test
+		System.out.println("\nOn peut tout modifier d'un coup:");
+		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, "TEST_utilisateur_ENCORE_mieux", "MotDePasseVachementPLUSMieux77", "mailENCOREplusbeau@gmail.com", "PrenomGenial", "NomSuper", "2000-01-01"));
 		
 		// Nettoyage de l'utilisateur cree
-		try {
-			bd.tools.UtilisateursTools.supprimerUtilisateurAvecId("10000");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("Fin du test de modification d'utilisateurs");
+		bd.tools.UtilisateursTools.supprimerUtilisateurAvecId(idUtilisateur);
+		
+		System.out.println("\n#####\n# Fin du test de modification d'utilisateurs\n#####");
 	}
 }

@@ -2,7 +2,6 @@ package services.authentification;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,8 +9,13 @@ import org.json.JSONObject;
 import bd.tools.AmitiesTools;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
+import exceptions.tailles.MotDePasseTropGrandException;
+import exceptions.tailles.MotDePasseTropPetitException;
+import exceptions.tailles.PseudoTropGrandException;
+import exceptions.tailles.PseudoTropPetitException;
 import services.CodesErreur;
 import services.ErrorJSON;
+import services.Tailles;
 
 public class Login {
 	public static JSONObject login(String pseudo, String motDePasse) {
@@ -20,6 +24,9 @@ public class Login {
 			if (! verificationParametres(pseudo, motDePasse)) {
 				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 			}
+			
+			// On verifie que les parametres entres respectent nos criteres de taille
+			verificationTailleInput(pseudo, motDePasse);
 			
 			// On verifie que l'utilisateur existe
 			boolean isUser = UtilisateursTools.checkExistencePseudo(pseudo);
@@ -73,12 +80,51 @@ public class Login {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (NoSuchAlgorithmException e) {
 			return ErrorJSON.serviceRefused("Erreur lors du hashage du mot de passe", CodesErreur.ERREUR_HASHAGE);
+		} catch (PseudoTropPetitException e) {
+			return ErrorJSON.serviceRefused("Erreur, pseudo trop petit", CodesErreur.ERREUR_PSEUDO_TROP_COURT);
+		} catch (PseudoTropGrandException e) {
+			return ErrorJSON.serviceRefused("Erreur, pseudo trop grand", CodesErreur.ERREUR_PSEUDO_TROP_GRAND);
+		} catch (MotDePasseTropPetitException e) {
+			return ErrorJSON.serviceRefused("Erreur, mot de passe trop petit", CodesErreur.ERREUR_MDP_TROP_COURT);
+		} catch (MotDePasseTropGrandException e) {
+			return ErrorJSON.serviceRefused("Erreur, mot de passe trop grand", CodesErreur.ERREUR_MDP_TROP_LONG);
 		} 
 	}
 	
+	
+	/**
+	 * Verifie que les parametres entres respectent nos criteres de taille.
+	 * Ces tailles sont situees dans le fichier services.Tailles.java
+	 * Cette fonction lance une exception si un des parametres ne respecte
+	 * pas ces criteres
+	 * @param pseudo
+	 * @param motDePasse
+	 * @throws PseudoTropPetitException 
+	 * @throws PseudoTropGrandException 
+	 * @throws MotDePasseTropPetitException 
+	 * @throws MotDePasseTropGrandException 
+	 */
+	private static void verificationTailleInput(String pseudo, String motDePasse) throws PseudoTropPetitException, PseudoTropGrandException, MotDePasseTropPetitException, MotDePasseTropGrandException {
+		if (pseudo.length() < Tailles.MIN_PSEUDO) {
+			throw new PseudoTropPetitException();
+		} else if (pseudo.length() > Tailles.MAX_PSEUDO) {
+			throw new PseudoTropGrandException();
+		} else if (motDePasse.length() < Tailles.MIN_MOT_DE_PASSE) {
+			throw new MotDePasseTropPetitException();
+		} else if (motDePasse.length() > Tailles.MAX_MOT_DE_PASSE) {
+			throw new MotDePasseTropGrandException();
+		}
+	}
+
+	
+   /**
+    * Verification de la validite des parametres
+    * @return : Un booleen a true si les paramatres sont valides.
+    */
 	private static boolean verificationParametres(String login, String motDePasse) {
 		return (login != null && motDePasse != null);
 	}
+	
 	
 	private static boolean estAdministrateur(String login) {
 		return (login.equals("SuperAlexia")) || (login.equals("SuperNicolas"));

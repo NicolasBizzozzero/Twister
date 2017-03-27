@@ -15,13 +15,12 @@ import services.commentaire.ListerCommentaires;
 public class ServletListerCommentaires extends HttpServlet {
     public void doGet(HttpServletRequest requete, HttpServletResponse reponse) throws ServletException, IOException {
         // Recuperation des parametres
-	String cle = requete.getParameter("cle");
-	int limite = Integer.parseInt(requete.getParameter("limite"));
-	int index_debut = Integer.parseInt(requete.getParameter("index_debut"));
-
-	// Utilisation du service approprie
-	JSONObject retour = ListerCommentaires.listerCommentaires(cle, index_debut, limite);
-	reponse.setContentType("text/plain");
-	reponse.getWriter().print(retour);
+		String clef = requete.getParameter("clef");
+		String id_message = requete.getParameter("id_message");
+	
+		// Utilisation du service approprie
+		JSONObject retour = ListerCommentaires.listerCommentaires(clef, id_message);
+		reponse.setContentType("text/plain");
+		reponse.getWriter().print(retour);
     }
 }

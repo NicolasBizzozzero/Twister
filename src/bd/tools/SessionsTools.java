@@ -10,6 +10,7 @@ import java.util.Date;
 import bd.Database;
 import exceptions.ClefInexistanteException;
 import outils.MesMethodes;
+import services.Tailles;
 
 public class SessionsTools {
 	public static final int TEMPS_AVANT_DECONNEXION = 3600000; // En millisecondes, = 60 minutes
@@ -42,7 +43,7 @@ public class SessionsTools {
 		// Tant qu'on n'obtient pas de clef unique, on recommence
 		String cle;
 		do {
-			cle = MesMethodes.getStringAleatoire(32);
+			cle = MesMethodes.getStringAleatoire(Tailles.TAILLE_CLEF);
 		} while(SessionsTools.clefExiste(cle));
 		
 		// On cree une session dans la BDD avec cette clef
