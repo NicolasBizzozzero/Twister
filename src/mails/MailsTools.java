@@ -2,6 +2,7 @@ package mails;
 
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -27,27 +28,30 @@ public class MailsTools {
 	 */
 	public static void envoyerMail(String destinataire, String enTete, String contenu) throws MessagingException {  
         // On modifie les proprietes du mail
-        Properties props = new Properties();    
-        props.put("mail.smtp.host", "smtp.gmail.com");    
-        props.put("mail.smtp.socketFactory.port", "465");    
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");    
-        props.put("mail.smtp.auth", "true");    
-        props.put("mail.smtp.port", "465");
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "localhost:smtp");
+        props.put("mail.smtp.port", 25);
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.user", MAIL_ENVOYEUR);
+        props.put("mail.password", MOT_DE_PASSE_ENVOYEUR);
         
         // On se connecte  
-        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {    
-	         protected PasswordAuthentication getPasswordAuthentication() {    
-		         return new PasswordAuthentication(MAIL_ENVOYEUR, MOT_DE_PASSE_ENVOYEUR);
-	         }
-	    });
+        Authenticator auth = new Authenticator() {
+            public PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(MAIL_ENVOYEUR, MOT_DE_PASSE_ENVOYEUR);
+            }
+        };
+        Session session = Session.getInstance(props, auth);
         
         // On ecrit le message
-    	MimeMessage message = new MimeMessage(session);    
+    	MimeMessage message = new MimeMessage(session);
+    	message.setFrom(new InternetAddress(MAIL_ENVOYEUR));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinataire));    
         message.setSubject(enTete);    
         message.setText(contenu);    
         
-        // On envoie le message  
+        // On envoie le message 
         Transport.send(message);    
 	}
 	
