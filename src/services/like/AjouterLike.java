@@ -8,10 +8,8 @@ import org.json.JSONObject;
 
 import services.CodesErreur;
 import services.ErrorJSON;
-import bd.tools.CommentairesTools;
 import bd.tools.LikesTools;
 import bd.tools.SessionsTools;
-import bd.tools.UtilisateursTools;
 import exceptions.ClefInexistanteException;
 
 public class AjouterLike {

@@ -3,11 +3,6 @@ package services;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-import org.json.JSONObject;
-
-import bd.tools.SessionsTools;
-import exceptions.BDException;
-
 public class TestAmities {
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
@@ -33,10 +28,10 @@ public class TestAmities {
 		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo2, mdp2, "mail1@gmail.com", sNull, sNull, sNull);
 		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo3, mdp3, "mail1@gmail.com", sNull, sNull, sNull);
 		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo4, mdp4, "mail1@gmail.com", sNull, sNull, sNull);
-		String id1 = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo1);
-		String id2 = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo2);
-		String id3 = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo3);
-		String id4 = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo4);
+		String id1 = bd.tools.UtilisateursTools.getIDByPseudo(pseudo1);
+		String id2 = bd.tools.UtilisateursTools.getIDByPseudo(pseudo2);
+		String id3 = bd.tools.UtilisateursTools.getIDByPseudo(pseudo3);
+		String id4 = bd.tools.UtilisateursTools.getIDByPseudo(pseudo4);
 		
 		// Ensuite on les connecte
 		String clef1 = services.authentification.Login.login(pseudo1, mdp1).getString("clef");
@@ -87,9 +82,9 @@ public class TestAmities {
 		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo1, mdp1, "mail1@gmail.com", sNull, sNull, sNull);
 		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo2, mdp2, "mail1@gmail.com", sNull, sNull, sNull);
 		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo3, mdp3, "mail1@gmail.com", sNull, sNull, sNull);
-		String id1 = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo1);
-		String id2 = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo2);
-		String id3 = bd.tools.UtilisateursTools.getIdUtilisateur(pseudo3);
+		String id1 = bd.tools.UtilisateursTools.getIDByPseudo(pseudo1);
+		String id2 = bd.tools.UtilisateursTools.getIDByPseudo(pseudo2);
+		String id3 = bd.tools.UtilisateursTools.getIDByPseudo(pseudo3);
 		
 		// Ensuite on les connecte
 		String clef1 = services.authentification.Login.login(pseudo1, mdp1).getString("clef");

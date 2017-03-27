@@ -2,10 +2,6 @@ package bd.tools;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;

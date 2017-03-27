@@ -302,7 +302,7 @@ public class UtilisateursTools {
 	}
 	
 
-	public static String getIdUtilisateur(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static String getIDByPseudo(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -446,5 +446,118 @@ public class UtilisateursTools {
         connection.close();
         
         return pseudo;
+	}
+	
+	
+	/**
+	 * Execute une commande DSQL pour remettre a la valeur 1
+	 * l'autoincrement de l'ID de la table 'Utilisateurs'.
+	 * @throws SQLException
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 */
+	public static void resetAutoIncrementID() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "ALTER TABLE Utilisateurs AUTO_INCREMENT = 1;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.executeQuery();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+	
+	
+	/**
+	 * Vide entierement le contenu de la table 'Utilisateurs' dans
+	 * notre BDD MySQL.
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	public static void nettoieTableUtilisateurs() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "TRUNCATE TABLE Utilisateurs;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.executeQuery();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+	
+	
+	/**
+	 * Creer la table 'Utilisateurs' dans notre
+	 * BDD MySQL.
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	public static void creerTableUtilisateurs() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = String.format("%s%s%s%s%s%s%s%s%s",
+        		"CREATE TABLE Utilisateurs(",
+        			"id Integer PRIMARY KEY AUTO_INCREMENT,",
+        			"pseudo Varchar(32) UNIQUE,",
+        			"mot_de_passe Varchar(64),",
+        			"mail Varchar(64) UNIQUE,",
+        			"prenom Varchar(64),",
+        			"nom Varchar(64),",
+        			"anniversaire Date",
+        		");");
+
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.executeQuery();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+
+
+	/**
+	 * Retourne l'ID de l'utilisateur dont l'email est passe en
+	 * parametre.
+	 * @param email : L'email de l'utilisateur qu'on recherche
+	 * @return L'ID de l'utilisateur trouve
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 */
+	public static String getIDByEmail(String email) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT id FROM Utilisateurs WHERE mail=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, email);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        resultSet.next();
+        String id = Integer.toString(resultSet.getInt("id"));
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return id;
 	}
 }

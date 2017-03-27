@@ -9,8 +9,12 @@ import bd.tools.AmitiesTools;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import exceptions.ClefInexistanteException;
+import exceptions.tailles.ClefInvalideException;
+import exceptions.tailles.IDTropGrandException;
+import exceptions.tailles.IDTropPetitException;
 import services.CodesErreur;
 import services.ErrorJSON;
+import services.Tailles;
 
 public class SupprimerAmi {
 	
@@ -28,6 +32,8 @@ public class SupprimerAmi {
 			if (! verificationParametres(clef, id_ami)){
 				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 			}
+			// On verifie que les parametres entres respectent nos criteres de taille
+			verificationTailleInput(clef, id_ami);
 
 			// On recupere l'ID du supprimant
 			String id_supprimant = SessionsTools.getIDByClef(clef);
@@ -81,8 +87,14 @@ public class SupprimerAmi {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (ClassNotFoundException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (ClefInexistanteException e) {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'est pas presente dans la Base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
-		}  catch (ParseException e) {
+		} catch (ParseException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur lors du parsing de la date du jour", clef), CodesErreur.ERREUR_PARSE_DATE);
+		} catch (ClefInvalideException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, clef de session %s invalide", clef), CodesErreur.ERREUR_CLEF_INVALIDE);
+		} catch (IDTropPetitException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, ID d'ami trop petit : %s", id_ami), CodesErreur.ERREUR_ID_TROP_COURT);
+		} catch (IDTropGrandException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, ID d'ami trop grand : %s", id_ami), CodesErreur.ERREUR_ID_TROP_LONG);
 		}
 	}
 
@@ -94,5 +106,26 @@ public class SupprimerAmi {
 	private static boolean verificationParametres(String id_ami1, String id_ami) {
 		return (id_ami1 != null && id_ami != null);
 	}
-
+	
+	
+	/**
+	 * Verifie que les parametres entres respectent nos criteres de taille.
+	 * Ces tailles sont situees dans le fichier services.Tailles.java
+	 * Cette fonction lance une exception si un des parametres ne respecte
+	 * pas ces criteres
+	 * @param clef
+	 * @param id_ami
+	 * @throws ClefInvalideException
+	 * @throws IDTropPetitException
+	 * @throws IDTropGrandException
+	 */
+    private static void verificationTailleInput(String clef, String id_ami) throws ClefInvalideException, IDTropPetitException, IDTropGrandException {
+	    if (clef.length() != Tailles.TAILLE_CLEF) {
+			throw new ClefInvalideException();
+		} else if (id_ami.length() < Tailles.MIN_ID) {
+			throw new IDTropPetitException();
+	    } else if (id_ami.length() > Tailles.MAX_ID) {
+			throw new IDTropGrandException();
+	    }
+	}
 }

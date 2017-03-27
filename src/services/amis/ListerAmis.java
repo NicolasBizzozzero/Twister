@@ -10,8 +10,16 @@ import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import exceptions.ClefInexistanteException;
 import exceptions.IndexInvalideException;
+import exceptions.tailles.ClefInvalideException;
+import exceptions.tailles.IDTropGrandException;
+import exceptions.tailles.IDTropPetitException;
+import exceptions.tailles.IndexDebutTropGrandException;
+import exceptions.tailles.IndexDebutTropPetitException;
+import exceptions.tailles.NombreDemandesTropGrandException;
+import exceptions.tailles.NombreDemandesTropPetitException;
 import services.CodesErreur;
 import services.ErrorJSON;
+import services.Tailles;
 
 public class ListerAmis {
 	
@@ -33,6 +41,9 @@ public class ListerAmis {
 			if (! verificationParametres(id_utilisateur)){
 				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 			}
+			
+			// On verifie que les parametres entres respectent nos criteres de taille
+			verificationTailleInput(clef, id_utilisateur, index_debut, nombre_demandes);
 			
 			// On verifie que l'utilisateur est connecte
 			boolean cleExiste = bd.tools.SessionsTools.clefExiste(clef);
@@ -76,11 +87,45 @@ public class ListerAmis {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'est pas presente dans la Base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 		}  catch (ParseException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur lors du parsing de la date du jour", clef), CodesErreur.ERREUR_PARSE_DATE);
+		} catch (ClefInvalideException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, clef de session %s invalide", clef), CodesErreur.ERREUR_CLEF_INVALIDE);
+		} catch (IDTropPetitException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, ID d'ami trop petit : %s", id_utilisateur), CodesErreur.ERREUR_ID_TROP_COURT);
+		} catch (IDTropGrandException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, ID d'ami trop grand : %s", id_utilisateur), CodesErreur.ERREUR_ID_TROP_LONG);
+		} catch (IndexDebutTropPetitException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, index debut trop petit : %s", index_debut), CodesErreur.ERREUR_INDEX_DEBUT_TROP_COURT);
+		} catch (IndexDebutTropGrandException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, index debut trop grand : %s", index_debut), CodesErreur.ERREUR_INDEX_DEBUT_TROP_LONG);
+		} catch (NombreDemandesTropPetitException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, nombre demandes trop petit : %s", index_debut), CodesErreur.ERREUR_NOMBRE_DEMANDES_TROP_COURT);
+		} catch (NombreDemandesTropGrandException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, nombre demandes trop grand : %s", index_debut), CodesErreur.ERREUR_NOMBRE_DEMANDES_TROP_LONG);
 		}
 	}
 
 	
-   /**
+    private static void verificationTailleInput(String clef, String id_utilisateur, String index_debut,
+			String nombre_demandes) throws ClefInvalideException, IDTropPetitException, IDTropGrandException, IndexDebutTropPetitException, IndexDebutTropGrandException, NombreDemandesTropPetitException, NombreDemandesTropGrandException {
+    	if (clef.length() != Tailles.TAILLE_CLEF) {
+			throw new ClefInvalideException();
+		} else if (id_utilisateur.length() < Tailles.MIN_ID) {
+			throw new IDTropPetitException();
+	    } else if (id_utilisateur.length() > Tailles.MAX_ID) {
+			throw new IDTropGrandException();
+	    } else if (index_debut.length() < Tailles.MIN_INT) {
+	    	throw new IndexDebutTropPetitException();
+	    } else if (index_debut.length() > Tailles.MAX_INT) {
+	    	throw new IndexDebutTropGrandException();
+	    } else if (nombre_demandes.length() < Tailles.MIN_INT) {
+	    	throw new NombreDemandesTropPetitException();
+	    } else if (nombre_demandes.length() > Tailles.MAX_INT) {
+	    	throw new NombreDemandesTropGrandException();
+	    }
+	}
+
+
+/**
     * Verification de la validite des parametres
     * @return : Un booleen a true si les paramatres sont valides.
     */

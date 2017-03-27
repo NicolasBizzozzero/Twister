@@ -1,28 +1,52 @@
 package services;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-import org.json.JSONObject;
-
-import exceptions.BDException;
 import exceptions.ClefInexistanteException;
 
 public class TestSession {
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException, InterruptedException {
-		String pseudo = "MegaPizzaSansOlives";
-		String mdp = "MonSuperMotDePasse";
-		services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, mdp, "mail1@gmail.com", null, null, null);		
-		String clef = testLogin(pseudo, mdp);
-		testLogout(clef);
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException, InterruptedException, NoSuchAlgorithmException {
+		testLogin();
+		testLogout();
 	}
 	
-	private static String testLogin(String pseudo, String mdp){
-		JSONObject retour = services.authentification.Login.login(pseudo, mdp);
-		String clef = retour.getString("clef");
-		return clef;
+	private static void testLogin() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException, NoSuchAlgorithmException{
+		String pseudo = "TEST_utilisateur_1";
+		String motDePasse = "motDePasseEnClair77";
+		String email = "mail1@gmail.com";
+		bd.tools.UtilisateursTools.ajouterUtilisateur(pseudo, outils.MesMethodes.hasherMotDePasse(motDePasse), email, null, null, null);
+		
+		System.out.println("#####\n# Debut du test de Login\n#####");
+		
+		System.out.println("\nOn peut se loguer:");
+		System.out.println(services.authentification.Login.login(pseudo, motDePasse).toString(4));
+		
+		System.out.println("\n#####\n# Fin du test de Login\n#####");
+		
+		String id = bd.tools.UtilisateursTools.getIDByPseudo(pseudo);
+		String clef = bd.tools.SessionsTools.getClefById(id);
+		bd.tools.SessionsTools.suppressionCle(clef);
+		bd.tools.UtilisateursTools.supprimerUtilisateurAvecId(id);
 	}
 	
-	private static void testLogout(String clef) {
-		System.out.println(services.authentification.Logout.logout(clef));
+	private static void testLogout() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException, NoSuchAlgorithmException {
+		String pseudo = "TEST_utilisateur_1";
+		String motDePasse = "motDePasseEnClair77";
+		String email = "mail1@gmail.com";
+		bd.tools.UtilisateursTools.ajouterUtilisateur(pseudo, outils.MesMethodes.hasherMotDePasse(motDePasse), email, null, null, null);
+		String id = bd.tools.UtilisateursTools.getIDByPseudo(pseudo);
+		bd.tools.SessionsTools.insertSession(id, false);
+		String clef = bd.tools.SessionsTools.getClefById(id);
+		
+		System.out.println("#####\n# Debut du test de Logout\n#####");
+		
+		System.out.println("\nOn peut se logout:");
+		System.out.println(services.authentification.Logout.logout(clef).toString(4));
+		
+		System.out.println("\n#####\n# Fin du test de Logout\n#####");
+		
+		bd.tools.SessionsTools.suppressionCle(clef);
+		bd.tools.UtilisateursTools.supprimerUtilisateurAvecId(id);
 	}
 }

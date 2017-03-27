@@ -10,6 +10,7 @@ import java.util.Date;
 import bd.Database;
 import exceptions.ClefInexistanteException;
 import outils.MesMethodes;
+import services.Tailles;
 
 public class SessionsTools {
 	public static final int TEMPS_AVANT_DECONNEXION = 3600000; // En millisecondes, = 60 minutes
@@ -42,7 +43,7 @@ public class SessionsTools {
 		// Tant qu'on n'obtient pas de clef unique, on recommence
 		String cle;
 		do {
-			cle = MesMethodes.getStringAleatoire(32);
+			cle = MesMethodes.getStringAleatoire(Tailles.TAILLE_CLEF);
 		} while(SessionsTools.clefExiste(cle));
 		
 		// On cree une session dans la BDD avec cette clef
@@ -295,5 +296,59 @@ public class SessionsTools {
         connection.close();
         
         return date;
+	}
+	
+	
+	/**
+	 * Vide entierement le contenu de la table 'Sessions' dans
+	 * notre BDD MySQL.
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	public static void nettoieTableSessions() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "TRUNCATE TABLE Sessions;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.executeQuery();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+	
+	
+	/**
+	 * Creer la table 'Sessions' dans notre
+	 * BDD MySQL.
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
+	public static void creerTableSessions() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = String.format("%s%s%s%s%s%s%s",
+        		"CREATE TABLE Sessions(",
+        			"clef Varchar(32) UNIQUE,",
+        			"id Integer UNIQUE,",
+        			"timestamp Timestamp,",
+        			"est_administrateur boolean,",
+        			"PRIMARY KEY (id)",
+        		");");
+
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.executeQuery();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
 	}
 }
