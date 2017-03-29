@@ -93,9 +93,9 @@ public class AjouterAmi {
 		} catch (ClefInvalideException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur, clef de session %s invalide", clef), CodesErreur.ERREUR_CLEF_INVALIDE);
 		} catch (IDTropPetitException e) {
-			return ErrorJSON.serviceRefused(String.format("Erreur, ID d'ami trop petit : %s", id_ami), CodesErreur.ERREUR_ID_TROP_COURT);
+			return ErrorJSON.serviceRefused("Erreur, ID d'ami trop petit : %s", CodesErreur.ERREUR_ID_TROP_COURT);
 		} catch (IDTropGrandException e) {
-			return ErrorJSON.serviceRefused(String.format("Erreur, ID d'ami trop grand : %s", id_ami), CodesErreur.ERREUR_ID_TROP_LONG);
+			return ErrorJSON.serviceRefused("Erreur, ID d'ami trop grand : %s", CodesErreur.ERREUR_ID_TROP_LONG);
 		}
 	}
 

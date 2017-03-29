@@ -73,7 +73,7 @@ public class RecuperationMotDePasse {
 			return ErrorJSON.serviceRefused("Erreur lors du hashage du mot de passe", CodesErreur.ERREUR_HASHAGE);
 		} catch (MessagingException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur lors de l'envoi du mail : ", e.getMessage()), CodesErreur.ERREUR_ENVOI_MAIl);
-		}  
+		}
 	}
 
 	

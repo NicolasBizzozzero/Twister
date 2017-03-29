@@ -20,6 +20,8 @@ public class Tailles {
 	public static final int MAX_COMMENTAIRE = 256;
 	public static final int MIN_ID = 1;
 	public static final int MAX_ID = 11;
+	public static final int MIN_TYPE_LIKE = 1;
+	public static final int MAX_TYPE_LIKE = 1;
 	
 	// TODO: Verifier taille anniversaire
 	public static final int MIN_ANNIVERSAIRE = 1;
