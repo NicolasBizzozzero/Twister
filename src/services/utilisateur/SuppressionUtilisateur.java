@@ -4,12 +4,15 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
+import javax.mail.MessagingException;
+
 import org.json.JSONObject;
 
 import exceptions.ClefInexistanteException;
 import exceptions.tailles.ClefInvalideException;
 import exceptions.tailles.MotDePasseTropGrandException;
 import exceptions.tailles.MotDePasseTropPetitException;
+import mails.MailsTools;
 import bd.tools.AmitiesTools;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
@@ -60,6 +63,10 @@ public class SuppressionUtilisateur {
 			if (! motDePasseCorrect) {
 				return ErrorJSON.serviceRefused("Erreur, mot de passe incorrect", CodesErreur.ERREUR_MDP_INCORRECT);
 			}
+			
+			// On recupere son email et son pseudo
+			// String email = bd.tools.UtilisateursTools.getEmailByID(id_utilisateur);
+			// String pseudo = bd.tools.UtilisateursTools.getPseudoUtilisateur(id_utilisateur);
 
 			// On supprime l'utilisateur
 			UtilisateursTools.supprimerUtilisateurAvecId(id_utilisateur);
@@ -69,6 +76,9 @@ public class SuppressionUtilisateur {
 			
 			// On le deconnecte
 			SessionsTools.suppressionCle(clef);
+			
+			// On envoie un mail de au revoir a l'utilisateur
+			// MailsTools.envoyerMailAuRevoir(email, pseudo); 
 
 			// On renvoie une reponse
 			return new JSONObject();
@@ -93,7 +103,9 @@ public class SuppressionUtilisateur {
 			return ErrorJSON.serviceRefused("Erreur, mot de passe trop petit", CodesErreur.ERREUR_MDP_TROP_COURT);
 		} catch (MotDePasseTropGrandException e) {
 			return ErrorJSON.serviceRefused("Erreur, mot de passe trop grand", CodesErreur.ERREUR_MDP_TROP_LONG);
-		}
+		}/* catch (MessagingException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de l'envoi du mail", CodesErreur.ERREUR_ENVOI_MAIl);
+	    } */
 	}
 
 	

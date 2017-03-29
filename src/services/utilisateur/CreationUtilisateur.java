@@ -1,6 +1,9 @@
 package services.utilisateur;
 
 import java.sql.SQLException;
+
+import javax.mail.MessagingException;
+
 import java.security.NoSuchAlgorithmException;
 
 import org.json.JSONObject;
@@ -10,6 +13,7 @@ import services.CodesErreur;
 import services.ErrorJSON;
 import services.Tailles;
 import exceptions.tailles.*;
+import mails.MailsTools;
 
 
 public class CreationUtilisateur {
@@ -65,6 +69,9 @@ public class CreationUtilisateur {
 
 			// On ajoute l'utilisateur a la BDD
 			UtilisateursTools.ajouterUtilisateur(pseudo, motDePasse, email, prenom, nom, anniversaire);
+			
+			// On envoie un mail de bienvenue a l'utilisateur
+			//MailsTools.envoyerMailBienvenue(email, pseudo); 
 
 			// On renvoie une reponse
 			return new JSONObject();
@@ -102,7 +109,9 @@ public class CreationUtilisateur {
 			return ErrorJSON.serviceRefused("Erreur, anniversaire trop petit", CodesErreur.ERREUR_ANNIVERSAIRE_TROP_COURT);
 		} catch (AnniversaireTropGrandException e) {
 			return ErrorJSON.serviceRefused("Erreur, anniversaire trop grand", CodesErreur.ERREUR_ANNIVERSAIRE_TROP_LONG);
-		}
+		}/* catch (MessagingException e) {
+			return ErrorJSON.serviceRefused("Erreur lors de l'envoi du mail", CodesErreur.ERREUR_ENVOI_MAIl);
+		} */
 	}
 
 	

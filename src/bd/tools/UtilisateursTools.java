@@ -560,4 +560,28 @@ public class UtilisateursTools {
         
         return id;
 	}
+
+
+	public static String getEmailByID(String id_utilisateur) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT mail FROM Utilisateurs WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, id_utilisateur);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        resultSet.next();
+        String mail = resultSet.getString("mail");
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return mail;
+	}
 }

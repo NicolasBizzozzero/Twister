@@ -43,15 +43,7 @@ Avec
        - i: l'identifiant de l'utilisateur
        - l: le login de l'utilisateur
 
-
------------------- Service GetPass (optionnel) -----------------------------------------
-
-Le service GetPass permet d'obtenir son mot de passe sur la boîte mail renseignée lors de l'inscription.
-Il attend les paramètres suivants:
-        - mail : le mail de l'utilisateur voulant obtenir son mot de passe
-
-Le service retourne un json vide si tout va bien (avec un champ erreur si il y a eu un soucis)
-
+-----------------------------------------
 
 
 Verifier la taille de TOUS les inputs
@@ -62,10 +54,6 @@ La fonction retournant le temps d'inactivite d'un utilisateur ne fonctionne pas 
 Tester SupprimerLike avec un utilisateur n'ayant pas like
 Service ListerMessages
 Implementer la verification de la validite de la date d'anniversaire
-Service AjouterLike
-Service SupprimerLike
-Service ListerLike
-Attention a bazard dans ServletCreationUtilisateur
 Faire un schema de la BDD MongoDB
 Faire un schema de la BDD MySQL
 Implementer toutes les fonctions liees aux emails (meme si le proxy empeche l'envoi d'email)
