@@ -90,9 +90,9 @@ public class ListerAmis {
 		} catch (ClefInvalideException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur, clef de session %s invalide", clef), CodesErreur.ERREUR_CLEF_INVALIDE);
 		} catch (IDTropPetitException e) {
-			return ErrorJSON.serviceRefused(String.format("Erreur, ID d'ami trop petit : %s", id_utilisateur), CodesErreur.ERREUR_ID_TROP_COURT);
+			return ErrorJSON.serviceRefused("Erreur, ID trop petit", CodesErreur.ERREUR_ID_TROP_COURT);
 		} catch (IDTropGrandException e) {
-			return ErrorJSON.serviceRefused(String.format("Erreur, ID d'ami trop grand : %s", id_utilisateur), CodesErreur.ERREUR_ID_TROP_LONG);
+			return ErrorJSON.serviceRefused("Erreur, ID trop grand", CodesErreur.ERREUR_ID_TROP_LONG);
 		} catch (IndexDebutTropPetitException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur, index debut trop petit : %s", index_debut), CodesErreur.ERREUR_INDEX_DEBUT_TROP_COURT);
 		} catch (IndexDebutTropGrandException e) {

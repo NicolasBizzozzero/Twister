@@ -49,6 +49,16 @@ public abstract class CodesErreur {
 	public static final int ERREUR_NOMBRE_DEMANDES_TROP_LONG = 44;
 	public static final int ERREUR_EMAIL_INEXISTANT = 45;
 	public static final int ERREUR_ENVOI_MAIl = 46;
+	public static final int ERREUR_MESSAGE_TROP_COURT = 47;
+	public static final int ERREUR_MESSAGE_TROP_LONG = 48;
+	public static final int ERREUR_TYPE_LIKE_TROP_COURT = 49;
+	public static final int ERREUR_TYPE_LIKE_TROP_LONG = 50;
+	public static final int ERREUR_COMMENTAIRE_TROP_COURT = 51;
+	public static final int ERREUR_COMMENTAIRE_TROP_LONG = 52;
+	public static final int ERREUR_ID_MESSAGE_TROP_COURT = 53;
+	public static final int ERREUR_ID_MESSAGE_TROP_LONG = 54;
+	public static final int ERREUR_ID_COMMENTAIRE_TROP_COURT = 55;
+	public static final int ERREUR_ID_COMMENTAIRE_TROP_LONG = 56;
 	public static final int ERREUR_JSON = 100;
 	public static final int ERREUR_SQL = 1000;
 	public static final int ERREUR_JAVA = 10000;

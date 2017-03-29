@@ -9,8 +9,14 @@ import org.json.JSONObject;
 import bd.tools.LikesTools;
 import bd.tools.SessionsTools;
 import exceptions.ClefInexistanteException;
+import exceptions.tailles.ClefInvalideException;
+import exceptions.tailles.IDTropGrandException;
+import exceptions.tailles.IDTropPetitException;
+import exceptions.tailles.TypeLikeTropGrandException;
+import exceptions.tailles.TypeLikeTropPetitException;
 import services.CodesErreur;
 import services.ErrorJSON;
+import services.Tailles;
 
 public class SupprimerLike {
 
@@ -27,6 +33,9 @@ public class SupprimerLike {
 			if (! verificationParametres(type_like, id_message, clef)){
 				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 			}
+			
+			// On verifie que les parametres entres respectent nos criteres de taille
+			verificationTailleInput(clef, id_message, type_like);
 			
 			// On verifie que la clef de connexion existe
 			boolean cleExiste = SessionsTools.clefExiste(clef);
@@ -76,6 +85,49 @@ public class SupprimerLike {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 		} catch (ParseException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur lors du parsing de la date du jour", clef), CodesErreur.ERREUR_PARSE_DATE);
+		} catch (ClefInvalideException e) {
+			return ErrorJSON.serviceRefused("Erreur, clef de session invalide", CodesErreur.ERREUR_CLEF_INVALIDE);
+		} catch (IDTropPetitException e) {
+			return ErrorJSON.serviceRefused("Erreur, ID message trop petit", CodesErreur.ERREUR_ID_TROP_COURT);
+		} catch (IDTropGrandException e) {
+			return ErrorJSON.serviceRefused("Erreur, ID message trop grand", CodesErreur.ERREUR_ID_TROP_LONG);
+		} catch (TypeLikeTropPetitException e) {
+			return ErrorJSON.serviceRefused("Erreur, Type Like trop petit", CodesErreur.ERREUR_TYPE_LIKE_TROP_COURT);
+		} catch (TypeLikeTropGrandException e) {
+			return ErrorJSON.serviceRefused("Erreur, Type Like trop grand", CodesErreur.ERREUR_TYPE_LIKE_TROP_LONG);
+		}
+	}
+	
+	
+	/**
+	 * Verifie que les parametres entres respectent nos criteres de taille.
+	 * Ces tailles sont situees dans le fichier services.Tailles.java
+	 * Cette fonction lance une exception si un des parametres ne respecte
+	 * pas ces criteres
+	 * @param clef
+	 * @param id_message
+	 * @param type_like
+	 * @throws ClefInvalideException
+	 * @throws IDTropPetitException
+	 * @throws IDTropGrandException
+	 * @throws TypeLikeTropPetitException
+	 * @throws TypeLikeTropGrandException
+	 */
+    private static void verificationTailleInput(String clef, String id_message, String type_like) throws ClefInvalideException, IDTropPetitException, IDTropGrandException, TypeLikeTropPetitException, TypeLikeTropGrandException {
+		if (clef.length() != Tailles.TAILLE_CLEF) {
+			throw new ClefInvalideException();
+		}
+		
+		if (id_message.length() < Tailles.MIN_ID) {
+			throw new IDTropPetitException();
+		} else if (id_message.length() > Tailles.MAX_ID) {
+			throw new IDTropGrandException();
+		}
+		
+		if (type_like.length() < Tailles.MIN_TYPE_LIKE) {
+			throw new TypeLikeTropPetitException();
+		} else if (type_like.length() > Tailles.MAX_TYPE_LIKE) {
+			throw new TypeLikeTropGrandException();
 		}
 	}
 	

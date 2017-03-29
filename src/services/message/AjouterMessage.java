@@ -7,8 +7,12 @@ import java.text.ParseException;
 import org.json.JSONObject;
 
 import exceptions.ClefInexistanteException;
+import exceptions.tailles.ClefInvalideException;
+import exceptions.tailles.MessageTropGrandException;
+import exceptions.tailles.MessageTropPetitException;
 import services.CodesErreur;
 import services.ErrorJSON;
+import services.Tailles;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import bd.tools.MessagesTools;
@@ -29,6 +33,9 @@ public class AjouterMessage {
 			if (! verificationParametres(contenu, clef)){
 				return ErrorJSON.serviceRefused("L'un des parametres est null", CodesErreur.ERREUR_ARGUMENTS);
 			}
+			
+			// On verifie que les parametres entres respectent nos criteres de taille
+			verificationTailleInput(clef, contenu);
 			
 			// On verifie que la clef de connexion existe
 			boolean cleExiste = bd.tools.SessionsTools.clefExiste(clef);
@@ -75,11 +82,41 @@ public class AjouterMessage {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'appartient pas a la base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 		}  catch (ParseException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur lors du parsing de la date du jour", clef), CodesErreur.ERREUR_PARSE_DATE);
+		} catch (ClefInvalideException e) {
+			return ErrorJSON.serviceRefused(String.format("Erreur, clef de session %s invalide", clef), CodesErreur.ERREUR_CLEF_INVALIDE);
+		} catch (MessageTropPetitException e) {
+			return ErrorJSON.serviceRefused("Erreur, Le message est trop petit", CodesErreur.ERREUR_MESSAGE_TROP_COURT);
+		} catch (MessageTropGrandException e) {
+			return ErrorJSON.serviceRefused("Erreur, Le message est trop grand", CodesErreur.ERREUR_MESSAGE_TROP_LONG);
 		}
 	}
 	
 	
-   /**
+	/**
+	 * Verifie que les parametres entres respectent nos criteres de taille.
+	 * Ces tailles sont situees dans le fichier services.Tailles.java
+	 * Cette fonction lance une exception si un des parametres ne respecte
+	 * pas ces criteres
+	 * @param clef
+	 * @param contenu
+	 * @throws ClefInvalideException
+	 * @throws MessageTropPetitException
+	 * @throws MessageTropGrandException
+	 */
+   private static void verificationTailleInput(String clef, String contenu) throws ClefInvalideException, MessageTropPetitException, MessageTropGrandException {
+		if (clef.length() != Tailles.TAILLE_CLEF) {
+			throw new ClefInvalideException();
+		}
+		
+		if (contenu.length() < Tailles.MIN_MESSAGE) {
+			throw new MessageTropPetitException();
+		} else if (contenu.length() > Tailles.MAX_MESSAGE) {
+			throw new MessageTropGrandException();
+		}
+	}
+
+
+/**
     * Verification de la validite des parametres
     * @return : Un booleen a true si les paramatres sont valides.
     */
