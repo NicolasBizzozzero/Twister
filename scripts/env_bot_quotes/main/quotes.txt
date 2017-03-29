@@ -1,4 +1,0 @@
-phrase 1
-phrase 2
-phrase 3
-phrase 4
