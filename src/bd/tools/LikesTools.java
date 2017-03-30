@@ -137,4 +137,10 @@ public class LikesTools {
 		// On retourne ce JSONObject des likes
 		return likes;
 	}
+	
+	
+	
+	public static boolean aDejaLike(String id_utilisateur, String id_message, String type_like) {
+		
+	}
 }

@@ -23,7 +23,9 @@ function makeConnexionPanel() {
 }
 
 function connexionF(formulaire) {
-	event.preventDefault();
+	formulaire.submit(function(event) {
+            event.preventDefault();
+    });
 	var login = formulaire.pseudo.value;
 	var password = formulaire.mdp.value;
 	var ok = verif_formulaire_connexion(login, password);

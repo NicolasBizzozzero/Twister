@@ -229,11 +229,11 @@ public class SessionsTools {
 		}
 		
 		Date derniereActivite = getDateByClef(clef);
-		System.out.println("Date:");
-		System.out.println(derniereActivite);
+//		System.out.println("Date:");
+//		System.out.println(derniereActivite);
 		long tempsInactivite = MesMethodes.getTempsInactivite(derniereActivite);
-		System.out.println("Temps :");
-		System.out.println(tempsInactivite);
+//		System.out.println("Temps :");
+//		System.out.println(tempsInactivite);
 		
 		return (tempsInactivite > TEMPS_AVANT_DECONNEXION);
 	}

@@ -226,6 +226,19 @@ public class MessagesTools {
 	
 	
 	/**
+	 * Retourne le nombre de messages postes depuis le debut
+	 * @return Le nombre de messages contenus dans la BDD MongoDB
+	 * @throws UnknownHostException
+	 */
+	public static int getNombreDeMessages() throws UnknownHostException {
+		DBCollection collectionCompteurs = getCollectionCompteurs();
+		
+		DBObject doc = collectionCompteurs.findOne(new BasicDBObject("_id", Nom.ID_DOCUMENT_COMPTEURS));
+		return (Integer) doc.get(Nom.CHAMP_NOMBRE_DE_MESSAGES);
+	}
+	
+
+	/**
 	 * Permet d'obtenir tous les messages contenus dans la collection "Compteurs"
 	 * Utilisee seulement à des fins de debugage
 	 * @return Un JSONObject contenant tous les messages
