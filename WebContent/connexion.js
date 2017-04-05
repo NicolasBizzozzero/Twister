@@ -24,6 +24,7 @@ function makeConnexionPanel() {
 
 function connexionF(formulaire) {
 	event.preventDefault();
+	/*
 	formulaire.submit(function(event) {
             event.preventDefault();
         });
