@@ -56,6 +56,5 @@ Service ListerMessages
 Implementer la verification de la validite de la date d'anniversaire
 Faire un schema de la BDD MongoDB
 Faire un schema de la BDD MySQL
-Implementer toutes les fonctions liees aux emails (meme si le proxy empeche l'envoi d'email)
 On ne supprime pas les messages ou les commentaires lors de la suppression d'un utilisateur, le preciser lors de l'ecriture du CDG
 Quand on aura tout fini, rajouter pour chaque service un catch (Exception e) avec un JSON D'erreur : ERREUR_INCONNUE
