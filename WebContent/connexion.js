@@ -24,7 +24,6 @@ function makeConnexionPanel() {
 
 function connexionF(formulaire) {
 	event.preventDefault();
-	/*
 	formulaire.submit(function(event) {
             event.preventDefault();
         });
@@ -33,11 +32,11 @@ function connexionF(formulaire) {
 	var password = formulaire.mdp.value;
 	var ok = verif_formulaire_connexion(login, password);
 	if (ok) {
-		console.log("entree dans ok=true");
+		//console.log("entree dans ok=true");
 		connect(login, password);
 		return true;
 	} else {
-		console.log("entree dans ok=false");
+		//console.log("entree dans ok=false");
 		return false;
 		//func_erreur("Couple 'Login-Password' invalide.");
 	}
@@ -83,20 +82,29 @@ function func_erreur(message) {
 
 function reponseConnection(rep) {
 	if (rep.erreur == undefined) {
+		console.log("pas erreur connexion");
 		env.key = rep.key;
 		env.id = rep.id;
 		env.login = rep.login;
-		env.follows = new Set();
-		
-		for (follower=0; follower < rep.follows.length; follower++) {
-			env.follows.add(rep.follows[follower]);
-		}
-
+		env.follows[rep.id] = new Set();
+		//console.log("rep.follows[]",rep.follows);
+		/*for (follower=0; follower < rep.follows.size; follower++) {
+			env.follows[rep.id].add(rep.follows[follower]);
+			console.log("rep.follows[follower]",rep.follows[follower])
+			console.log("env.follows",env.follows[rep.id])
+		}*/
+		rep.follows.forEach(function(valeur){
+			env.follows[rep.id].add(valeur);
+		});
+		//console.log("env.follows[rep.id]",env.follows[rep.id]);
 		if (env.noConnection) {
-			follows[rep.id] = new Set();
-			for (follower=0; follower < rep.follows.length; follower++) {
-				follows[rep.id].add(rep.follows[follower]);
-			}
+			env.follows[rep.id] = new Set();
+			/*for (follower=0; follower < rep.follows.size; follower++) {
+				env.follows[rep.id].add(rep.follows[follower]);
+			}*/
+			rep.follows.forEach(function(valeur){
+				env.follows[rep.id].add(valeur);
+			});
 		}
 		makeMainPanel(-1,env.login,4);
 	} else {
@@ -109,9 +117,9 @@ function connect(login, password) {
 	var id_user = 1;
 	var key = 8546515;
 	if (!env.noConnection) {
-		$ajax({type:"POST", url:"/services/authentification/Login", data:"pseudo="+login+"&motDePasse="+password, dataType:"json",success:function(res){ reponseConnection(res);},error:function(xhr,status,err){func_erreur(status);}});
+		$.ajax({type:"GET", url:"/services/authentification/login", data:"pseudo="+login+"&motDePasse="+password, dataType:"json",success:function(res){ reponseConnection(res);},error:function(xhr,status,err){func_erreur(status);}});
 	} else {
-		reponseConnection({"key": key, "id": id_user, "login": login, "follows": [2, 3]});
+		reponseConnection({"key": key, "id": id_user, "login": login, "follows": env.follows[id_user]});
 	}
 }
 
