@@ -8,6 +8,12 @@ function init() {
     env.key = 0;
 }
 
+
+function hasher(string) {
+    return SHA512(string);
+}
+
+
 function Message(id, auteur, texte, date, comments){
         this.id = id;
         this.auteur = auteur;

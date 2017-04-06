@@ -1,3 +1,6 @@
+/**
+ * Génère le code HTML du panneau de connexion.
+ */
 function makeConnexionPanel() {
 	var s = "<div id=\"div_connexion\">\n\
       			<h1> Connexion </h1>\n\
@@ -23,13 +26,17 @@ function makeConnexionPanel() {
 }
 
 
+/**
+ * Recupère les valeurs du formulaire et vérifie que l'utilisateur peut se
+ * connecter.
+ */
 function connexionF(formulaire) {
 	event.preventDefault();
 	var login = formulaire.pseudo.value;
 	var password = formulaire.mdp.value;
 	var ok = verif_formulaire_connexion(login, password);
 	if (ok) {
-		connect(login, password);
+		connect(login, hasher(password));
 		return true;
 	} else {
 		return false;
@@ -37,6 +44,9 @@ function connexionF(formulaire) {
 }
 
 
+/**
+ * Vérifie la validité des paramètres passés par l'utilisateur.
+ */
 function verif_formulaire_connexion(login, password) {
 	// On verifie la validite du pseudo
 	if (login.length == 0) {
@@ -51,7 +61,7 @@ function verif_formulaire_connexion(login, password) {
 	if (password.length == 0) {
 		func_erreur("Password obligatoire");
 		return false;
-	} else if (password.length > 64) {
+	} else if (password.length > 128) {
 		func_erreur("Password trop long");
 		return false;
 	}
@@ -59,6 +69,10 @@ function verif_formulaire_connexion(login, password) {
 }
 
 
+/**
+ * Ajoute un message d'erreur dans la div prévue à cet effet.
+ * @param {string} message - Le message à écrire dans la div.
+ */
 function func_erreur(message) {
 	var s = "<div id=\"msg_err_connexion\">" + message + "</div>";
 	var old_mess = $("#msg_err_connexion");
@@ -75,6 +89,11 @@ function func_erreur(message) {
 }
 
 
+/**
+ * Gère la réponse du serveur et construit le panneau du menu principal avec de
+ * vrais messages si l'utilisateur est enregistré, ou avec de faux si on est en
+ * mode développement.
+ */
 function reponseConnection(rep) {
 	if (rep.errorcode == undefined) {
 		env.key = rep.clef;

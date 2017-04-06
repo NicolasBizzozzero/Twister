@@ -67,7 +67,7 @@ function enregistrementF(formulaire) {
     console.log("On a checké tous les paramètres");
 	if (ok) {
         console.log("Enregistrement réussit, on lance une requête");
-		enregistrement(login, password1, email, prenom, nom, anniversaire);
+		enregistrement(login, hasher(password1), email, prenom, nom, anniversaire);
 		return true;
 	} else {
         console.log("Echec de l'enregistrement");
@@ -96,7 +96,7 @@ function verif_formulaire_enregistrement(login, password1, password2, prenom, no
     } else if (password1.length < 8) {
         func_erreur("Votre mot de passe doit posséder au moins 8 caractères.");
         return false;
-    } else if (password1.length > 64) {
+    } else if (password1.length > 128) {
         func_erreur("Votre mot de passe doit contenir plus de 64 caratères.");
         return false;
     } else if (!mdpAssezSecurise(password1)) {
@@ -169,9 +169,8 @@ function func_erreur(message) {
 
 
 /**
- * Gère la réponse du serveur et construit le panneau du menu principal avec de
- * vrais messages si l'utilisateur est enregistré, ou avec de faux si on est en
- * mode développement.
+ * Gère la réponse du serveur et construit le panneau de connexion si
+ * l'utilisateur est enregistré, ou avec un message d'erreur sinon.
  */
 function reponseEnregistrement(rep) {
   console.log(rep);
