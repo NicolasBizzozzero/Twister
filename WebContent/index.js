@@ -36,7 +36,7 @@ Message.prototype.getHtml=function(){
         var retour="<div id=\"message_"+this.id+"\" class=\"messageUtilisateur\">\n\
                         <div class=\"text_message\">"+this.texte+"</div>\n\
                         <div class=\"info_mesage\">\n\
-                                <span>Posté par <span class=\"liens\" onClick=\"javascript:makeMainPanel("+this.auteur.id+","+ this.auteur.login+", 9)\" >"+this.auteur.login+"</span><span> le "+this.date+"</span><img src=\"images/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\"  onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
+                                <span>Posté par <span class=\"liens\" onClick=\"javascript:pageUser("+this.auteur.id+")\" >"+this.auteur.login+"</span><span> le "+this.date+"</span><img src=\"images/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\"  onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
                                 </span>\n\
                         </div>\n\
                         <div class=\"comments\">\n\
@@ -51,19 +51,20 @@ Message.prototype.getHtml=function(){
 Commentaire.prototype.getHtml=function(){
 	//console.log("this.auteur.id "+this.auteur.id);
 	//console.log("this.auteur.login "+this.auteur.login);
-	env.id=this.auteur.id;
-	env.login=this.auteur.login;
         var retour="<div id=\"commentaire_"+this.id+"\" class=\"commentaireUtilisateur\">\n\
                         <div class=\"text_commentaire\">"+this.texte+"</div>\n\
                         <div class=\"info_commentaire\">\n\
-                                <span>Posté par <span class=\"liens\" onClick=\"javascript:makeMainPanel(this.auteur.id,this.auteur.login,9)\">"+this.auteur.login+"</span><span> le "+this.date+"</span>\n\
+                                <span>Posté par <span class=\"liens\" onClick=\"javascript:pageUser("+this.auteur.id+")\">"+this.auteur.login+"</span><span> le "+this.date+"</span>\n\
 				</span>\n\
                         </div>\n\
                      </div>";
 	return retour;
 }
 
-
+function pageUser(id){
+	console.log("id",id);
+	makeMainPanel(id,9)
+}
 function revival(key,value){
 	//console.log(key,value);
         if(key=="erreur"&&value!=0){
@@ -102,16 +103,16 @@ function setVirtualMessages(){
 }
 
 
-function makeMainPanel(fromId, fromLogin, query){
+function makeMainPanel(fromId, query){ //j'ai retiré fromLogin
 	console.log("entree dans makemainpanel");
         if (fromId == undefined){
 		fromId = -1;
 	}
         env.fromId = fromId;
-        env.fromLogin = fromLogin;
         env.query = query;
         env.msg = [];
-	console.log(env.fromId+"   "+env.fromLogin);
+	console.log("env.fromId",env.fromId);
+	console.log("env.id",env.id);
         env.minId = -1;
         env.maxId = -1;
 
@@ -128,7 +129,7 @@ function makeMainPanel(fromId, fromLogin, query){
                 </form>\n\
                 <div id=\"deconnexion\" class=\"entete\">\n\
                         <div class=\"liens\" onclick=\"javascript:makeConnexionPanel()\">Se déconnecter</div>\n\
-			<div class=\"liens\" onclick=\"javascript:makeMainPanel(-1,env.login,4)\" >Retour page principale</div>\n\
+			<div class=\"liens\" onclick=\"javascript:makeMainPanel(-1,4)\" >Retour page principale</div>\n\
                 </div>\n\
                </header>";
 	//console.log("En-tête chargée");
@@ -138,7 +139,7 @@ function makeMainPanel(fromId, fromLogin, query){
                                 <img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         </div>\n\
  			<div id=\"profil\">\n\
-                                <div id=\"link1\" onClick=\"javascript:makeMainPanel(env.id,env.login,4)\">Mon profil</div>\n\
+                                <div id=\"link1\" onClick=\"javascript:makeMainPanel(env.id, 4)\">Mon profil</div>\n\
                         </div>\n\
                      </div>\n\
                      <div id=\"milieu\" class=\"corp\">\n\
@@ -156,15 +157,16 @@ function makeMainPanel(fromId, fromLogin, query){
                      </div>";
 		//console.log("Page d'accueil chargée");
         } else {
-
+		console.log("env.follows[env.id]",env.follows[env.fromId]);
                 if (env.fromId == env.id){
                         s+= "<div id=\"cote\" class=\"corp\">\n\
                         	<div id=\"photo\">\n\
                                 	<img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         	</div>\n\
  				<div id=\"informations\">\n\
-        				Nom :\n\
-        				<br>Prénom:</br>\n\
+					Pseudo: \n\
+        				<br>Nom: </br>\n\
+        				<br>Prénom: </br>\n\
         				Date de naissance:\n\
       				</div>\n\
     			    </div>\n\
@@ -182,10 +184,15 @@ function makeMainPanel(fromId, fromLogin, query){
                         	</section>\n\
    		    	    </div>\n\
     			    <div id=\"cote\" class=\"corp\">\n\
-      				Amis\n\
+				<div id=\"amis\">\n\
+      					Amis\n\
+					<script type=\"text/javascript\">\n\
+						$(listerAmis);\n\
+					</script>\n\
+				</div>\n\
                             </div>";
 			//console.log("Page de profil de l'utilisateur chargée");
-                } else if(!env.follows[env.fromId].has(env.id)){
+                } else if(! env.follows[env.id].has(env.fromId)){ // changement env.follows[env.fromId].has(env.id)
                         s+= "<div id=\"cote\" class=\"corp\">\n\
                         	<div id=\"photo\">\n\
                                 	<img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
@@ -211,7 +218,12 @@ function makeMainPanel(fromId, fromLogin, query){
                         	</section>\n\
    		    	    </div>\n\
     			    <div id=\"cote\" class=\"corp\">\n\
-      				Amis\n\
+				<div id=\"amis\">\n\
+      					Amis\n\
+					<script type=\"text/javascript\">\n\
+						$(listerAmis);\n\
+					</script>\n\
+				</div>\n\
                             </div>";
 			//console.log("Page de profil d'une personne qu'on ne suit pas encore chargée");
  		} else{
@@ -240,7 +252,12 @@ function makeMainPanel(fromId, fromLogin, query){
                         	</section>\n\
    		    	    </div>\n\
     			    <div id=\"cote\" class=\"corp\">\n\
-      				Amis\n\
+				<div id=\"amis\">\n\
+      					Amis\n\
+					<script type=\"text/javascript\">\n\
+						$(listerAmis);\n\
+					</script>\n\
+				</div>\n\
                            </div>";
 			//console.log("Page de profil d'une personne qu'on suit chargée");
                 	}
@@ -486,7 +503,7 @@ function refreshCommentaires(id){
 }
 
 function ajouter_ami(){
-	if (!noConnection){
+	if (!env.noConnection){
 	$.ajax({type:"GET", url:"/services/ami/ajouterAmi", data:"clef="+env.key+"&id_ami="+env.id, dataType:"json",success:function(res){ reponseFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
 		reponseFollow({});
@@ -498,7 +515,7 @@ function reponseFollow(){
 }
 
 function ne_plus_suivre(){
-	if (!noConnection){
+	if (!env.noConnection){
 	$.ajax({type:"GET", url:"/services/ami/suprimerAmi", data:"clef="+env.key+"&id_ami="+env.id, dataType:"json",success:function(res){ reponseStopFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
 		reponseStopFollow({});
@@ -510,17 +527,28 @@ function reponseStopFollow(){
 }
 
 
-function lister_amis(){
-	if (!noConnection){
+function listerAmis(){
+	if (!env.noConnection){
 	$.ajax({type:"GET", url:"/services/ami/listerAmis", data:"clef="+env.key+"&id_utilisateur="+env.id+"&index_debut=0&nombre_demandes=10", dataType:"json",success:function(res){ reponseFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
-		reponseListerAmis({});
+		console.log("env.follows[env.fromId]",env.follows[env.fromId]);
+		reponseListerAmis(env.follows[env.fromId]);
 	}
 }
 
 
 function reponseListerAmis(rep){
-	//todo
+	console.log("entree dans reponseListerAmis");
+	console.log("rep",rep);
+	var s="";
+	rep.forEach(function (ami){
+		console.log("ami",ami);
+		s+="<div class=\"liens_amis\" >"+ami.login+"</div>";
+		
+	});
+	var el = $("#amis");
+	el.append(s);
+	
 }
 
 
