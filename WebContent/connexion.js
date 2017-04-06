@@ -1,6 +1,3 @@
-/**
- * Génère le code HTML du panneau de connexion.
- */
 function makeConnexionPanel() {
 	var s = "<div id=\"div_connexion\">\n\
       			<h1> Connexion </h1>\n\
@@ -21,64 +18,49 @@ function makeConnexionPanel() {
            				<div id=\"link2\" onClick=\"javascript:makeEnregistrementPanel()\">Pas encore inscrit</div>\n\
           			</div>\n\
       			</form>\n\
-   		    </div>";
-
+   		 </div>";
 	$("body").html(s);
 }
 
-
-/**
- * Recupère les valeurs du formulaire et vérifie que l'utilisateur peut se
- * connecter.
- */
 function connexionF(formulaire) {
-	formulaire.submit(function(event) {
-            event.preventDefault();
-    });
+	event.preventDefault();
 	var login = formulaire.pseudo.value;
 	var password = formulaire.mdp.value;
 	var ok = verif_formulaire_connexion(login, password);
 	if (ok) {
+		//console.log("entree dans ok=true");
 		connect(login, password);
 		return true;
 	} else {
+		//console.log("entree dans ok=false");
 		return false;
+		//func_erreur("Couple 'Login-Password' invalide.");
 	}
 }
 
-
-/**
- * Vérifie la validité des paramètres passés par l'utilisateur.
- */
 function verif_formulaire_connexion(login, password) {
-	if (login.length < 1) {
-		func_erreur("Login trop court");
+	if (login.length == 0) {
+		func_erreur("Login obligatoire");
 		return false;
 	}
 
-	if (login.length > 32) {
-        func_erreur("Login trop long");
+	if (login.length > 20) {
+		func_erreur("Login trop long");
 		return false;
 	}
 
-	if (password.length < 8) {
-		func_erreur("Mot de passe trop court");
+	if (password.length == 0) {
+		func_erreur("Password obligatoire");
 		return false;
 	}
 
-	if (password.length > 64) {
-        func_erreur("Mot de passe trop long");
+	if (password.length > 20) {
+		func_erreur("Password trop long");
 		return false;
 	}
-
 	return true;
 }
 
-
-/**
- * Ajoute un message d'erreur dans la div prévue à cet effet.
- * @param {string} message - Le message à écrire dans la div.
- */
 function func_erreur(message) {
 	var s = "<div id=\"msg_err_connexion\">" + message + "</div>";
 	var old_mess = $("#msg_err_connexion");
@@ -94,37 +76,36 @@ function func_erreur(message) {
 	}
 }
 
-
 function reponseConnection(rep) {
-  if (rep.erreur == undefined) {
-    console.log("pas erreur connexion");
-    env.key = rep.key;
-    env.id = rep.id;
-    env.login = rep.login;
-    env.follows[rep.id] = new Set();
-    //console.log("rep.follows[]",rep.follows);
-    /*for (follower=0; follower < rep.follows.size; follower++) {
-      env.follows[rep.id].add(rep.follows[follower]);
-      console.log("rep.follows[follower]",rep.follows[follower])
-      console.log("env.follows",env.follows[rep.id])
-    }*/
-    rep.follows.forEach(function(valeur){
-      env.follows[rep.id].add(valeur);
-    });
-    //console.log("env.follows[rep.id]",env.follows[rep.id]);
-    if (env.noConnection) {
-      env.follows[rep.id] = new Set();
-      /*for (follower=0; follower < rep.follows.size; follower++) {
-        env.follows[rep.id].add(rep.follows[follower]);
-      }*/
-      rep.follows.forEach(function(valeur){
-        env.follows[rep.id].add(valeur);
-      });
-    }
-    makeMainPanel(-1,env.login,4);
-  } else {
-    func_erreur(rep.erreur);
-  }
+	if (rep.erreur == undefined) {
+		console.log("pas erreur connexion");
+		env.key = rep.key;
+		env.id = rep.id;
+		env.login = rep.login;
+		env.follows[rep.id] = new Set();
+		//console.log("rep.follows[]",rep.follows);
+		/*for (follower=0; follower < rep.follows.size; follower++) {
+			env.follows[rep.id].add(rep.follows[follower]);
+			console.log("rep.follows[follower]",rep.follows[follower])
+			console.log("env.follows",env.follows[rep.id])
+		}*/
+		rep.follows.forEach(function(valeur){
+			env.follows[rep.id].add(valeur);
+		});
+		//console.log("env.follows[rep.id]",env.follows[rep.id]);
+		if (env.noConnection) {
+			env.follows[rep.id] = new Set();
+			/*for (follower=0; follower < rep.follows.size; follower++) {
+				env.follows[rep.id].add(rep.follows[follower]);
+			}*/
+			rep.follows.forEach(function(valeur){
+				env.follows[rep.id].add(valeur);
+			});
+		}
+		makeMainPanel(-1,env.login,4);
+	} else {
+		func_erreur(rep.erreur);
+	}
 }
 
 
@@ -138,49 +119,10 @@ function connect(login, password) {
 	var id_user = 1;
 	var key = 8546515;
 	if (!env.noConnection) {
-		$.ajax({type: "GET",
-                url: "/services/authentification/login",
-                data: "pseudo=" + login + "&motDePasse=" + password,
-                dataType: "json",
-                success: function(res) {
-                    reponseConnection(res);
-                },
-                error: function(xhr, status, err) {
-                    func_erreur(status);
-                }
-            });
+		$.ajax({type:"GET", url:"/services/authentification/login", data:"pseudo="+login+"&motDePasse="+password, dataType:"json",success:function(res){ reponseConnection(res);},error:function(xhr,status,err){func_erreur(status);}});
 	} else {
-		reponseConnection({"key": key,
-                           "id": id_user,
-                           "login": login,
-                           "follows": env.follows[id_user]});
+		reponseConnection({"key": key, "id": id_user, "login": login, "follows": env.follows[id_user]});
 	}
 }
 
 
-/**
- * Gère la réponse du serveur et construit le panneau du menu principal avec de
- * vrais messages si l'utilisateur est connecté, ou avec de faux si on est en
- * mode développement.
- */
-function reponseConnection(rep) {
-    if (rep.erreur == undefined) {
-        console.log("pas erreur connexion");
-        env.key = rep.key;
-        env.id = rep.id;
-        env.login = rep.login;
-        env.follows[rep.id] = new Set();
-        rep.follows.forEach(function(valeur) {
-            env.follows[rep.id].add(valeur);
-        });
-        if (env.noConnection) {
-            env.follows[rep.id] = new Set();
-            rep.follows.forEach(function(valeur) {
-                env.follows[rep.id].add(valeur);
-            });
-        }
-        makeMainPanel(-1, env.login, 4);
-    } else {
-        func_erreur(rep.erreur);
-    }
-}

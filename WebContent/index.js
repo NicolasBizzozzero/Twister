@@ -7,26 +7,18 @@ function init() {
     env.key = 0;
 }
 
-
-/**
- * Constructeur de message.
- */
-function Message(id, auteur, texte, date, comments) {
+function Message(id, auteur, texte, date, comments){
         this.id = id;
         this.auteur = auteur;
         this.texte = texte;
         this.date = date;
         if (comments == undefined){
-		    comments = []
-	    }
+		comments = []
+	}
         this.comments = comments;
 }
 
-
-/**
- * Constructeur de commentaire.
- */
-function Commentaire(id, auteur, texte, date) {
+function Commentaire(id, auteur, texte, date){
         this.id = id;
         this.auteur = auteur;
         this.texte = texte;
@@ -55,6 +47,7 @@ Message.prototype.getHtml = function() {
     return retour;
 }
 
+
 /**
  * Recupère le code HTML permettant d'afficher un commentaire.
  */
@@ -74,47 +67,38 @@ Commentaire.prototype.getHtml=function() {
 }
 
 
-/**
- * Permet de construire un objet Javascript précis depuis un objet JSON.
- */
-function revival(key, value) {
-    // Cas où on a une erreur
-    if (key == "erreur" && value != 0){
-        return {erreur: value};
-    } 
-    // Cas où on a un Message
-    else if (value.comments != undefined) {
-        var m = new Message(value.id, value.auteur, value.texte, value.date, value.comments);
-        return m;
-    }
-    // Cas où on a un Commentaire
-    else if (value.texte != undefined) {
-        var c = new Commentaire(value.id, value.auteur, value.texte, value.date);
-        return c;
+function revival(key,value){
+	//console.log(key,value);
+        if(key=="erreur"&&value!=0){
+                return {erreur:value};
+        }
+        else if(value.comments!=undefined){
+                var m=new Message( value.id,value.auteur,value.texte,value.date,value.comments);
+                return m;
+        }
+        else if(value.texte!=undefined){
+                var c=new Commentaire(value.id,value.auteur,value.texte,value.date);
+                return c;
 	}
-    // Cas où on a une date
-    else if (key == "date") {
-        var d = new Date(value);
-        return d;
-    }
-    // Autres cas
-    else {
+        else if(key=="date"){
+                var d=new Date(value);
+                return d;
+        }else{
 		return value;
 	}
 }
 
-
 function setVirtualMessages(){
-    localdb=[];
-    env.follows=[];
-    var user1={"id":1,"login":"Nicolas"};
-    var user2={"id":2,"login":"Alexia"};
+        localdb=[];
+        env.follows=[];
+        var user1={"id":1,"login":"Nicolas"};
+        var user2={"id":2,"login":"Alexia"};
  	var user3={"id":3,"login":"Inconnu"};
-    env.follows[1]=new Set();
-    env.follows[1].add(user2);
-    env.follows[1].add(user3);
-    var com =new Commentaire (1,user3,"bonjour",new Date());
-    localdb[0]= new Message (0,user2,"Salut",new Date(),[com]);
+        env.follows[1]=new Set();
+        env.follows[1].add(user2);
+        env.follows[1].add(user3);
+        var com =new Commentaire (1,user3,"bonjour",new Date());
+        localdb[0]= new Message (0,user2,"Salut",new Date(),[com]);
 	localdb[1]= new Message (1,user2,"Salut tous le monde",new Date(),[com]);
 	localdb[2]= new Message (2,user3,"Salut tous le monde",new Date(),[]);
 	console.log("follows[1]",env.follows[1]);
@@ -273,103 +257,88 @@ function makeMainPanel(fromId, fromLogin, query) {
 }
 
 
-/**
- * Envoie une requête au serveur pour récupèrer les messages si on dispose
- * d'une connexion. Dans le cas contraire, charge les messages depuis la BDD
- * locale.
- */
-function completeMessages() {
-	if (!env.noConnection) {
-		$.ajax({type: "POST",
-                url: "/services/message/listerMessages",
-                data: "key=" + env.key + "&query=" + env.query + "&from=" + env.fromId + "&limite=10&id_min=-1&id_max=" + env.idmin,
-                dataType:"json",
-                success:function(res){
-                    completeMessagesReponse(res);
-                },
-                error:function(xhr, status, err){
-                    func_erreur(status);
-                }
-            });
-	} else {
-		var tab = getFromLocalDb(env.fromId, env.minId, env.maxId, tab=[], 10);
+function completeMessages(){
+	if(!env.noConnection){
+		$.ajax({type:"POST", url:"/services/message/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="+env.fromId+"&limite=10&id_min=-1&id_max="+env.idmin, dataType:"json", success:function(res){ completeMessagesReponse(res);}, error:function(xhr,status,err){func_erreur(status);}});
+	}
+	else {
+		console.log(env.fromId);
+		var tab = getFromLocalDb(env.fromId,env.minId,env.maxId, tab=[],10);
 		completeMessagesReponse(JSON.stringify(tab));
 	}
 }
 
-
-/**
- * Gère la réponse du serveur après la requête demandant de lister les messages.
- */
-function completeMessagesReponse(rep) {
- 	var tab = JSON.parse(rep, revival);
-
-	for (i=0; i < tab.length; i++) {
-		var m = tab[i];
+function completeMessagesReponse(rep){
+	//console.log("test2");
+	//console.log(rep);
+ 	var tab=JSON.parse(rep,revival);
+	//console.log(tab);
+	for(i=0;i<tab.length;i++){
+		var m=tab[i];
 		$("#messages").prepend(m.getHtml());
-		env.msg[m.id] = m;
-		if (m.id > env.maxId) {
-            env.maxId = m.id;
-        }
-		if (m.id < env.minId) {
-            env.minId = m.id;
-        }
+		env.msg[m.id]=m;
+		if(m.id>env.maxId){env.maxId=m.id;}
+		if(m.id<env.minId){env.minId=m.id;}
 	}
-
-	var last_id = env.msg[tab.length - 1].id;
-	$("#message_" + last_id).appear();
+	var last_id=env.msg[tab.length-1].id;
+	$("#message_"+last_id).appear();
 	$.force_appear();
 }
 
-
-/**
- * Appellée en mode developpement.
- * Recupère les messages depuis la BDD locale.
- */
-function getFromLocalDb(from, minId, maxId, tab=[], nbmax) {
-	var rep = [];
-	if (from < 0) {
-		for (m=0; m < nbmax; m++) {
-			if (m < localdb.length) {
+function getFromLocalDb(from,minId,maxId, tab=[],nbmax){
+	//console.log("from:"+from);
+	//console.log("env.follows[1]:",env.follows[1]);
+	//console.log("env.follows[from]:",env.follows[from]);
+	var rep=[];
+	//console.log(localdb.length);
+	if(from<0){
+		for(m=0;m<nbmax;m++){
+			if(m<localdb.length){
 				rep.push(localdb[m]);
 			}
-		}	
-	} else {
-		var m = 0;
-		while (m < nbmax && m < localdb.length) {
-			if (localdb[m].auteur.id == from) {
+		}
+		//console.log("localdb", localdb);		
+	}
+	else{
+		var m=0;
+		while(m<nbmax && m<localdb.length){
+			//console.log("localdb[m] ",localdb[m]);
+			//console.log("localdb[m].auteur ",localdb[m].auteur);
+			//console.log("m "+m);
+			if( localdb[m].auteur.id==from ){
 				rep.push(localdb[m]);
 				m++;
-			} else {
-				env.follows[from].forEach(function(valeur) {
-					if (localdb[m].auteur == valeur) {
+			}else{
+				/*console.log("follows[from].length"+follows[from].length);
+				for(a=0; a < follows[from].length;a++){
+					if(localdb[m].auteur==a ){
 						rep.push(localdb[m]);
 						m++;
 					}
+				}*/
+				env.follows[from].forEach(function (valeur){
+					console.log(valeur)
+					if(localdb[m].auteur==valeur ){
+						rep.push(localdb[m]);
+						m++;
+
+					}
 				});
+	
 			}
 		}
 	}
+	console.log(rep);
 	return rep;
 }
 
 
-
-function refreshMessages() {
-	if (!env.noConnection) {
-		$.ajax({type: "POST",
-                url: "/services/message/listerMessages",
-                data: "key=" + env.key + "&query=" + env.query + "&from=" + env.maxId + "&limite=-1&id_min=" + env.maxId + "&id_max=-1",
-                dataType: "json",
-                success:function(res) {
-                    refreshMessagesReponse(res);
-                },
-                error:function(xhr, status, err) {
-                    func_erreur(status);
-                }
-            });
-	} else {
-		var tab = getFromLocalDb(env.fromId, env.minId, env.maxId, tab=[], 10);
+function refreshMessages(){
+	if(!env.noConnection){
+		$.ajax({type:"POST", url:"/services/message/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="+env.maxId+"&limite=-1&id_min="+env.maxId+"&id_max=-1", dataType:"json",success:function(res){ refreshMessagesReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
+	}
+	else {
+		var tab = getFromLocalDb(env.fromId,env.minId,env.maxId, tab=[],10);
 		refreshMessagesReponse(JSON.stringify(tab));
 	}
 }
@@ -549,3 +518,8 @@ function lister_amis(){
 function reponseListerAmis(rep){
 	//todo
 }
+
+
+
+
+
