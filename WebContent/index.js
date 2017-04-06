@@ -1,16 +1,18 @@
-function init(){
-        env = new Object();
-        env.noConnection = true;
-        setVirtualMessages();
-        env.id = 1;
-        env.login = "Nicolas";
-        env.key = 0;	
-	//makeMainPanel(env.id, env.login, "");
-	/*$("body").on('appear',function fappeared(event,$affected){
-		$.clear_appear();
-		completeMessages();
-	});*/
+function init() {
+    url_site = "http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero"
+    env = new Object();
+    env.noConnection = false;
+    setVirtualMessages();
+    env.id = 1;
+    env.login = "Nicolas";
+    env.key = 0;
 }
+
+
+function hasher(string) {
+    return SHA512(string);
+}
+
 
 function Message(id, auteur, texte, date, comments){
         this.id = id;
@@ -128,8 +130,8 @@ function makeMainPanel(fromId, query){ //j'ai retiré fromLogin
                         <input type=\"image\" src=\"images/loupe.jpg\" alt=\"rechercher\"/>\n\
                 </form>\n\
                 <div id=\"deconnexion\" class=\"entete\">\n\
-                        <div class=\"liens\" onclick=\"javascript:makeConnexionPanel()\">Se déconnecter</div>\n\
-			<div class=\"liens\" onclick=\"javascript:makeMainPanel(-1,4)\" >Retour page principale</div>\n\
+                        <div class=\"liens\" onclick=\"javascript:deconnexion()\">Se déconnecter</div>\n\
+            <div class=\"liens\" onclick=\"javascript:makeMainPanel(-1,env.login,4)\" >Retour page principale</div>\n\
                 </div>\n\
                </header>";
 	//console.log("En-tête chargée");
@@ -550,8 +552,3 @@ function reponseListerAmis(rep){
 	el.append(s);
 	
 }
-
-
-
-
-

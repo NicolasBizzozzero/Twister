@@ -26,4 +26,6 @@ Avancement du Service							Fonctionnel
 Classes JAVA en rapport avec le service Web		servlets.utilisateur.ServletCreationUtilisateur
 												bd.tools.UtilisateursTools
 																								
-Informations additionnelles
+Informations additionnelles						Le mot de passe etant hashe une premiere fois par le code javascript cote client, puis
+                                                une deuxieme fois lorsqu'il arrive sur le serveur, ce service ne devrait pas etre utilise
+                                                manuellement, mais uniquement appelle depuis le code javascript.

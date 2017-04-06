@@ -97,8 +97,10 @@ public class ModificationUtilisateur {
 			
 			// Anniversaire
 			if (nouvelAnniversaire != null) {
-				if (! services.utilisateur.CreationUtilisateur.estValide(nouvelAnniversaire)) {
-					return ErrorJSON.serviceRefused(String.format("Erreur, l'anniversaire %s est invalide.", nouvelAnniversaire), CodesErreur.ERREUR_ANNIVERSAIRE_INVALIDE);
+				if (nouvelAnniversaire.length() != 0) {
+					if (! services.utilisateur.CreationUtilisateur.estValide(nouvelAnniversaire)) {
+						return ErrorJSON.serviceRefused(String.format("Erreur, l'anniversaire %s est invalide.", nouvelAnniversaire), CodesErreur.ERREUR_ANNIVERSAIRE_INVALIDE);
+					}
 				}
 			}
 			
@@ -131,7 +133,11 @@ public class ModificationUtilisateur {
 			
 			// Changement de l'anniversaire
 			if (nouvelAnniversaire != null) {
-				UtilisateursTools.modifierAnniversaire(id_utilisateur, nouvelAnniversaire);
+				if (nouvelAnniversaire.length() == 0) {
+					UtilisateursTools.supprimerAnniversaire(id_utilisateur);		
+				} else {
+					UtilisateursTools.modifierAnniversaire(id_utilisateur, nouvelAnniversaire);
+				}
 			}
 
 			// On renvoie une reponse

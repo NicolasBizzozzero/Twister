@@ -4,7 +4,7 @@
 function makeEnregistrementPanel() {
 	var s = "<div id=\"div_inscription\">\n\
       			<h1> Inscription </h1>\n\
-    			<form method=\"get\"  action=\"javascript:(function(){return;})()\" onSubmit=\"javascript:enregistrementF(this)\">\n\
+    			<form method=\"get\" action=\"javascript:(function(){return;})()\" onSubmit=\"javascript:enregistrementF(this)\">\n\
           			<div class=\"ids_haut\">\n\
             				<label for=\" prenom\"> Prénom </label>\n\
             				<div>\n\
@@ -19,7 +19,7 @@ function makeEnregistrementPanel() {
           			</div>\n\
           			<div class =\"ids\" >\n\
             				<label for= \"anniversaire\">Anniversaire</label>\n\
-            				<input type=\"text\" name=\"anniversaire\" id=\"anniversaire\"/>\n\
+            				<input type=\"date\" name=\"anniversaire\" id=\"anniversaire\"/>\n\
           			</div>\n\
           			<div class =\"ids\" >\n\
             				<label for= \"pseudo\"> Pseudo*</label>\n\
@@ -67,7 +67,7 @@ function enregistrementF(formulaire) {
     console.log("On a checké tous les paramètres");
 	if (ok) {
         console.log("Enregistrement réussit, on lance une requête");
-		enregistrement(login, password1, email, prenom, nom, anniversaire);
+		enregistrement(login, hasher(password1), email, prenom, nom, anniversaire);
 		return true;
 	} else {
         console.log("Echec de l'enregistrement");
@@ -96,7 +96,7 @@ function verif_formulaire_enregistrement(login, password1, password2, prenom, no
     } else if (password1.length < 8) {
         func_erreur("Votre mot de passe doit posséder au moins 8 caractères.");
         return false;
-    } else if (password1.length > 64) {
+    } else if (password1.length > 128) {
         func_erreur("Votre mot de passe doit contenir plus de 64 caratères.");
         return false;
     } else if (!mdpAssezSecurise(password1)) {
@@ -105,19 +105,13 @@ function verif_formulaire_enregistrement(login, password1, password2, prenom, no
     }
 
     // On vérifie la validité du prénom
-    if (prenom.length < 1) {
-        func_erreur("Prenom trop court.");
-        return false;
-    } else if (prenom.length > 64) {
+    if (prenom.length > 64) {
         func_erreur("Prenom trop long.");
         return false;
     }
 
     // On vérifie la validité du nom
-    if (nom.length < 1) {
-        func_erreur("Nom trop court.");
-        return false;
-    } else if (nom.length > 64) {
+    if (nom.length > 64) {
         func_erreur("Nom trop long.");
         return false;
     }
@@ -175,9 +169,8 @@ function func_erreur(message) {
 
 
 /**
- * Gère la réponse du serveur et construit le panneau du menu principal avec de
- * vrais messages si l'utilisateur est enregistré, ou avec de faux si on est en
- * mode développement.
+ * Gère la réponse du serveur et construit le panneau de connexion si
+ * l'utilisateur est enregistré, ou avec un message d'erreur sinon.
  */
 function reponseEnregistrement(rep) {
   console.log(rep);
@@ -199,10 +192,10 @@ function reponseEnregistrement(rep) {
  */
 function enregistrement(pseudo, password, email, prenom, nom, anniversaire) {
 	if (!env.noConnection) {
-    var url_site = "http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero"
     $.ajax({type: "GET",
             url: url_site + "/services/utilisateur/creationUtilisateur",
             data: "pseudo=" + pseudo + "&motDePasse=" + password + "&email=" + email + "&prenom=" + prenom + "&nom=" + nom + "&anniversaire=" + anniversaire,
+            dataType: "json",
             success: function(data) {
                 console.log("Y'a eu du succes !")
                 reponseEnregistrement(data);
