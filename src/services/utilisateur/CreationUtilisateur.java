@@ -60,11 +60,32 @@ public class CreationUtilisateur {
 			// On verifie que la date d'anniversaire est valide
 			if (anniversaire != null) {
 				// Si l'anniversaire est de taille 0, alors c'est que l'utilisateur n'a pas passe d'anniversaire en parametre
-				if (anniversaire.length() != Tailles.MIN_ANNIVERSAIRE) {
+				if (anniversaire.length() != 0) {
 					// On verifie alors sa validite
 					if (! estValide(anniversaire)) {
 						return ErrorJSON.serviceRefused(String.format("Erreur, l'anniversaire %s est invalide.", anniversaire), CodesErreur.ERREUR_ANNIVERSAIRE_INVALIDE);
 					}
+				} else {
+					// Sinon, on le met a null pour ne pas faire planter la BDD
+					anniversaire = null;
+				}
+			}
+			
+			// On verifique le prenom est valide
+			if (prenom != null) {
+				// Si le prenom est de taille 0, alors c'est que l'utilisateur n'a pas passe de prenom en parametre
+				if (prenom.length() == 0) {
+					// On le met alors a null pour ne pas faire planter la BDD
+					prenom = null;
+				}
+			}
+			
+			// On verifique le nom est valide
+			if (nom != null) {
+				// Si le nom est de taille 0, alors c'est que l'utilisateur n'a pas passe de nom en parametre
+				if (nom.length() == 0) {
+					// On le met alors a null pour ne pas faire planter la BDD
+					nom = null;
 				}
 			}
 

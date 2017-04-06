@@ -11,7 +11,6 @@ import services.ErrorJSON;
 import services.Tailles;
 import bd.tools.CommentairesTools;
 import bd.tools.SessionsTools;
-import bd.tools.UtilisateursTools;
 import exceptions.ClefInexistanteException;
 import exceptions.tailles.ClefInvalideException;
 import exceptions.tailles.IDTropGrandException;
