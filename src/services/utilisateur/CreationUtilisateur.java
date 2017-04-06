@@ -39,11 +39,6 @@ public class CreationUtilisateur {
 
 			// On verifie que les parametres entres respectent nos criteres de taille
 			verificationTailleInput(pseudo, motDePasse, email, prenom, nom, anniversaire);
-
-			// On verifie que le mot de passe est securise
-			if (! estSecurise(motDePasse)) {
-				return ErrorJSON.serviceRefused(String.format("Erreur, le mot de passe n'est pas assez securise.", motDePasse), CodesErreur.ERREUR_MDP_NON_SECURISE);
-			}
 			
 			// On verifie que le pseudo n'existe pas deja
 			boolean isUser = UtilisateursTools.checkExistencePseudo(pseudo);
