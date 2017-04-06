@@ -25,5 +25,5 @@ public class Tailles {
 	
 	// TODO: Verifier taille anniversaire
 	public static final int MIN_ANNIVERSAIRE = 0;
-	public static final int MAX_ANNIVERSAIRE = 64;
+	public static final int MAX_ANNIVERSAIRE = 10;
 }
