@@ -46,6 +46,7 @@ Avec
 -----------------------------------------
 
 
+La date d'anniversaire doit être au format YYYY-MM-DD
 Verifier la taille de TOUS les inputs
 Verifier comment verifier la taille de l'input anniversaire
 Modifier les tailles des variables stockees dans MySQL

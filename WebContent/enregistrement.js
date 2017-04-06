@@ -4,7 +4,7 @@
 function makeEnregistrementPanel() {
 	var s = "<div id=\"div_inscription\">\n\
       			<h1> Inscription </h1>\n\
-    			<form method=\"post\"  action=\"\" onSubmit=\"return enregistrementF(this)\">\n\
+    			<form method=\"get\"  action=\"javascript:(function(){return;})()\" onSubmit=\"javascript:enregistrementF(this)\">\n\
           			<div class=\"ids_haut\">\n\
             				<label for=\" prenom\"> Prénom </label>\n\
             				<div>\n\
@@ -180,13 +180,14 @@ function func_erreur(message) {
  * mode développement.
  */
 function reponseEnregistrement(rep) {
-	if (rep.erreur == undefined) {
-        console.log("Je make le connexion pannel");
-		makeConnexionPanel();
-        func_erreur("Enregistrement effectué avec succès. Veuillez vous connecter.");
+  console.log(rep);
+	if (rep.errorcode == undefined) {
+      console.log("Je make le connexion pannel");
+      makeConnexionPanel();
+      func_erreur("Enregistrement effectué avec succès. Veuillez vous connecter.");
 	} else {
-        console.log("Grosse erreur:", rep.erreur);
-		func_erreur(rep.erreur);
+      console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
+		  func_erreur(rep.message);
 	}
 }
 
@@ -198,19 +199,21 @@ function reponseEnregistrement(rep) {
  */
 function enregistrement(pseudo, password, email, prenom, nom, anniversaire) {
 	if (!env.noConnection) {
-    console.log("On requete !");
-        $.ajax({type: "POST",
-                url: "/services/utilisateur/creationUtilisateur",
-                data: "pseudo=" + login + "&motDePasse=" + password + "&email=" + email + "&prenom=" + prenom + "&nom=" + nom + "&anniversaire=" + anniversaire,
-                dataType: "json",
-                success: function(res) {
-                    reponseEnregistrement(res);
-                },
-                error: function(xhr, status, err) {
-                    func_erreur(status);
-                }
-            });
-    console.log("On a requeté !");
+    var url_site = "http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero"
+    $.ajax({type: "GET",
+            url: url_site + "/services/utilisateur/creationUtilisateur",
+            data: "pseudo=" + pseudo + "&motDePasse=" + password + "&email=" + email + "&prenom=" + prenom + "&nom=" + nom + "&anniversaire=" + anniversaire,
+            success: function(data) {
+                console.log("Y'a eu du succes !")
+                reponseEnregistrement(data);
+            },
+            error: function(xhr, status, err) {
+                console.log("Y'a eu de l'erreur ...")
+                console.log(status)
+                console.log(err)
+                func_erreur(status + ": " + err);
+            }
+        });
 	} else {
 		reponseEnregistrement({});
 	}
