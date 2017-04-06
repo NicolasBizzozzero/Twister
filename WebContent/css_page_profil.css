@@ -1,0 +1,100 @@
+header{
+  border:solid #b2e6cc;
+}
+header .entete{
+  display:inline-block;
+  padding:10px;
+  margin :10px;
+  width:20%;
+  text-align:center;
+
+}
+section>form>textarea{
+  width:70%;
+}
+section>form>input{
+  color:#256c50;
+}
+#recherche :nth-child(2){
+  width:20px;
+}
+.comments>div{
+	border: solid #b2e6cc;
+	margin:3%;
+	padding:5%;
+}
+
+#titre{
+  color:#256c50;
+  padding-left:50px;
+  padding-right:50px;
+}
+#titre h1{
+  font-family:"Courier New";
+}
+div.corp{
+  vertical-align: top;
+  display:inline-block;
+  padding:5px;
+  margin-top:20px;
+  width :50%;
+}
+
+#corp{
+  width:100%;
+  margin:auto;
+}
+
+#photo>img{
+  width:70%;
+}
+
+#image_plus{
+  width:20px;
+  cursor:pointer;
+}
+
+#cote{
+  border:solid #256c50;
+  padding-bottom:60%;
+  width :20%;
+}
+#cote>button{
+  margin-top:30px;
+  color: #256c50; 
+}
+#informations{
+  margin-top:30px;
+}
+section{
+  border:solid #b2e6cc;
+  margin:auto;
+  margin-bottom:10px;
+  padding:10px;
+  width :80%;
+}
+section>text{
+  font-family:"Courier New";
+}
+#messages{
+  padding-bottom:100%;
+}
+#amis{
+  color:red;
+  text-align:center;
+}
+
+.liens_amis{
+  border:dashed #256c50;
+  padding:10px;
+  margin:20px;
+  cursor:pointer;
+  text-decoration:underline;
+  text-align:center;
+  color:#256c50;
+}
+.messageUtilisateur{
+  border:solid #256c50;
+  padding: 20px;
+  margin: 30px;
+}
