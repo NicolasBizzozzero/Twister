@@ -59,8 +59,12 @@ public class CreationUtilisateur {
 			
 			// On verifie que la date d'anniversaire est valide
 			if (anniversaire != null) {
-				if (! estValide(anniversaire)) {
-					return ErrorJSON.serviceRefused(String.format("Erreur, l'anniversaire %s est invalide.", anniversaire), CodesErreur.ERREUR_ANNIVERSAIRE_INVALIDE);
+				// Si l'anniversaire est de taille 0, alors c'est que l'utilisateur n'a pas passe d'anniversaire en parametre
+				if (anniversaire.length() != Tailles.MIN_ANNIVERSAIRE) {
+					// On verifie alors sa validite
+					if (! estValide(anniversaire)) {
+						return ErrorJSON.serviceRefused(String.format("Erreur, l'anniversaire %s est invalide.", anniversaire), CodesErreur.ERREUR_ANNIVERSAIRE_INVALIDE);
+					}
 				}
 			}
 

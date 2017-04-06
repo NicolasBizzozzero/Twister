@@ -19,7 +19,7 @@ function makeEnregistrementPanel() {
           			</div>\n\
           			<div class =\"ids\" >\n\
             				<label for= \"anniversaire\">Anniversaire</label>\n\
-            				<input type=\"text\" name=\"anniversaire\" id=\"anniversaire\"/>\n\
+            				<input type=\"date\" name=\"anniversaire\" id=\"anniversaire\"/>\n\
           			</div>\n\
           			<div class =\"ids\" >\n\
             				<label for= \"pseudo\"> Pseudo*</label>\n\
@@ -105,19 +105,13 @@ function verif_formulaire_enregistrement(login, password1, password2, prenom, no
     }
 
     // On vérifie la validité du prénom
-    if (prenom.length < 1) {
-        func_erreur("Prenom trop court.");
-        return false;
-    } else if (prenom.length > 64) {
+    if (prenom.length > 64) {
         func_erreur("Prenom trop long.");
         return false;
     }
 
     // On vérifie la validité du nom
-    if (nom.length < 1) {
-        func_erreur("Nom trop court.");
-        return false;
-    } else if (nom.length > 64) {
+    if (nom.length > 64) {
         func_erreur("Nom trop long.");
         return false;
     }
