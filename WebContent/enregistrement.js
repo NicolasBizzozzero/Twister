@@ -1,3 +1,6 @@
+/**
+ * Génère le code HTML du panneau d"enregistrement.
+ */
 function makeEnregistrementPanel() {
 	var s = "<div id=\"div_inscription\">\n\
       			<h1> Inscription </h1>\n\
@@ -45,64 +48,119 @@ function makeEnregistrementPanel() {
     		</div>";
 	$("body").html(s);
 }
+
+
+/**
+ * Recupère les valeurs du formulaire et vérifie que l'utilisateur peut se
+ * créer un compte.
+ */
 function enregistrementF(formulaire) {
-	var prenom=formulaire.prenom.value;
-	var nom=formulaire.nom.value;
-	var email=formulaire.email.value;
+    console.log("On va enregistrer l'utilisateur");
+	var prenom = formulaire.prenom.value;
+	var nom = formulaire.nom.value;
+	var email = formulaire.email.value;
 	var login = formulaire.pseudo.value;
 	var password1 = formulaire.mdp.value;
 	var password2 = formulaire.mdp2.value;
-	var ok = verif_formulaire_enregistrement(login, password1,password2,prenom,nom,email);
+    var anniversaire = formulaire.anniversaire.value;
+	var ok = verif_formulaire_enregistrement(login, password1, password2, prenom, nom, email, anniversaire);
+    console.log("On a checké tous les paramètres");
 	if (ok) {
-		console.log("entree dans ok=true");
-		connect(login, password1);
+        console.log("Enregistrement réussit, on lance une requête");
+		enregistrement(login, password1, email, prenom, nom, anniversaire);
 		return true;
 	} else {
-		console.log("entree dans ok=false");
+        console.log("Echec de l'enregistrement");
 		return false;
-		//func_erreur("Couple 'Login-Password' invalide.");
 	}
 }
 
-function verif_formulaire_enregistrement(login, password1,password2,prenom,nom,email) {
-	var re_email=new RegExp("[a-z]+[@][a-z]+[\.][a-z]+");
-	if (login.length ==0) {
-		func_erreur("Saisissez un identifiant.");
+
+/**
+ * Vérifie la validité des paramètres passés par l'utilisateur.
+ */
+function verif_formulaire_enregistrement(login, password1, password2, prenom, nom, email, anniversaire) {
+    // On vérifie la validité du login
+	if (login.length < 1) {
+		func_erreur("Login trop court.");
+		return false;
+	} else if (login.length > 32) {
+		func_erreur("Login trop long.");
 		return false;
 	}
 
-	if (login.length > 20) {
-		func_erreur("Votre identifiant doit posséder moins de 20 caratères.");
+    // On vérifie la validité du mot de passe
+    if (password1 != password2 ) {
+        func_erreur("Erreur de mot de passe. Vous n'avez pas saisi deux fois les mêmes caractères.");
+        return false;
+    } else if (password1.length < 8) {
+        func_erreur("Votre mot de passe doit posséder au moins 8 caractères.");
+        return false;
+    } else if (password1.length > 64) {
+        func_erreur("Votre mot de passe doit contenir plus de 64 caratères.");
+        return false;
+    } else if (!mdpAssezSecurise(password1)) {
+        func_erreur("Votre mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.");
+        return false;
+    }
+
+    // On vérifie la validité du prénom
+    if (prenom.length < 1) {
+        func_erreur("Prenom trop court.");
+        return false;
+    } else if (prenom.length > 64) {
+        func_erreur("Prenom trop long.");
+        return false;
+    }
+
+    // On vérifie la validité du nom
+    if (nom.length < 1) {
+        func_erreur("Nom trop court.");
+        return false;
+    } else if (nom.length > 64) {
+        func_erreur("Nom trop long.");
+        return false;
+    }
+
+    // On vérifie la validité de l'adresse mail
+    var re_email = new RegExp("[a-z]+[@][a-z]+[\.][a-z]+");
+	if (email.length < 1) {
+		func_erreur("Adresse email trop courte.");
 		return false;
-	}
-	if (email.length==0) {
-		func_erreur("Saisissez une adresse email.");
-		return false;
-	}
-	if (!re_email.exec(email)) {
-		func_erreur("L'adresse email saisie n'est pas corecte.");
-		return false;
-	}
-	if (password1 != password2 ) {
-		func_erreur("Erreur de mot de passe. Vous n'avez pas saisi deux fois les mêmes caractères.");
+	} else if (email.length > 64) {
+        func_erreur("Adresse email trop long.");
+        return false;
+    } else if (!re_email.exec(email)) {
+		func_erreur("L'adresse email saisie n'est pas correcte.");
 		return false;
 	}
 
-	if (password1.length < 8) {
-		func_erreur("Votre mot de passe doit posséder au moins 8 caractères.");
-		return false;
-	}
+    // TODO: On vérifie la validité de l'anniversaire
 
-	if (password1.length > 20) {
-		func_erreur("Votre mot de passe doit contenir moins de 20 caratères.");
-		return false;
-	}
 	return true;
 }
 
+
+/**
+ * Vérifie qu'un mot de passe est assez sécurisé.
+ * Il doit contenir au moins:
+ * - Une majuscule
+ * - Une minuscule
+ * - Un chiffre
+ */
+function mdpAssezSecurise(mdp) {
+    //TODO: Remplir cette fonction
+    return true;
+}
+
+
+/**
+ * Ajoute un message d'erreur dans la div prévue à cet effet.
+ * @param {string} message - Le message à écrire dans la div.
+ */
 function func_erreur(message) {
-	var s = "<div id=\"msg_err_connexion\">" + message + "</div>";
-	var old_mess = $("#msg_err_connexion");
+	var s = "<div id=\"msg_err_enregistrement\">" + message + "</div>";
+	var old_mess = $("#msg_err_enregistrement");
 
 	// Cas où il n'y avait pas de message d'erreur
 	if (old_mess.length == 0) {
@@ -115,36 +173,45 @@ function func_erreur(message) {
 	}
 }
 
+
+/**
+ * Gère la réponse du serveur et construit le panneau du menu principal avec de
+ * vrais messages si l'utilisateur est enregistré, ou avec de faux si on est en
+ * mode développement.
+ */
 function reponseEnregistrement(rep) {
 	if (rep.erreur == undefined) {
-		env.key = rep.key;
-		env.id = rep.id;
-		env.login = rep.login;
-		env.follows = new Set();
-		
-		for (follower=0; follower < rep.follows.length; follower++) {
-			env.follows.add(rep.follows[follower]);
-		}
-
-		if (env.noConnection) {
-			follows[rep.id] = new Set();
-			for (follower=0; follower < rep.follows.length; follower++) {
-				follows[rep.id].add(rep.follows[follower]);
-			}
-		}
-		makeMainPanel(-1,env.login,4);
+        console.log("Je make le connexion pannel");
+		makeConnexionPanel();
+        func_erreur("Enregistrement effectué avec succès. Veuillez vous connecter.");
 	} else {
+        console.log("Grosse erreur:", rep.erreur);
 		func_erreur(rep.erreur);
 	}
 }
 
-function enregistrement(login, password) {
-	console.log("Connect " + login + ", " + password);
-	var id_user = 78;
-	var key = 8546515;
+
+/**
+ * Effectue une requête auprès du serveur pour enregistrer un utilisateur si on
+ * a une connexion, on fait semblant de l'enregistrer si on est en mode
+ * developpement.
+ */
+function enregistrement(pseudo, password, email, prenom, nom, anniversaire) {
 	if (!env.noConnection) {
-		// TODO: REMPLIR QUAND ON POURRA PARLER AU SERVEUR
+    console.log("On requete !");
+        $.ajax({type: "POST",
+                url: "http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/utilisateur/creationUtilisateur",
+                data: "pseudo=" + login + "&motDePasse=" + password + "&email=" + email + "&prenom=" + prenom + "&nom=" + nom + "&anniversaire=" + anniversaire,
+                dataType: "json",
+                success: function(res) {
+                    reponseEnregistrement(res);
+                },
+                error: function(xhr, status, err) {
+                    func_erreur(status);
+                }
+            });
+    console.log("On a requeté !");
 	} else {
-		reponseConnection({"key": key, "id": id_user, "login": login, "follows": [2, 4]});
+		reponseEnregistrement({});
 	}
 }

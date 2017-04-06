@@ -58,3 +58,4 @@ Faire un schema de la BDD MongoDB
 Faire un schema de la BDD MySQL
 On ne supprime pas les messages ou les commentaires lors de la suppression d'un utilisateur, le preciser lors de l'ecriture du CDG
 Quand on aura tout fini, rajouter pour chaque service un catch (Exception e) avec un JSON D'erreur : ERREUR_INCONNUE
+Ajouter un petit message ou un petit design de site différent lorsque c'est l'anniversaire d'un utilisateur

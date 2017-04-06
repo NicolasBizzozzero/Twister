@@ -141,6 +141,7 @@ public class LikesTools {
 	
 	
 	public static boolean aDejaLike(String id_utilisateur, String id_message, String type_like) {
-		
+		//TODO: Faire cette fonction
+		return false;
 	}
 }
