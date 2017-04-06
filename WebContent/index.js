@@ -140,7 +140,7 @@ function makeMainPanel(fromId, fromLogin, query) {
                         <input type=\"image\" src=\"images/loupe.jpg\" alt=\"rechercher\"/>\n\
                 </form>\n\
                 <div id=\"deconnexion\" class=\"entete\">\n\
-                        <div class=\"liens\" onclick=\"javascript:makeConnexionPanel()\">Se déconnecter</div>\n\
+                        <div class=\"liens\" onclick=\"javascript:deconnexion()\">Se déconnecter</div>\n\
             <div class=\"liens\" onclick=\"javascript:makeMainPanel(-1,env.login,4)\" >Retour page principale</div>\n\
                 </div>\n\
                </header>";
