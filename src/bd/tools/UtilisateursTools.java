@@ -425,6 +425,22 @@ public class UtilisateursTools {
 	}
 
 
+	public static void supprimerAnniversaire(String id_utilisateur) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "UPDATE Utilisateurs SET anniversaire=NULL WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setInt(1, Integer.parseInt(id_utilisateur));
+        statement.executeUpdate();
+        
+        // Liberation des ressources
+        statement.close();
+        connection.close();
+	}
+
+
 	public static String getPseudoUtilisateur(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();

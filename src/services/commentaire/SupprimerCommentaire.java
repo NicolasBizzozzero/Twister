@@ -15,8 +15,6 @@ import exceptions.tailles.IDCommentaireTropGrandException;
 import exceptions.tailles.IDCommentaireTropPetitException;
 import exceptions.tailles.IDMessageTropGrandException;
 import exceptions.tailles.IDMessageTropPetitException;
-import exceptions.tailles.IDTropGrandException;
-import exceptions.tailles.IDTropPetitException;
 import services.CodesErreur;
 import services.ErrorJSON;
 import services.Tailles;

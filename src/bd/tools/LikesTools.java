@@ -41,6 +41,7 @@ public class LikesTools {
 		
 		// Modification de la map des likes en map des nombre de likes
 		for (Integer indexLike=0; indexLike < NOMBRE_LIKE_DIFFERENTS; indexLike++) {
+			@SuppressWarnings("unchecked")
 			ArrayList<DBObject> listeLikes = (ArrayList<DBObject>) likes.get(indexLike.toString());
 			int nombreDeLikes = listeLikes.size();
 			reponse.put(indexLike.toString(), nombreDeLikes);
