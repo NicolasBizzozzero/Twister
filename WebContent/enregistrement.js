@@ -200,7 +200,7 @@ function enregistrement(pseudo, password, email, prenom, nom, anniversaire) {
 	if (!env.noConnection) {
     console.log("On requete !");
         $.ajax({type: "POST",
-                url: "http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/utilisateur/creationUtilisateur",
+                url: "/services/utilisateur/creationUtilisateur",
                 data: "pseudo=" + login + "&motDePasse=" + password + "&email=" + email + "&prenom=" + prenom + "&nom=" + nom + "&anniversaire=" + anniversaire,
                 dataType: "json",
                 success: function(res) {

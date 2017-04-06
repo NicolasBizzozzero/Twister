@@ -106,7 +106,7 @@ function connect(login, password) {
 	var key = 8546515;
 	if (!env.noConnection) {
 		$.ajax({type: "GET",
-                url: "services/authentification/login",
+                url: "/services/authentification/login",
                 data: "pseudo=" + login + "&motDePasse=" + password,
                 dataType: "json",
                 success: function(res) {

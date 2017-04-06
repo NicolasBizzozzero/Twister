@@ -34,7 +34,7 @@
 		<servlet-name>ListerAmis</servlet-name> 
 		<servlet-class>servlets.amis.ServletListerAmis</servlet-class> 
 	</servlet>
-	<!-- <servlet> 
+	<servlet> 
 		<servlet-name>AjouterCommentaire</servlet-name> 
 		<servlet-class>servlets.commentaire.ServletAjouterCommentaire</servlet-class> 
 	</servlet>
@@ -54,6 +54,7 @@
 		<servlet-name>SupprimerMessage</servlet-name> 
 		<servlet-class>servlets.message.ServletSupprimerMessage</servlet-class> 
 	</servlet>
+
 	<servlet> 
 		<servlet-name>ListerMessages</servlet-name> 
 		<servlet-class>servlets.message.ServletListerMessages</servlet-class> 
@@ -63,14 +64,13 @@
 		<servlet-class>servlets.like.ServletAjouterLike</servlet-class> 
 	</servlet>
 	<servlet> 
-		<servlet-name>SupprimerMessage</servlet-name> 
+		<servlet-name>SupprimerLike</servlet-name> 
 		<servlet-class>servlets.like.ServletSupprimerLike</servlet-class> 
 	</servlet>
 	<servlet> 
 		<servlet-name>ListerLikes</servlet-name> 
 		<servlet-class>servlets.like.ServletListerLikes</servlet-class> 
-	</servlet> -->
-	
+	</servlet>	
 	
 	<servlet-mapping> 
 		<servlet-name>CreationUtilisateur</servlet-name> 
@@ -104,7 +104,7 @@
 		<servlet-name>ListerAmis</servlet-name> 
 		<url-pattern>/services/ami/listerAmis</url-pattern> 
 	</servlet-mapping>
-	<!--<servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>AjouterCommentaire</servlet-name> 
 		<url-pattern>/services/commentaire/ajouterCommentaire</url-pattern> 
 	</servlet-mapping>
@@ -116,6 +116,7 @@
 		<servlet-name>ListerCommentaires</servlet-name> 
 		<url-pattern>/services/commentaire/listerCommentaires</url-pattern> 
 	</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>AjouterMessage</servlet-name> 
 		<url-pattern>/services/message/ajouterMessage</url-pattern> 
@@ -124,6 +125,7 @@
 		<servlet-name>SupprimerMessage</servlet-name> 
 		<url-pattern>/services/message/supprimerMessage</url-pattern> 
 	</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>ListerMessages</servlet-name> 
 		<url-pattern>/services/message/listerMessages</url-pattern> 
@@ -132,6 +134,7 @@
 		<servlet-name>AjouterLike</servlet-name> 
 		<url-pattern>/services/like/ajouterLike</url-pattern> 
 	</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>SupprimerLike</servlet-name> 
 		<url-pattern>/services/like/supprimerLike</url-pattern> 
@@ -139,5 +142,10 @@
 	<servlet-mapping>
 		<servlet-name>ListerLikes</servlet-name> 
 		<url-pattern>/services/like/listerLikes</url-pattern> 
-	</servlet-mapping> -->
+	</servlet-mapping>
+	
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 </web-app>
