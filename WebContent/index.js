@@ -1,126 +1,108 @@
-function init() {
-    env = new Object();
-    env.noConnection = false;
-    //setVirtualMessages();
-    //env.id = 1;
-    //env.login = "Nicolas";
-    //env.key = 0;
+function init(){
+        env = new Object();
+        env.noConnection = false;
+        setVirtualMessages();
+        env.id = 1;
+        env.login = "Nicolas";
+        env.key = 0;	
+	//makeMainPanel(env.id, env.login, "");
+	/*$("body").on('appear',function fappeared(event,$affected){
+		$.clear_appear();
+		completeMessages();
+	});*/
 }
 
-
-/**
- * Constructeur de message.
- */
-function Message(id, auteur, texte, date, comments) {
+function Message(id, auteur, texte, date, comments){
         this.id = id;
         this.auteur = auteur;
         this.texte = texte;
         this.date = date;
         if (comments == undefined){
-		    comments = []
-	    }
+		comments = []
+	}
         this.comments = comments;
 }
 
-
-/**
- * Constructeur de commentaire.
- */
-function Commentaire(id, auteur, texte, date) {
+function Commentaire(id, auteur, texte, date){
         this.id = id;
         this.auteur = auteur;
         this.texte = texte;
         this.date = date;
 }
+Message.prototype.getHtml=function(){
+	console.log("auteur:"+this.auteur.id+"   "+this.auteur.login);
+	//console.log("this.auteur ",this.auteur);
 
-
-/**
- * Recupère le code HTML permettant d'afficher un message.
- */
-Message.prototype.getHtml = function() {
-	auteur_id = this.auteur.id;
-	auteur_login = "\"" + this.auteur.login + "\"";
-    var retour =    "<div id=\"message_"+this.id+"\" class=\"messageUtilisateur\">\n\
-                    <div class=\"text_message\">"+this.texte+"</div>\n\
-                    <div class=\"info_mesage\">\n\
-                            <span>Posté par <span class=\"liens\" onClick=\"javascript:makeMainPanel("+auteur_id+","+auteur_login+", 9)\" >"+this.auteur.login+"</span><span> le "+this.date+"</span><img src=\"images/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\"  onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
-                            </span>\n\
-                    </div>\n\
-                    <div class=\"comments\">\n\
-                    </div>\n\
-                    <div class=\"new_comment\">\n\
-                    </div>\n\
-                 </div>";
+        var retour="<div id=\"message_"+this.id+"\" class=\"messageUtilisateur\">\n\
+                        <div class=\"text_message\">"+this.texte+"</div>\n\
+                        <div class=\"info_mesage\">\n\
+                                <span>Posté par <span class=\"liens\" onClick=\"javascript:makeMainPanel(this.auteur.id, this.auteur.login, 9)\" >"+this.auteur.login+"</span><span> le "+this.date+"</span><img src=\"images/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\"  onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
+                                </span>\n\
+                        </div>\n\
+                        <div class=\"comments\">\n\
+                        </div>\n\
+                        <div class=\"new_comment\">\n\
+                        </div>\n\
+                     </div>";
 	return retour;
 }
 
 
-/**
- * Recupère le code HTML permettant d'afficher un commentaire.
- */
-Commentaire.prototype.getHtml=function() {
-    var retour = "<div id=\"commentaire_"+this.id+"\" class=\"commentaireUtilisateur\">\n\
-                    <div class=\"text_commentaire\">"+this.texte+"</div>\n\
-                    <div class=\"info_commentaire\">\n\
-                            <span>Posté par <span class=\"liens\" onClick=\"javascript:makeMainPanel("+this.auteur.id+","+this.auteur.login+",9)\">"+this.auteur.login+"</span><span> le "+this.date+"</span>\n\
-			</span>\n\
-                    </div>\n\
-                 </div>";
+Commentaire.prototype.getHtml=function(){
+	//console.log("this.auteur.id "+this.auteur.id);
+	//console.log("this.auteur.login "+this.auteur.login);
+	env.id=this.auteur.id;
+	env.login=this.auteur.login;
+        var retour="<div id=\"commentaire_"+this.id+"\" class=\"commentaireUtilisateur\">\n\
+                        <div class=\"text_commentaire\">"+this.texte+"</div>\n\
+                        <div class=\"info_commentaire\">\n\
+                                <span>Posté par <span class=\"liens\" onClick=\"javascript:makeMainPanel(this.auteur.id,this.auteur.login,9)\">"+this.auteur.login+"</span><span> le "+this.date+"</span>\n\
+				</span>\n\
+                        </div>\n\
+                     </div>";
 	return retour;
 }
 
 
-/**
- * Permet de construire un objet Javascript précis depuis un objet JSON.
- */
-function revival(key, value) {
-    // Cas où on a une erreur
-    if (key == "erreur" && value != 0){
-        return {erreur: value};
-    } 
-    // Cas où on a un Message
-    else if (value.comments != undefined) {
-        var m = new Message(value.id, value.auteur, value.texte, value.date, value.comments);
-        return m;
-    }
-    // Cas où on a un Commentaire
-    else if (value.texte != undefined) {
-        var c = new Commentaire(value.id, value.auteur, value.texte, value.date);
-        return c;
+function revival(key,value){
+	//console.log(key,value);
+        if(key=="erreur"&&value!=0){
+                return {erreur:value};
+        }
+        else if(value.comments!=undefined){
+                var m=new Message( value.id,value.auteur,value.texte,value.date,value.comments);
+                return m;
+        }
+        else if(value.texte!=undefined){
+                var c=new Commentaire(value.id,value.auteur,value.texte,value.date);
+                return c;
 	}
-    // Cas où on a une date
-    else if (key == "date") {
-        var d = new Date(value);
-        return d;
-    }
-    // Autres cas
-    else {
+        else if(key=="date"){
+                var d=new Date(value);
+                return d;
+        }else{
 		return value;
 	}
 }
 
-
 function setVirtualMessages(){
-    localdb=[];
-    env.follows=[];
-    var user1={"id":1,"login":"Nicolas"};
-    var user2={"id":2,"login":"Alexia"};
+        localdb=[];
+        env.follows=[];
+        var user1={"id":1,"login":"Nicolas"};
+        var user2={"id":2,"login":"Alexia"};
  	var user3={"id":3,"login":"Inconnu"};
-    env.follows[1]=new Set();
-    env.follows[1].add(user2);
-    env.follows[1].add(user3);
-    var com =new Commentaire (1,user3,"bonjour",new Date());
-    localdb[0]= new Message (0,user2,"Salut",new Date(),[com]);
+        env.follows[1]=new Set();
+        env.follows[1].add(user2);
+        env.follows[1].add(user3);
+        var com =new Commentaire (1,user3,"bonjour",new Date());
+        localdb[0]= new Message (0,user2,"Salut",new Date(),[com]);
 	localdb[1]= new Message (1,user2,"Salut tous le monde",new Date(),[com]);
 	localdb[2]= new Message (2,user3,"Salut tous le monde",new Date(),[]);
 	console.log("follows[1]",env.follows[1]);
 }
 
 
-/**
- * Charge le code de la page principale.
- */
-function makeMainPanel(fromId, fromLogin, query) {
+function makeMainPanel(fromId, fromLogin, query){
 	console.log("entree dans makemainpanel");
         if (fromId == undefined){
 		fromId = -1;
@@ -161,8 +143,8 @@ function makeMainPanel(fromId, fromLogin, query) {
                      </div>\n\
                      <div id=\"milieu\" class=\"corp\">\n\
                         <section >\n\
-        			<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : ecrire_message(this)\">\n\
-         				<textarea form=\"nv_message\" > Poster un nouveau message </textarea>\n\
+        			<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
+         				<textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
          				<input type=\"submit\" value=\"Poster\"/>\n\
         			</form >\n\
        			</section>\n\
@@ -188,8 +170,8 @@ function makeMainPanel(fromId, fromLogin, query) {
     			    </div>\n\
                     	    <div id=\"milieu\" class=\"corp\">\n\
 				<section >\n\
-                        		<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : ecrire_message(this)\">\n\
-                               			<textarea form=\"nv_message\"> Poster un nouveau message </textarea>\n\
+                        		<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
+                               			<textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
                                 		<input type=\"submit\" value=\"Poster\"/> \n\
                         		</form >\n\
 				</section>\n\
@@ -217,8 +199,8 @@ function makeMainPanel(fromId, fromLogin, query) {
                     	    </div>\n\
                     	    <div id=\"milieu\" class=\"corp\">\n\
 				<section >\n\
-                        		<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : ecrire_message(this)\">\n\
-                               			<textarea form=\"nv_message\"> Poster un nouveau message </textarea>\n\
+                        		<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
+                               			<textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
                                 		<input type=\"submit\" value=\"Poster\"/> \n\
                         		</form >\n\
 				</section>\n\
@@ -246,8 +228,8 @@ function makeMainPanel(fromId, fromLogin, query) {
                     	    </div>\n\
                     	    <div id=\"milieu\" class=\"corp\">\n\
 				<section >\n\
-                        		<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : ecrire_message(this)\">\n\
-                               			<textarea form=\"nv_message\"> Poster un nouveau message </textarea>\n\
+                        		<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
+                               			<textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
                                 		<input type=\"submit\" value=\"Poster\"/> \n\
                         		</form >\n\
 				</section>\n\
@@ -269,103 +251,88 @@ function makeMainPanel(fromId, fromLogin, query) {
 }
 
 
-/**
- * Envoie une requête au serveur pour récupèrer les messages si on dispose
- * d'une connexion. Dans le cas contraire, charge les messages depuis la BDD
- * locale.
- */
-function completeMessages() {
-	if (!env.noConnection) {
-		$.ajax({type: "POST",
-                url: "/services/message/listerMessages",
-                data: "key=" + env.key + "&query=" + env.query + "&from=" + env.fromId + "&limite=10&id_min=-1&id_max=" + env.idmin,
-                dataType:"json",
-                success:function(res){
-                    completeMessagesReponse(res);
-                },
-                error:function(xhr, status, err){
-                    func_erreur(status);
-                }
-            });
-	} else {
-		var tab = getFromLocalDb(env.fromId, env.minId, env.maxId, tab=[], 10);
+function completeMessages(){
+	if(!env.noConnection){
+		$.ajax({type:"POST", url:"/services/message/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="+env.fromId+"&limite=10&id_min=-1&id_max="+env.idmin, dataType:"json", success:function(res){ completeMessagesReponse(res);}, error:function(xhr,status,err){func_erreur(status);}});
+	}
+	else {
+		console.log(env.fromId);
+		var tab = getFromLocalDb(env.fromId,env.minId,env.maxId, tab=[],10);
 		completeMessagesReponse(JSON.stringify(tab));
 	}
 }
 
-
-/**
- * Gère la réponse du serveur après la requête demandant de lister les messages.
- */
-function completeMessagesReponse(rep) {
- 	var tab = JSON.parse(rep, revival);
-
-	for (i=0; i < tab.length; i++) {
-		var m = tab[i];
+function completeMessagesReponse(rep){
+	//console.log("test2");
+	//console.log(rep);
+ 	var tab=JSON.parse(rep,revival);
+	//console.log(tab);
+	for(i=0;i<tab.length;i++){
+		var m=tab[i];
 		$("#messages").prepend(m.getHtml());
-		env.msg[m.id] = m;
-		if (m.id > env.maxId) {
-            env.maxId = m.id;
-        }
-		if (m.id < env.minId) {
-            env.minId = m.id;
-        }
+		env.msg[m.id]=m;
+		if(m.id>env.maxId){env.maxId=m.id;}
+		if(m.id<env.minId){env.minId=m.id;}
 	}
-
-	var last_id = env.msg[tab.length - 1].id;
-	$("#message_" + last_id).appear();
+	var last_id=env.msg[tab.length-1].id;
+	$("#message_"+last_id).appear();
 	$.force_appear();
 }
 
-
-/**
- * Appellée en mode developpement.
- * Recupère les messages depuis la BDD locale.
- */
-function getFromLocalDb(from, minId, maxId, tab=[], nbmax) {
-	var rep = [];
-	if (from < 0) {
-		for (m=0; m < nbmax; m++) {
-			if (m < localdb.length) {
+function getFromLocalDb(from,minId,maxId, tab=[],nbmax){
+	//console.log("from:"+from);
+	//console.log("env.follows[1]:",env.follows[1]);
+	//console.log("env.follows[from]:",env.follows[from]);
+	var rep=[];
+	//console.log(localdb.length);
+	if(from<0){
+		for(m=0;m<nbmax;m++){
+			if(m<localdb.length){
 				rep.push(localdb[m]);
 			}
-		}	
-	} else {
-		var m = 0;
-		while (m < nbmax && m < localdb.length) {
-			if (localdb[m].auteur.id == from) {
+		}
+		//console.log("localdb", localdb);		
+	}
+	else{
+		var m=0;
+		while(m<nbmax && m<localdb.length){
+			//console.log("localdb[m] ",localdb[m]);
+			//console.log("localdb[m].auteur ",localdb[m].auteur);
+			//console.log("m "+m);
+			if( localdb[m].auteur.id==from ){
 				rep.push(localdb[m]);
 				m++;
-			} else {
-				env.follows[from].forEach(function(valeur) {
-					if (localdb[m].auteur == valeur) {
+			}else{
+				/*console.log("follows[from].length"+follows[from].length);
+				for(a=0; a < follows[from].length;a++){
+					if(localdb[m].auteur==a ){
 						rep.push(localdb[m]);
 						m++;
 					}
+				}*/
+				env.follows[from].forEach(function (valeur){
+					console.log(valeur)
+					if(localdb[m].auteur==valeur ){
+						rep.push(localdb[m]);
+						m++;
+
+					}
 				});
+	
 			}
 		}
 	}
+	console.log(rep);
 	return rep;
 }
 
 
-
-function refreshMessages() {
-	if (!env.noConnection) {
-		$.ajax({type: "POST",
-                url: "/services/message/listerMessages",
-                data: "key=" + env.key + "&query=" + env.query + "&from=" + env.maxId + "&limite=-1&id_min=" + env.maxId + "&id_max=-1",
-                dataType: "json",
-                success:function(res) {
-                    refreshMessagesReponse(res);
-                },
-                error:function(xhr, status, err) {
-                    func_erreur(status);
-                }
-            });
-	} else {
-		var tab = getFromLocalDb(env.fromId, env.minId, env.maxId, tab=[], 10);
+function refreshMessages(){
+	if(!env.noConnection){
+		$.ajax({type:"POST", url:"/services/message/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="+env.maxId+"&limite=-1&id_min="+env.maxId+"&id_max=-1", dataType:"json",success:function(res){ refreshMessagesReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
+	}
+	else {
+		var tab = getFromLocalDb(env.fromId,env.minId,env.maxId, tab=[],10);
 		refreshMessagesReponse(JSON.stringify(tab));
 	}
 }
@@ -374,22 +341,40 @@ function refreshMessages() {
 function refreshMessagesReponse(rep){
 	console.log("rep="+rep);
 	var tab=JSON.parse(rep,revival);
-	for(var i=tab.length-1;i>=0;i--){
+	console.log("tab",tab);
+	console.log("tab[0]",tab[0]);
+	for(i=0;i<tab.length;i++){
 		var m=tab[i];
+		$("#messages").empty();
 		$("#messages").prepend(m.getHtml());
+		env.msg[m.id]=m;
+		if(m.id>env.maxId){env.maxId=m.id;}
+		if(m.id<env.minId){env.minId=m.id;}
+	}
+	/*for(var i=tab.length-1;i>=0;i--){
+		var m=tab[i];
+		console.log("m",m);
+		$("#messages").append(m.getHtml());
 		env.msg[m.id]=m;
 		if(m.id>env.maxId){ env.maxId=m.id;}
 		if(env.minId<0 || m.id<env.minId){ env.minId=m.id;}
-	}
+	}*/
+	/*console.log("env.msg",env.msg)
+	var last_id=env.msg[tab.length-1].id;
+	$("#message_"+last_id).appear();
+	$.force_appear();*/
 }
 
-function newMessage(){
-	var texte=$("#nv_message").val();
+function newMessage(form){
+	var texte=$("textarea[NAME=nv_msg]").val();
+	//console.log("texte message",texte);
 	if(! env.noConnection){
 		$.ajax({type:"GET", url:"/services/message/ajouterMessage", data:"clef="+env.key+"&contenu="+texte, dataType:"json",success:function(res){ newMessageReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
 		taille_localdb=localdb.length;
-		localdb[taille_localdb]= new Message (taille_localdb,{"id":env.id,"login":env.login},"Salut tous le monde",new Date(),[]);	
+		localdb[taille_localdb]= new Message (taille_localdb,{"id":env.id,"login":env.login},texte,new Date(),[]);
+		//console.log("localdb[taille_localdb]",localdb[taille_localdb]);
+		newMessageReponse(JSON.stringify({"key":env.key}));	
 	}
 
 }
@@ -397,8 +382,11 @@ function newMessage(){
 
 
 function newMessageReponse(rep){
+	//console.log("rep newMessageReponse", rep);
 	var msg=JSON.parse(rep,revival);
-	if(key!=undefined && msg.erreur==undefined ){
+	//console.log("msg",msg);
+	//if(msg.key!=undefined && msg.erreur==undefined ){
+	if(msg.erreur==undefined ){
 		refreshMessages();
 	}
 	else{
@@ -422,19 +410,22 @@ function func_erreur(message) {
 	}
 }
 function developpeMessage(id){
-	var m=env.msg[id];
-	var el = $("#message_"+id+" .comments");
+	var im=id
+	//console.log("im",im);
+	var m=env.msg[im];
+	var el = $("#message_"+im+" .comments");
+	el.empty();
 	for(var i=0;i<m.comments.length ;i++){
 		var c=m.comments[i];
 		el.append(c.getHtml());
 	}
-	el=$("#message_"+id+" .new_comment");
-	el.append("<form  id=\"nv_commentaire\" method=\"post\" action=\"\" onSubmit=\"javascript : ecrire_commentaire(this)\">\n\
-                               <textarea form=\"nv_commentaire\"> Poster un nouveau commentaire </textarea>\n\
+	el=$("#message_"+im+" .new_comment");
+	el.append("<form  id=\"nv_commentaire\" method=\"post\" action=\"\" onSubmit=\"javascript : newCommentaire("+im+")\">\n\
+                               <textarea form=\"nv_commentaire\" name=\"nv_com\"> Poster un nouveau commentaire </textarea>\n\
                                <input type=\"submit\" value=\"Poster\"/> \n\
                    </form >");
 
-	$("#message_"+id+" img").replaceWith("<img src=\"images/image_moins.png\" title=\"Ne plus afficher les messages\" alt=\"Ne plus afficher les messages\" id=\"image_plus\" onClick=\"javascript:replieMessage("+id+")\"/>");
+	$("#message_"+im+" img").replaceWith("<img src=\"images/image_moins.png\" title=\"Ne plus afficher les messages\" alt=\"Ne plus afficher les messages\" id=\"image_plus\" onClick=\"javascript:replieMessage("+im+")\"/>");
 }
 
 
@@ -452,16 +443,30 @@ var m=env.msg[id];
 
 }
 
-function newComment(id){
-	if(!noConection){
-	$.ajax({type:"GET", url:"/services/message/ajouterCommentaire", data:"clef="+env.key+"&contenu="+texte+"&id_message="+id, dataType:"json",success:function(res){ newMessageReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
+function newCommentaire(id){
+	var texte=$("textarea[NAME=nv_com]").val();
+	if(! env.noConnection){
+		$.ajax({type:"GET", url:"/services/message/ajouterCommentaire", data:"clef="+env.key+"&contenu="+texte+"&id_message="+id, dataType:"json",success:function(res){ newCommentaireReponse(id,res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
-		new_comment_response(id,JSON.stringify(new Commantaire(env.msg[i].comments.length+1,{"id": env.id,"login":env.login}, "je suis un texte",this.date)));
+		
+		var com= new Commentaire(env.msg[id].comments.length+1,{"id": env.id,"login":env.login}, texte ,this.date)
+		env.msg[id].comments.push(com);
+		//console.log("env.msg[id]",env.msg[id]);
+		newCommentaireReponse(id,JSON.stringify(com));
 	}
 	//JSON.parse(...) ?
 }
-function new_comment_response(id, rep){
-	//todo
+function newCommentaireReponse(id, rep){
+	//console.log("rep newCommentaireReponse", rep);
+	var msg=JSON.parse(rep,revival);
+	//console.log("msg",msg);
+	//if(msg.key!=undefined && msg.erreur==undefined ){
+	if(msg.erreur==undefined ){
+		developpeMessage(id);
+	}
+	else{
+		alert("erreur lors de la création du nouveau commentaire");
+	}
 }
 
 function ajouter_ami(){
@@ -501,3 +506,8 @@ function lister_amis(){
 function reponseListerAmis(rep){
 	//todo
 }
+
+
+
+
+
