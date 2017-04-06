@@ -108,6 +108,12 @@ function reponseConnection(rep) {
 	}
 }
 
+
+/**
+ * Envoie une requête au serveur pour connecter un utilisateur si on dispose
+ * d'une connexion. Dans le cas contraire, on le connecte avec une fausse clef
+ * et un faux ID.
+ */
 function connect(login, password) {
 	console.log("Connect " + login + ", " + password);
 	var id_user = 1;

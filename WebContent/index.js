@@ -1,15 +1,10 @@
-function init(){
-        env = new Object();
-        env.noConnection = false;
-        setVirtualMessages();
-        env.id = 1;
-        env.login = "Nicolas";
-        env.key = 0;	
-	//makeMainPanel(env.id, env.login, "");
-	/*$("body").on('appear',function fappeared(event,$affected){
-		$.clear_appear();
-		completeMessages();
-	});*/
+function init() {
+    env = new Object();
+    env.noConnection = false;
+    setVirtualMessages();
+    env.id = 1;
+    env.login = "Nicolas";
+    env.key = 0;
 }
 
 function Message(id, auteur, texte, date, comments){
@@ -29,9 +24,14 @@ function Commentaire(id, auteur, texte, date){
         this.texte = texte;
         this.date = date;
 }
-Message.prototype.getHtml=function(){
-	console.log("auteur:"+this.auteur.id+"   "+this.auteur.login);
-	//console.log("this.auteur ",this.auteur);
+
+
+/**
+ * Recupère le code HTML permettant d'afficher un message.
+ */
+Message.prototype.getHtml = function() {
+    console.log("auteur:"+this.auteur.id+"   "+this.auteur.login);
+    //console.log("this.auteur ",this.auteur);
 
         var retour="<div id=\"message_"+this.id+"\" class=\"messageUtilisateur\">\n\
                         <div class=\"text_message\">"+this.texte+"</div>\n\
@@ -44,23 +44,26 @@ Message.prototype.getHtml=function(){
                         <div class=\"new_comment\">\n\
                         </div>\n\
                      </div>";
-	return retour;
+    return retour;
 }
 
 
-Commentaire.prototype.getHtml=function(){
-	//console.log("this.auteur.id "+this.auteur.id);
-	//console.log("this.auteur.login "+this.auteur.login);
-	env.id=this.auteur.id;
-	env.login=this.auteur.login;
+/**
+ * Recupère le code HTML permettant d'afficher un commentaire.
+ */
+Commentaire.prototype.getHtml=function() {
+    //console.log("this.auteur.id "+this.auteur.id);
+    //console.log("this.auteur.login "+this.auteur.login);
+    env.id=this.auteur.id;
+    env.login=this.auteur.login;
         var retour="<div id=\"commentaire_"+this.id+"\" class=\"commentaireUtilisateur\">\n\
                         <div class=\"text_commentaire\">"+this.texte+"</div>\n\
                         <div class=\"info_commentaire\">\n\
                                 <span>Posté par <span class=\"liens\" onClick=\"javascript:makeMainPanel(this.auteur.id,this.auteur.login,9)\">"+this.auteur.login+"</span><span> le "+this.date+"</span>\n\
-				</span>\n\
+                </span>\n\
                         </div>\n\
                      </div>";
-	return retour;
+    return retour;
 }
 
 
@@ -102,22 +105,25 @@ function setVirtualMessages(){
 }
 
 
-function makeMainPanel(fromId, fromLogin, query){
-	console.log("entree dans makemainpanel");
+/**
+ * Charge le code de la page principale.
+ */
+function makeMainPanel(fromId, fromLogin, query) {
+    console.log("entree dans makemainpanel");
         if (fromId == undefined){
-		fromId = -1;
-	}
+        fromId = -1;
+    }
         env.fromId = fromId;
         env.fromLogin = fromLogin;
         env.query = query;
         env.msg = [];
-	console.log(env.fromId+"   "+env.fromLogin);
+    console.log(env.fromId+"   "+env.fromLogin);
         env.minId = -1;
         env.maxId = -1;
 
         var s="<header>\n\
                 <div id=\"logo\" class=\"entete\">\n\
- 			<img src=\"images/logo.pgn\" alt=\"logo de notre site\"/> \n\
+            <img src=\"images/logo.pgn\" alt=\"logo de notre site\"/> \n\
                 </div>\n\
                 <div id=\"titre\" class=\"entete\">\n\
                         <h1> TWISTER </h1>\n\
@@ -128,124 +134,124 @@ function makeMainPanel(fromId, fromLogin, query){
                 </form>\n\
                 <div id=\"deconnexion\" class=\"entete\">\n\
                         <div class=\"liens\" onclick=\"javascript:makeConnexionPanel()\">Se déconnecter</div>\n\
-			<div class=\"liens\" onclick=\"javascript:makeMainPanel(-1,env.login,4)\" >Retour page principale</div>\n\
+            <div class=\"liens\" onclick=\"javascript:makeMainPanel(-1,env.login,4)\" >Retour page principale</div>\n\
                 </div>\n\
                </header>";
-	//console.log("En-tête chargée");
+    //console.log("En-tête chargée");
         if (env.fromId < 0){
                 s += "<div id=\"cote\" class=\"corp\">\n\
                         <div id=\"photo\">\n\
                                 <img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         </div>\n\
- 			<div id=\"profil\">\n\
+            <div id=\"profil\">\n\
                                 <div id=\"link1\" onClick=\"javascript:makeMainPanel(env.id,env.login,4)\">Mon profil</div>\n\
                         </div>\n\
                      </div>\n\
                      <div id=\"milieu\" class=\"corp\">\n\
                         <section >\n\
-        			<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
-         				<textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
-         				<input type=\"submit\" value=\"Poster\"/>\n\
-        			</form >\n\
-       			</section>\n\
+                    <form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
+                        <textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
+                        <input type=\"submit\" value=\"Poster\"/>\n\
+                    </form >\n\
+                </section>\n\
                         <section id=\"messages\">\n\
-				<script type=\"text/javascript\">\n\
-					$(completeMessages);\n\
-				</script>\n\
+                <script type=\"text/javascript\">\n\
+                    $(completeMessages);\n\
+                </script>\n\
                         </section>\n\
                      </div>";
-		//console.log("Page d'accueil chargée");
+        //console.log("Page d'accueil chargée");
         } else {
 
                 if (env.fromId == env.id){
                         s+= "<div id=\"cote\" class=\"corp\">\n\
-                        	<div id=\"photo\">\n\
-                                	<img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
-                        	</div>\n\
- 				<div id=\"informations\">\n\
-        				Nom :\n\
-        				<br>Prénom:</br>\n\
-        				Date de naissance:\n\
-      				</div>\n\
-    			    </div>\n\
-                    	    <div id=\"milieu\" class=\"corp\">\n\
-				<section >\n\
-                        		<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
-                               			<textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
-                                		<input type=\"submit\" value=\"Poster\"/> \n\
-                        		</form >\n\
-				</section>\n\
-                            	<section id=\"messages\">\n\
-					<script type=\"text/javascript\">\n\
-						$(completeMessages);\n\
-					</script>\n\
-                        	</section>\n\
-   		    	    </div>\n\
-    			    <div id=\"cote\" class=\"corp\">\n\
-      				Amis\n\
+                            <div id=\"photo\">\n\
+                                    <img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                            </div>\n\
+                <div id=\"informations\">\n\
+                        Nom :\n\
+                        <br>Prénom:</br>\n\
+                        Date de naissance:\n\
+                    </div>\n\
+                    </div>\n\
+                            <div id=\"milieu\" class=\"corp\">\n\
+                <section >\n\
+                                <form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
+                                        <textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
+                                        <input type=\"submit\" value=\"Poster\"/> \n\
+                                </form >\n\
+                </section>\n\
+                                <section id=\"messages\">\n\
+                    <script type=\"text/javascript\">\n\
+                        $(completeMessages);\n\
+                    </script>\n\
+                            </section>\n\
+                    </div>\n\
+                    <div id=\"cote\" class=\"corp\">\n\
+                    Amis\n\
                             </div>";
-			//console.log("Page de profil de l'utilisateur chargée");
+            //console.log("Page de profil de l'utilisateur chargée");
                 } else if(!env.follows[env.fromId].has(env.id)){
                         s+= "<div id=\"cote\" class=\"corp\">\n\
-                        	<div id=\"photo\">\n\
-                                	<img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
-                        	</div>\n\
-				<button type=\"button\" onclick=\"javascript:ajouter_ami()\" >Suivre</button>\n\
- 				<div id=\"informations\">\n\
-        				Nom :\n\
-        				<br>Prénom:</br>\n\
-        				Date de naissance:\n\
-      				</div>\n\
-                    	    </div>\n\
-                    	    <div id=\"milieu\" class=\"corp\">\n\
-				<section >\n\
-                        		<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
-                               			<textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
-                                		<input type=\"submit\" value=\"Poster\"/> \n\
-                        		</form >\n\
-				</section>\n\
-                            	<section id=\"messages\">\n\
-					<script type=\"text/javascript\">\n\
-						$(completeMessages);\n\
-					</script>\n\
-                        	</section>\n\
-   		    	    </div>\n\
-    			    <div id=\"cote\" class=\"corp\">\n\
-      				Amis\n\
+                            <div id=\"photo\">\n\
+                                    <img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                            </div>\n\
+                <button type=\"button\" onclick=\"javascript:ajouter_ami()\" >Suivre</button>\n\
+                <div id=\"informations\">\n\
+                        Nom :\n\
+                        <br>Prénom:</br>\n\
+                        Date de naissance:\n\
+                    </div>\n\
+                            </div>\n\
+                            <div id=\"milieu\" class=\"corp\">\n\
+                <section >\n\
+                                <form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
+                                        <textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
+                                        <input type=\"submit\" value=\"Poster\"/> \n\
+                                </form >\n\
+                </section>\n\
+                                <section id=\"messages\">\n\
+                    <script type=\"text/javascript\">\n\
+                        $(completeMessages);\n\
+                    </script>\n\
+                            </section>\n\
+                    </div>\n\
+                    <div id=\"cote\" class=\"corp\">\n\
+                    Amis\n\
                             </div>";
-			//console.log("Page de profil d'une personne qu'on ne suit pas encore chargée");
- 		} else{
+            //console.log("Page de profil d'une personne qu'on ne suit pas encore chargée");
+        } else{
                         s+=  "<div id=\"cote\" class=\"corp\">\n\
-                        	<div id=\"photo\">\n\
-                                	<img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
-                        	</div>\n\
-				<button type=\"button\" onclick=\"javascript:supprimer_ami()\" >Suivre</button>\n\
- 				<div id=\"informations\">\n\
-        				Nom :\n\
-        				<br>Prénom:</br>\n\
-        				Date de naissance:\n\
-      				</div>\n\
-                    	    </div>\n\
-                    	    <div id=\"milieu\" class=\"corp\">\n\
-				<section >\n\
-                        		<form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
-                               			<textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
-                                		<input type=\"submit\" value=\"Poster\"/> \n\
-                        		</form >\n\
-				</section>\n\
-                            	<section id=\"messages\">\n\
-					<script type=\"text/javascript\">\n\
-						$(completeMessages);\n\
-					</script>\n\
-                        	</section>\n\
-   		    	    </div>\n\
-    			    <div id=\"cote\" class=\"corp\">\n\
-      				Amis\n\
+                            <div id=\"photo\">\n\
+                                    <img src=\"images/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                            </div>\n\
+                <button type=\"button\" onclick=\"javascript:supprimer_ami()\" >Suivre</button>\n\
+                <div id=\"informations\">\n\
+                        Nom :\n\
+                        <br>Prénom:</br>\n\
+                        Date de naissance:\n\
+                    </div>\n\
+                            </div>\n\
+                            <div id=\"milieu\" class=\"corp\">\n\
+                <section >\n\
+                                <form  id=\"nv_message\" method=\"post\" action=\"\" onSubmit=\"javascript : newMessage(this)\">\n\
+                                        <textarea form=\"nv_message\" name=\"nv_msg\"> Poster un nouveau message </textarea>\n\
+                                        <input type=\"submit\" value=\"Poster\"/> \n\
+                                </form >\n\
+                </section>\n\
+                                <section id=\"messages\">\n\
+                    <script type=\"text/javascript\">\n\
+                        $(completeMessages);\n\
+                    </script>\n\
+                            </section>\n\
+                    </div>\n\
+                    <div id=\"cote\" class=\"corp\">\n\
+                    Amis\n\
                            </div>";
-			//console.log("Page de profil d'une personne qu'on suit chargée");
-                	}
+            //console.log("Page de profil d'une personne qu'on suit chargée");
+                    }
          }
-	//$("body").appendTo().html(s);
+    //$("body").appendTo().html(s);
         $("body").html(s);
 
 }
@@ -339,59 +345,59 @@ function refreshMessages(){
 
 
 function refreshMessagesReponse(rep){
-	console.log("rep="+rep);
-	var tab=JSON.parse(rep,revival);
-	console.log("tab",tab);
-	console.log("tab[0]",tab[0]);
-	for(i=0;i<tab.length;i++){
-		var m=tab[i];
-		$("#messages").empty();
-		$("#messages").prepend(m.getHtml());
-		env.msg[m.id]=m;
-		if(m.id>env.maxId){env.maxId=m.id;}
-		if(m.id<env.minId){env.minId=m.id;}
-	}
-	/*for(var i=tab.length-1;i>=0;i--){
-		var m=tab[i];
-		console.log("m",m);
-		$("#messages").append(m.getHtml());
-		env.msg[m.id]=m;
-		if(m.id>env.maxId){ env.maxId=m.id;}
-		if(env.minId<0 || m.id<env.minId){ env.minId=m.id;}
-	}*/
-	/*console.log("env.msg",env.msg)
-	var last_id=env.msg[tab.length-1].id;
-	$("#message_"+last_id).appear();
-	$.force_appear();*/
+    console.log("rep="+rep);
+    var tab=JSON.parse(rep,revival);
+    console.log("tab",tab);
+    console.log("tab[0]",tab[0]);
+    for(i=0;i<tab.length;i++){
+        var m=tab[i];
+        $("#messages").empty();
+        $("#messages").prepend(m.getHtml());
+        env.msg[m.id]=m;
+        if(m.id>env.maxId){env.maxId=m.id;}
+        if(m.id<env.minId){env.minId=m.id;}
+    }
+    /*for(var i=tab.length-1;i>=0;i--){
+        var m=tab[i];
+        console.log("m",m);
+        $("#messages").append(m.getHtml());
+        env.msg[m.id]=m;
+        if(m.id>env.maxId){ env.maxId=m.id;}
+        if(env.minId<0 || m.id<env.minId){ env.minId=m.id;}
+    }*/
+    /*console.log("env.msg",env.msg)
+    var last_id=env.msg[tab.length-1].id;
+    $("#message_"+last_id).appear();
+    $.force_appear();*/
 }
+
 
 function newMessage(form){
-	var texte=$("textarea[NAME=nv_msg]").val();
-	//console.log("texte message",texte);
-	if(! env.noConnection){
-		$.ajax({type:"GET", url:"/services/message/ajouterMessage", data:"clef="+env.key+"&contenu="+texte, dataType:"json",success:function(res){ newMessageReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
-	}else{
-		taille_localdb=localdb.length;
-		localdb[taille_localdb]= new Message (taille_localdb,{"id":env.id,"login":env.login},texte,new Date(),[]);
-		//console.log("localdb[taille_localdb]",localdb[taille_localdb]);
-		newMessageReponse(JSON.stringify({"key":env.key}));	
-	}
+    var texte=$("textarea[NAME=nv_msg]").val();
+    //console.log("texte message",texte);
+    if(! env.noConnection){
+        $.ajax({type:"GET", url:"/services/message/ajouterMessage", data:"clef="+env.key+"&contenu="+texte, dataType:"json",success:function(res){ newMessageReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
+    }else{
+        taille_localdb=localdb.length;
+        localdb[taille_localdb]= new Message (taille_localdb,{"id":env.id,"login":env.login},texte,new Date(),[]);
+        //console.log("localdb[taille_localdb]",localdb[taille_localdb]);
+        newMessageReponse(JSON.stringify({"key":env.key})); 
+    }
 
 }
-
 
 
 function newMessageReponse(rep){
-	//console.log("rep newMessageReponse", rep);
-	var msg=JSON.parse(rep,revival);
-	//console.log("msg",msg);
-	//if(msg.key!=undefined && msg.erreur==undefined ){
-	if(msg.erreur==undefined ){
-		refreshMessages();
-	}
-	else{
-		alert("erreur lors de la création du nouveau message");
-	}
+    //console.log("rep newMessageReponse", rep);
+    var msg=JSON.parse(rep,revival);
+    //console.log("msg",msg);
+    //if(msg.key!=undefined && msg.erreur==undefined ){
+    if(msg.erreur==undefined ){
+        refreshMessages();
+    }
+    else{
+        alert("erreur lors de la création du nouveau message");
+    }
 }
 
 
@@ -409,23 +415,25 @@ function func_erreur(message) {
 		old_mess.replaceWith(s);
 	}
 }
+
+
 function developpeMessage(id){
-	var im=id
-	//console.log("im",im);
-	var m=env.msg[im];
-	var el = $("#message_"+im+" .comments");
-	el.empty();
-	for(var i=0;i<m.comments.length ;i++){
-		var c=m.comments[i];
-		el.append(c.getHtml());
-	}
-	el=$("#message_"+im+" .new_comment");
-	el.append("<form  id=\"nv_commentaire\" method=\"post\" action=\"\" onSubmit=\"javascript : newCommentaire("+im+")\">\n\
+    var im=id
+    //console.log("im",im);
+    var m=env.msg[im];
+    var el = $("#message_"+im+" .comments");
+    el.empty();
+    for(var i=0;i<m.comments.length ;i++){
+        var c=m.comments[i];
+        el.append(c.getHtml());
+    }
+    el=$("#message_"+im+" .new_comment");
+    el.append("<form  id=\"nv_commentaire\" method=\"post\" action=\"\" onSubmit=\"javascript : newCommentaire("+im+")\">\n\
                                <textarea form=\"nv_commentaire\" name=\"nv_com\"> Poster un nouveau commentaire </textarea>\n\
                                <input type=\"submit\" value=\"Poster\"/> \n\
                    </form >");
 
-	$("#message_"+im+" img").replaceWith("<img src=\"images/image_moins.png\" title=\"Ne plus afficher les messages\" alt=\"Ne plus afficher les messages\" id=\"image_plus\" onClick=\"javascript:replieMessage("+im+")\"/>");
+    $("#message_"+im+" img").replaceWith("<img src=\"images/image_moins.png\" title=\"Ne plus afficher les messages\" alt=\"Ne plus afficher les messages\" id=\"image_plus\" onClick=\"javascript:replieMessage("+im+")\"/>");
 }
 
 
@@ -443,31 +451,35 @@ var m=env.msg[id];
 
 }
 
+
 function newCommentaire(id){
-	var texte=$("textarea[NAME=nv_com]").val();
-	if(! env.noConnection){
-		$.ajax({type:"GET", url:"/services/message/ajouterCommentaire", data:"clef="+env.key+"&contenu="+texte+"&id_message="+id, dataType:"json",success:function(res){ newCommentaireReponse(id,res);},error:function(xhr,status,err){func_erreur(status);}});
-	}else{
-		
-		var com= new Commentaire(env.msg[id].comments.length+1,{"id": env.id,"login":env.login}, texte ,this.date)
-		env.msg[id].comments.push(com);
-		//console.log("env.msg[id]",env.msg[id]);
-		newCommentaireReponse(id,JSON.stringify(com));
-	}
-	//JSON.parse(...) ?
+    var texte=$("textarea[NAME=nv_com]").val();
+    if(! env.noConnection){
+        $.ajax({type:"GET", url:"/services/message/ajouterCommentaire", data:"clef="+env.key+"&contenu="+texte+"&id_message="+id, dataType:"json",success:function(res){ newCommentaireReponse(id,res);},error:function(xhr,status,err){func_erreur(status);}});
+    }else{
+        
+        var com= new Commentaire(env.msg[id].comments.length+1,{"id": env.id,"login":env.login}, texte ,this.date)
+        env.msg[id].comments.push(com);
+        //console.log("env.msg[id]",env.msg[id]);
+        newCommentaireReponse(id,JSON.stringify(com));
+    }
+    //JSON.parse(...) ?
 }
+
+
 function newCommentaireReponse(id, rep){
-	//console.log("rep newCommentaireReponse", rep);
-	var msg=JSON.parse(rep,revival);
-	//console.log("msg",msg);
-	//if(msg.key!=undefined && msg.erreur==undefined ){
-	if(msg.erreur==undefined ){
-		developpeMessage(id);
-	}
-	else{
-		alert("erreur lors de la création du nouveau commentaire");
-	}
+    //console.log("rep newCommentaireReponse", rep);
+    var msg=JSON.parse(rep,revival);
+    //console.log("msg",msg);
+    //if(msg.key!=undefined && msg.erreur==undefined ){
+    if(msg.erreur==undefined ){
+        developpeMessage(id);
+    }
+    else{
+        alert("erreur lors de la création du nouveau commentaire");
+    }
 }
+
 
 function ajouter_ami(){
 	if (!noConnection){
