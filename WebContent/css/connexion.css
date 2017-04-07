@@ -1,12 +1,8 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
 body {
-    margin: 0 0 100px;              /* bottom = footer height */
-    background-color: #FFFFFF;
-    font-family: "Roboto", sans-serif;
+    background-image: url("../res/backgrounds/connexion.jpg");
 }
 
-
+/*
 #background_image_connexion {
     background-image: url("../res/backgrounds/connexion.jpg");
     position: absolute;
@@ -17,6 +13,7 @@ body {
     background-position: left bottom;
     background-size:cover;
 }
+*/
 
 
 #div_connexion h1 {

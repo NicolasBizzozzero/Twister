@@ -1,0 +1,7 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+    font-family: "Roboto", sans-serif;
+    background: #ffffff none repeat scroll 0 0;
+    background-image: url("../res/backgrounds/connexion.jpg");
+}

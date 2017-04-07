@@ -21,7 +21,6 @@ function makeConnexionPanelAvecMessage(message) {
  * connecter.
  */
 function connexionF(formulaire) {
-	event.preventDefault();
 	var login = formulaire.pseudo.value;
 	var password = formulaire.mdp.value;
 	var ok = verif_formulaire_connexion(login, password);
