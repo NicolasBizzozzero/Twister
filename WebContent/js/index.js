@@ -35,7 +35,7 @@ Message.prototype.getHtml=function(){
         var retour="<div id=\"message_"+this.id+"\" class=\"messageUtilisateur\">\n\
                         <div class=\"text_message\">"+this.texte+"</div>\n\
                         <div class=\"info_mesage\">\n\
-                                <span>Posté par <span class=\"liens\" onClick=\"javascript:pageUser("+this.auteur.id+")\" >"+this.auteur.login+"</span><span> le "+this.date+"</span><img src=\"../res/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\"  onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
+                                <span>Posté par <span class=\"liens\" onClick=\"javascript:pageUser("+this.auteur.id+")\" >"+this.auteur.login+"</span><span> le "+this.date+"</span><img src=\"res/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\"  onClick=\"javascript:developpeMessage("+this.id+")\"/>\n\
                                 </span>\n\
                         </div>\n\
                         <div class=\"comments\">\n\
@@ -117,14 +117,14 @@ function makeMainPanel(fromId, query){ //j'ai retiré fromLogin
 
         var s="<header>\n\
                 <div id=\"logo\" class=\"entete\">\n\
- 			<img src=\"../res/logo.pgn\" alt=\"logo de notre site\"/> \n\
+ 			<img src=\"res/logo.pgn\" alt=\"logo de notre site\"/> \n\
                 </div>\n\
                 <div id=\"titre\" class=\"entete\">\n\
                         <h1> TWISTER </h1>\n\
                 </div>\n\
                 <form id= \"recherche\" class=\"entete\">\n\
                         <input type=\"text\" id=\"recherche\" name=\"recherche\" value=\"Recherche\"/>\n\
-                        <input type=\"image\" src=\"../res/loupe.jpg\" alt=\"rechercher\"/>\n\
+                        <input type=\"image\" src=\"res/loupe.jpg\" alt=\"rechercher\"/>\n\
                 </form>\n\
                 <div id=\"deconnexion\" class=\"entete\">\n\
                         <div class=\"liens\" onclick=\"javascript:deconnexion()\">Se déconnecter</div>\n\
@@ -135,7 +135,7 @@ function makeMainPanel(fromId, query){ //j'ai retiré fromLogin
         if (env.fromId < 0){
                 s += "<div id=\"cote\" class=\"corp\">\n\
                         <div id=\"photo\">\n\
-                                <img src=\"../res/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                                <img src=\"res/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         </div>\n\
  			<div id=\"profil\">\n\
                                 <div id=\"link1\" onClick=\"javascript:makeMainPanel(env.id, 4)\">Mon profil</div>\n\
@@ -160,7 +160,7 @@ function makeMainPanel(fromId, query){ //j'ai retiré fromLogin
                 if (env.fromId == env.id){
                         s+= "<div id=\"cote\" class=\"corp\">\n\
                         	<div id=\"photo\">\n\
-                                	<img src=\"../res/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                                	<img src=\"res/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         	</div>\n\
  				<div id=\"informations\">\n\
 					Pseudo: \n\
@@ -194,7 +194,7 @@ function makeMainPanel(fromId, query){ //j'ai retiré fromLogin
                 } else if(! env.follows[env.id].has(env.fromId)){ // changement env.follows[env.fromId].has(env.id)
                         s+= "<div id=\"cote\" class=\"corp\">\n\
                         	<div id=\"photo\">\n\
-                                	<img src=\"../res/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                                	<img src=\"res/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         	</div>\n\
 				<button type=\"button\" onclick=\"javascript:ajouter_ami()\" >Suivre</button>\n\
  				<div id=\"informations\">\n\
@@ -228,7 +228,7 @@ function makeMainPanel(fromId, query){ //j'ai retiré fromLogin
  		} else{
                         s+=  "<div id=\"cote\" class=\"corp\">\n\
                         	<div id=\"photo\">\n\
-                                	<img src=\"../res/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
+                                	<img src=\"res/image_profil.jpg\" alt=\"votre photo de profil\"/>\n\
                         	</div>\n\
 				<button type=\"button\" onclick=\"javascript:supprimer_ami()\" >Suivre</button>\n\
  				<div id=\"informations\">\n\
@@ -269,7 +269,7 @@ function makeMainPanel(fromId, query){ //j'ai retiré fromLogin
 
 function completeMessages(){
 	if(!env.noConnection){
-		$.ajax({type:"POST", url:"/services/message/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="+env.fromId+"&limite=10&id_min=-1&id_max="+env.idmin, dataType:"json", success:function(res){ completeMessagesReponse(res);}, error:function(xhr,status,err){func_erreur(status);}});
+		$.ajax({type:"POST", url: url_site + "/services/message/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="+env.fromId+"&limite=10&id_min=-1&id_max="+env.idmin, dataType:"json", success:function(res){ completeMessagesReponse(res);}, error:function(xhr,status,err){func_erreur(status);}});
 	}
 	else {
 		console.log(env.fromId);
@@ -348,7 +348,7 @@ function getFromLocalDb(from,minId,maxId, tab=[],nbmax){
 function refreshMessages(){
 	console.log("entree dans refreshMessage");
 	if(!env.noConnection){
-		$.ajax({type:"POST", url:"/services/message/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="+env.maxId+"&limite=-1&id_min="+env.maxId+"&id_max=-1", dataType:"json",success:function(res){ refreshMessagesReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
+		$.ajax({type:"POST", url: url_site + "/services/message/listerMessages", data:"key="+env.key+"&query="+env.query+"&from="+env.maxId+"&limite=-1&id_min="+env.maxId+"&id_max=-1", dataType:"json",success:function(res){ refreshMessagesReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
 	}
 	else {
 		var tab = getFromLocalDb(env.fromId,env.minId,env.maxId, tab=[],10);
@@ -388,7 +388,11 @@ function newMessage(form){
 	var texte=$("textarea[NAME=nv_msg]").val();
 	//console.log("texte message",texte);
 	if(! env.noConnection){
-		$.ajax({type:"GET", url:"/services/message/ajouterMessage", data:"clef="+env.key+"&contenu="+texte, dataType:"json",success:function(res){ newMessageReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
+		$.ajax({type:"GET",
+                url: url_site + "/services/message/ajouterMessage",
+                data:"clef="+env.key+"&contenu="+texte,
+                dataType:"json",
+                success:function(res){ newMessageReponse(res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
 		taille_localdb=localdb.length;
 		localdb[taille_localdb]= new Message (taille_localdb,{"id":env.id,"login":env.login},texte,new Date(),[]);
@@ -445,7 +449,7 @@ function developpeMessage(id){
                                <input type=\"submit\" value=\"Poster\"/> \n\
                    </form >");
 
-	$("#message_"+im+" img").replaceWith("<img src=\"../res/image_moins.png\" title=\"Ne plus afficher les messages\" alt=\"Ne plus afficher les messages\" id=\"image_plus\" onClick=\"javascript:replieMessage("+im+")\"/>");
+	$("#message_"+im+" img").replaceWith("<img src=\"res/image_moins.png\" title=\"Ne plus afficher les messages\" alt=\"Ne plus afficher les messages\" id=\"image_plus\" onClick=\"javascript:replieMessage("+im+")\"/>");
 }
 
 
@@ -459,14 +463,14 @@ var m=env.msg[id];
 	}*/
 	el=$("#message_"+id+" .new_comment>form");
 	el.remove();
-	$("#message_"+id+" img").replaceWith("<img src=\"../res/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\" onClick=\"javascript:developpeMessage("+id+")\"/>");
+	$("#message_"+id+" img").replaceWith("<img src=\"res/image_plus.png\" title=\"Afficher les messages\" alt=\"Afficher les messages\" id=\"image_plus\" onClick=\"javascript:developpeMessage("+id+")\"/>");
 
 }
 
 function newCommentaire(id){
 	var texte=$("textarea[NAME=nv_com]").val();
 	if(! env.noConnection){
-		$.ajax({type:"GET", url:"/services/message/ajouterCommentaire", data:"clef="+env.key+"&contenu="+texte+"&id_message="+id, dataType:"json",success:function(res){ newCommentaireReponse(id,res);},error:function(xhr,status,err){func_erreur(status);}});
+		$.ajax({type:"GET", url: url_site + "/services/message/ajouterCommentaire", data:"clef="+env.key+"&contenu="+texte+"&id_message="+id, dataType:"json",success:function(res){ newCommentaireReponse(id,res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
 		
 		var com= new Commentaire(env.msg[id].comments.length+1,{"id": env.id,"login":env.login}, texte ,this.date)
@@ -503,7 +507,7 @@ function refreshCommentaires(id){
 
 function ajouter_ami(){
 	if (!env.noConnection){
-	$.ajax({type:"GET", url:"/services/ami/ajouterAmi", data:"clef="+env.key+"&id_ami="+env.id, dataType:"json",success:function(res){ reponseFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
+	$.ajax({type:"GET", url: url_site + "/services/ami/ajouterAmi", data:"clef="+env.key+"&id_ami="+env.id, dataType:"json",success:function(res){ reponseFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
 		reponseFollow({});
 	}
@@ -515,7 +519,7 @@ function reponseFollow(){
 
 function ne_plus_suivre(){
 	if (!env.noConnection){
-	$.ajax({type:"GET", url:"/services/ami/suprimerAmi", data:"clef="+env.key+"&id_ami="+env.id, dataType:"json",success:function(res){ reponseStopFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
+	$.ajax({type:"GET", url: url_site + "/services/ami/suprimerAmi", data:"clef="+env.key+"&id_ami="+env.id, dataType:"json",success:function(res){ reponseStopFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
 		reponseStopFollow({});
 	}
@@ -528,7 +532,7 @@ function reponseStopFollow(){
 
 function listerAmis(){
 	if (!env.noConnection){
-	$.ajax({type:"GET", url:"/services/ami/listerAmis", data:"clef="+env.key+"&id_utilisateur="+env.id+"&index_debut=0&nombre_demandes=10", dataType:"json",success:function(res){ reponseFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
+	$.ajax({type:"GET", url: url_site + "/services/ami/listerAmis", data:"clef="+env.key+"&id_utilisateur="+env.id+"&index_debut=0&nombre_demandes=10", dataType:"json",success:function(res){ reponseFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
 	}else{
 		console.log("env.follows[env.fromId]",env.follows[env.fromId]);
 		reponseListerAmis(env.follows[env.fromId]);

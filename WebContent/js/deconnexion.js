@@ -5,7 +5,7 @@ function deconnexion() {
     event.preventDefault();
 
     var clef = env.key
-    var ok = verif_formulaire_connexion(clef);
+    var ok = verif_params_deconnexion(clef);
     if (ok) {
         disconnect(clef);
         return true;

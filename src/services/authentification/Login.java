@@ -13,6 +13,7 @@ import exceptions.tailles.MotDePasseTropGrandException;
 import exceptions.tailles.MotDePasseTropPetitException;
 import exceptions.tailles.PseudoTropGrandException;
 import exceptions.tailles.PseudoTropPetitException;
+import outils.PseudosAdmins;
 import services.CodesErreur;
 import services.ErrorJSON;
 import services.Tailles;
@@ -127,6 +128,6 @@ public class Login {
 	
 	
 	private static boolean estAdministrateur(String login) {
-		return (login.equals("SuperAlexia")) || (login.equals("SuperNicolas"));
+		return PseudosAdmins.pseudoAdmins.contains(login);
 	}
 }
