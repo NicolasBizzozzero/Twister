@@ -59,47 +59,18 @@ function verif_formulaire_connexion(login, password) {
 
 
 /**
- * Ajoute un message d'erreur dans la div prévue à cet effet.
- * @param {string} message - Le message à écrire dans la div.
- */
-function func_erreur(message) {
-	var s = "<div id=\"msg_err_connexion\">" + message + "</div>";
-	var old_mess = $("#msg_err_connexion");
-
-	// Cas où il n'y avait pas de message d'erreur
-	if (old_mess.length == 0) {
-		$("form").prepend(s);
-	} 
-
-	// Cas où il y'avait déjà un message d'erreur
-	else {
-		old_mess.replaceWith(s);
-	}
-}
-
-
-/**
  * Gère la réponse du serveur et construit le panneau du menu principal avec de
  * vrais messages si l'utilisateur est enregistré, ou avec de faux si on est en
  * mode développement.
  */
 function reponseConnection(rep) {
 	if (rep.errorcode == undefined) {
-		env.key = rep.clef;
-		env.id = rep.id;
-		env.login = rep.pseudo;
-		env.follows[rep.id] = new Set();
-		rep.suivis.forEach(function(valeur) {
-			env.follows[rep.id].add(valeur);
-		});
-
-		if (env.noConnection) {
-			env.follows[rep.id] = new Set();
-			rep.suivis.forEach(function(valeur) {
-				env.follows[rep.id].add(valeur);
-			});
-		}
-		makeMainPanel(-1, env.login, 4);
+		env.clef = rep.clef;
+		env.id_utilisateur = rep.id;
+		env.pseudo = rep.pseudo;
+		env.follows = rep.suivis
+		console.log(env.follows);
+		makeMainPanel(-1, env.pseudo);
 	} else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
 		func_erreur(rep.message);

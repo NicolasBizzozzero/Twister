@@ -1,38 +1,13 @@
-header{
-  border:solid #b2e6cc;
-}
-header .entete{
-  display:inline-block;
-  padding:10px;
-  margin :10px;
-  width:20%;
-  text-align:center;
-
-}
-.liens{
-  cursor:pointer;
-  text-decoration:underline;
-  color:#256c50;
+body {
+    background-image: none;
+    background-color: #ffffff;
 }
 
-#recherche :nth-child(2){
-  width:20px;
-}
 #image_plus{
   width:20px;
   cursor:pointer;
 }
 
-#titre{
-  color:#256c50;
-  padding-left:50px;
-  padding-right:50px;
-}
-#titre h1{
-  font-family:"Courier New";
-  font-size: 3.5em;
-  margin:0px;
-}
 div.corp{
   vertical-align: top;
   display:inline-block;

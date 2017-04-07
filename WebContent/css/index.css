@@ -5,3 +5,8 @@ body {
     background: #ffffff none repeat scroll 0 0;
     background-image: url("../res/backgrounds/connexion.jpg");
 }
+
+#div_erreur {
+    color:red;
+    font-weight: bold;
+}
