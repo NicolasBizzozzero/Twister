@@ -1,0 +1,90 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+    margin: 0 0 100px;              /* bottom = footer height */
+    background-color: #FFFFFF;
+    font-family: "Roboto", sans-serif;
+}
+
+
+#background_image_connexion {
+    background-image: url("../res/backgrounds/connexion.jpg");
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size:cover;
+}
+
+
+#div_connexion h1 {
+    margin-top: 10px;    /* Pour eviter l'effet de margin collapsing */
+    text-align:center; 
+    color: #369765; 
+    margin-bottom: 10px;
+}
+
+
+#div_connexion {
+    background-color: #f7fcf4;
+    border-radius: 5px;
+    box-shadow: 0 0 1px 0;
+    margin-left: 40%;
+    margin-right: 40%;
+    margin-top: 16%;
+    opacity: 0.9;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: absolute;
+    text-shadow: 0 0 1px;
+    width: 400px;
+}
+
+
+#div_connexion form {
+    border: solid #b2e6cc;
+    padding: 15px;
+    position:relative;
+}
+
+
+#div_connexion .ids{
+    margin-left: 0px;
+    margin-top: 20px;
+    position: relative;
+    margin-right: 10px;
+}
+
+
+#div_connexion .ids>input{
+    left:40%;
+    width:60%;
+    position:absolute;
+}
+
+
+#div_connexion .boutons {
+    display: inline-block;
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-bottom: 5px;
+}
+
+
+#div_connexion .links {
+    color: #256c50;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: underline;
+    margin-left: 15px;
+    margin-top: 20px;
+}
+
+#msg_err_connexion{
+    color:red;
+    font-weight: bold;
+}

@@ -2,27 +2,17 @@
  * Génère le code HTML du panneau de connexion.
  */
 function makeConnexionPanel() {
-	var s = "<div id=\"div_connexion\">\n\
-      			<h1> Connexion </h1>\n\
-      			<form method=\"get\" action=\"javascript:(function(){return;})()\" onsubmit=\"javascript:connexionF(this)\">\n\
-          			<div class=\"ids\">\n\
-            				<label for=\" pseudo\"> Pseudo </label>\n\
-           				 <input type=\"text\" name=\"pseudo\" id=\"pseudo\" placeholder=\"name\" required autocomplete=\"off\"/>\n\
-          			</div>\n\
-          			<div class =\"ids\" >\n\
-            				<label for= \"mdp\">Mot de passe</label>\n\
-            				<input type=\"password\" name=\"mdp\" id=\"mdp\" required />\n\
-          			</div>\n\
-         			<div class =\"boutons\" >\n\
-          				<input type=\"submit\" name=\"connexion\" id=\"connexion\" value=\"Se connecter\"/>\n\
-          			</div>\n\
-          			<div class=\"links\">\n\
-           				<div id=\"link1\">Mot de passe oublié</div>\n\
-           				<div id=\"link2\" onClick=\"javascript:makeEnregistrementPanel()\">Pas encore inscrit</div>\n\
-          			</div>\n\
-      			</form>\n\
-   		 </div>";
-	$("body").html(s);
+	$("body").load("html/connexion.html");
+}
+
+
+/**
+ * Génère le code HTML du panneau de connexion avec un message.
+ */
+function makeConnexionPanelAvecMessage(message) {
+    $("body").load("html/connexion.html", function() {
+        func_erreur(message);
+    });
 }
 
 

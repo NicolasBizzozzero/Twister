@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="background_image_enregistrement"></div>
+        <div id="div_inscription">
+            <h1> Inscription </h1>
+            <form method="get"  action="javascript:(function(){return;})()" onSubmit="javascript:enregistrementF(this)">
+                <div class="ids_haut">
+                    <label for="prenom"> Prénom </label>            
+                    <div>
+                        <input type="text" name="prenom" id="prenom"/>
+                    </div>
+                </div>
+                <div class="ids_haut">
+                    <label for="nom"> Nom </label>
+                    <div>
+                        <input type="text" name="nom" id="nom"/>
+                    </div>
+                </div>
+                <div class="ids">
+                    <label for="anniversaire"> Anniversaire </label>
+                    <input type="date" name="anniversaire" id="anniversaire"/>
+                </div>
+                <div class="ids">
+                    <label for="pseudo"> Pseudo* </label>
+                    <input type="text" name="pseudo" id="pseudo"/>
+                </div>
+                <div class ="ids">
+                    <label for="email"> Email* </label>
+                    <input type="text" name="email" id="email"/>
+                </div>
+                <div class ="ids">
+                    <label for="mdp"> Mot de passe* </label>
+                    <input type="password" name="mdp" id="mdp"/>
+                </div>
+                <div class ="ids">
+                    <label for="mdp2"> Répétez le mot de passe* </label>
+                    <input type="password" name="mdp2" id="mdp2"/>
+                </div>
+                <div class ="boutons">
+                    <input type="submit" name="enregistrer" id="enregistrer" value="Inscription"/>
+                    <input type="submit" name="annuler" id="annuler" value="Annuler" onClick="javascript:makeConnexionPanel()"/>
+                </div>
+                <div class="champs_ob">
+                    <p> * : Champs obligatoires </p>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
