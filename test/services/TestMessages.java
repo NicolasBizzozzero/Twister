@@ -46,7 +46,6 @@ public class TestMessages {
 		System.out.println(services.message.AjouterMessage.ajouterMessage(clef, "Je suis le message numero quatre"));
 		
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
-		System.out.println("WWWWWWWWWWWWWWWWWWWWWWW");
 		System.out.println(bd.tools.LikesTools.compteTypeLikes("1").toString(4));
 
 

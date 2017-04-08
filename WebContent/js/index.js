@@ -1,5 +1,7 @@
 function init() {
     url_site = "http://li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero"
+    NB_MESSAGES_PAR_SCROLL = 10;
+
     env = new Object();
     env.noConnection = false;
     setVirtualMessages();

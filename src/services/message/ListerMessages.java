@@ -19,7 +19,8 @@ public class ListerMessages {
 	 * Permet d'obtenir les messages ecrits par un utilisateur. 
 	 * @param clef : La clef de la session
 	 * @param recherche : Les mots clefs de la recherche (vide si pas de mot clef)
-	 * @param id_utilisateur : L'ID de l'utilisateur dont on veut les messages (-1 si on est sur la page principale et que l'on souhaite avoir les messages de tout le monde)
+	 * @param id_utilisateur : L'ID de l'utilisateur dont on veut les messages (-1 si
+	 * on est sur la page principale et que l'on souhaite avoir les messages de tout le monde)
 	 * @param id_max : l'ID de chaque message retourne doit etre inferieur a 'id_max'
 	 * @param id_min : l'ID de chaque message retourne doit etre superieur a 'id_min'
 	 * @param limite : Nombre de messages a retourner (-1 si pas de limite)

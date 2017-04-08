@@ -1,6 +1,9 @@
 package services.utilisateur;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.mail.MessagingException;
 
@@ -75,7 +78,7 @@ public class CreationUtilisateur {
 				}
 			}
 			
-			// On verifique le nom est valide
+			// On verifie que le nom est valide
 			if (nom != null) {
 				// Si le nom est de taille 0, alors c'est que l'utilisateur n'a pas passe de nom en parametre
 				if (nom.length() == 0) {
@@ -255,7 +258,12 @@ public class CreationUtilisateur {
 	 * valide, false sinon.
 	 */
 	public static boolean estValide(String anniversaire) {
-		//TODO: Remplir cette fonction
-		return true;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD");
+		try {
+			simpleDateFormat.parse(anniversaire);
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
 	}
 }

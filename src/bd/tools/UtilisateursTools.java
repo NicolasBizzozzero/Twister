@@ -405,9 +405,7 @@ public class UtilisateursTools {
         connection.close();
 	}
 
-	public static void modifierAnniversaire(String id, String nouvelAnniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, AnniversaireInvalideException {
-		throw new AnniversaireInvalideException(String.format("L'anniversaire \"%s\" est invalide.", nouvelAnniversaire));
-		/*
+	public static void modifierAnniversaire(String id, String nouvelAnniversaire) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -421,7 +419,6 @@ public class UtilisateursTools {
         // Liberation des ressources
         statement.close();
         connection.close();
-        */
 	}
 
 

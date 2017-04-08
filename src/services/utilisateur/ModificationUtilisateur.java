@@ -78,14 +78,6 @@ public class ModificationUtilisateur {
 				}
 			}
 			
-			// Mot de passe
-			if (nouveauMotDePasse != null) {
-				// On verifie que le nouveau mot de passe est securise
-				if (! services.utilisateur.CreationUtilisateur.estSecurise(nouveauMotDePasse)) {
-					return ErrorJSON.serviceRefused(String.format("Erreur, le mot de passe n'est pas assez securise.", nouveauMotDePasse), CodesErreur.ERREUR_MDP_NON_SECURISE);
-				}
-			}
-			
 			// Email
 			if (nouvelEmail != null) {
 				// On verifie que le nouvel email est bien unique
@@ -157,8 +149,6 @@ public class ModificationUtilisateur {
 			return ErrorJSON.serviceRefused(String.format("La clef %s n'est pas presente dans la Base de donnees", clef), CodesErreur.ERREUR_CLEF_INEXISTANTE);
 		} catch (ParseException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur lors du parsing de la date du jour"), CodesErreur.ERREUR_PARSE_DATE);
-		} catch (AnniversaireInvalideException e) {
-			return ErrorJSON.serviceRefused(String.format("Erreur, la date d'anniversaire entree est invalide"), CodesErreur.ERREUR_ANNIVERSAIRE_INVALIDE);
 		} catch (ClefInvalideException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur, clef de session %s invalide", clef), CodesErreur.ERREUR_CLEF_INVALIDE);
 		} catch (MotDePasseTropPetitException e) {
