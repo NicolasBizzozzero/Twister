@@ -125,11 +125,11 @@
 		<servlet-name>SupprimerMessage</servlet-name> 
 		<url-pattern>/services/message/supprimerMessage</url-pattern> 
 	</servlet-mapping>
-
 	<servlet-mapping>
 		<servlet-name>ListerMessages</servlet-name> 
 		<url-pattern>/services/message/listerMessages</url-pattern> 
 	</servlet-mapping> 
+
 	<servlet-mapping>
 		<servlet-name>AjouterLike</servlet-name> 
 		<url-pattern>/services/like/ajouterLike</url-pattern> 

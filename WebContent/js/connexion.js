@@ -69,7 +69,6 @@ function reponseConnection(rep) {
 		env.id_utilisateur = rep.id;
 		env.pseudo = rep.pseudo;
 		env.follows = rep.suivis
-		console.log(env.follows);
 		makeMainPanel(-1, env.pseudo);
 	} else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
@@ -84,27 +83,17 @@ function reponseConnection(rep) {
  * et un faux ID.
  */
 function connect(login, password) {
-	console.log("Connect " + login + ", " + password);
-	if (!env.noConnection) {
-		$.ajax({type: "GET",
-			    url: url_site + "/services/authentification/login",
-			    data: "pseudo=" + login + "&motDePasse=" + password,
-			    dataType: "json",
-			    success: function(res) {
-			    	reponseConnection(res);
-			    },
-			    error: function(xhr, status, err) {
-			    	func_erreur(status + ": " + err);
-			    }
-			});
-	} else {
-		var id_user = 1;
-		var key = 8546515;
-		reponseConnection({"clef": key,
-			               "id": id_user,
-			               "pseudo": login,
-			               "suivis": env.follows[id_user]});
-	}
+	$.ajax({type: "GET",
+		    url: url_site + "/services/authentification/login",
+		    data: "pseudo=" + login + "&motDePasse=" + password,
+		    dataType: "json",
+		    success: function(res) {
+		    	reponseConnection(res);
+		    },
+		    error: function(xhr, status, err) {
+		    	func_erreur(status + ": " + err);
+		    }
+		});
 }
 
 

@@ -50,10 +50,7 @@ section{
 section>text{
   font-family:"Courier New";
 }
-#messages{
-  padding-bottom:100%;
 
-}
 .messageUtilisateur{
   border:solid #256c50;
   padding: 20px;

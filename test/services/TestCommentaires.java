@@ -10,17 +10,17 @@ import exceptions.ClefInexistanteException;
 
 public class TestCommentaires {
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException, UnknownHostException, ClefInexistanteException {
-		bd.tools.MessagesTools.supprimerCollectionMessages();
-		bd.tools.MessagesTools.supprimerCollectionCompteurs();
-		bd.tools.MessagesTools.creerCollectionMessages();
-		bd.tools.MessagesTools.creerCollectionCompteurs();
-		
-		testAjouterCommentaire();
-//		testSupprimerCommentaire();
-//		testListerCommentaires();
+//		bd.tools.MessagesTools.supprimerCollectionMessages();
+//		bd.tools.MessagesTools.supprimerCollectionCompteurs();
+//		bd.tools.MessagesTools.creerCollectionMessages();
+//		bd.tools.MessagesTools.creerCollectionCompteurs();
 //		
-		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
-		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
+//		testAjouterCommentaire();
+//		testSupprimerCommentaire();
+		testListerCommentaires();
+//		
+//		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
+//		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
 	}
 	
 	private static void testAjouterCommentaire() throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchAlgorithmException, SQLException, ClefInexistanteException, UnknownHostException {
@@ -104,19 +104,19 @@ public class TestCommentaires {
 		// Puis par ajouter des messages
 		System.out.println(services.message.AjouterMessage.ajouterMessage(clef, "Je suis le message numero un"));
 		// Puis des commentaires
-		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef, "1", "Coucou c'est moi le commentaire 1."));
-		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef, "1", "Et moi je suis le commentaire 2 !"));
+//		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef, "2", "Coucou c'est moi le commentaire 1."));
+//		System.out.println(services.commentaire.AjouterCommentaire.ajouterCommentaire(clef, "2", "Et moi je suis le commentaire 2 !"));
 		
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 		
 		// On commence le test
 		System.out.println("On liste les commentaires d'un message");
-		System.out.println(services.commentaire.ListerCommentaires.listerCommentaires(clef, "1").toString(4));
+		System.out.println(services.commentaire.ListerCommentaires.listerCommentaires(clef, "2").toString(4));
 		
 		//System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 
 		//  Suppression des messages et de l'utilisateur 
-		bd.tools.MessagesTools.supprimerMessage(clef, "1");
+		//bd.tools.MessagesTools.supprimerMessage(clef, "1");
 		bd.tools.SessionsTools.suppressionCle(clef);
 		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo("Test_utilisateur_500");
 		

@@ -4,7 +4,6 @@ function init() {
 
     env = new Object();
     env.noConnection = false;
-    setVirtualMessages();
 }
 
 
@@ -18,31 +17,20 @@ function hasher(string) {
 
 /**
  * Permet de construire un objet Javascript précis depuis un objet JSON.
- * TODO: A mon avis elle bug, les noms de clefs se chevauchent.
  */
 function revival(key, value) {
-    // Cas où on a une erreur
-    if (key == "erreur" && value != 0) {
-        return {erreur: value};
-    }
-
     // Cas où on a un Message
-    else if (value.comments != undefined) {
-        var m = new Message(value.id, value.auteur, value.texte, value.date,
-                            value.comments, value.nbComments, value.likes);
-        return m;
+    if (value.id_message != undefined) {
+        return new Message(value.id_message, value.auteur, value.contenu,
+                            value.date, value.commentaires,
+                            value.nb_commentaires, value.likes);
     }
 
     // Cas où on a un Commentaire
-    else if (value.texte != undefined) {
-        var c = new Commentaire(value.id, value.auteur, value.texte, value.date);
-        return c;
-    }
-
-    // Cas où on a une date
-    else if (key == "date") {
-        var d = new Date(value);
-        return d;
+    else if (value.id_commentaire != undefined) {
+        console.log("revival commentaire:" + key + ", " + value);
+        return new Commentaire(value.id_commentaire, value.auteur,
+                                value.contenu, value.date);
     }
 
     // Autres cas
@@ -94,8 +82,8 @@ function makeMainPanel(fromId, query) {
     env.fromId = fromId;
     env.query = query;
     env.messages = [];
-    env.minId = -1;
-    env.maxId = -1;
+    env.minId = Infinity;
+    env.maxId = -Infinity;
 
     // Cas où on a demandé la page d'accueil
     if (env.fromId == -1) {

@@ -1,11 +1,20 @@
+/**
+ * Construit un objet Commentaire.
+ */
 function Commentaire(id, auteur, texte, date){
+    console.log("commentairedate" + date);
     this.id = id;
     this.auteur = auteur;
     this.texte = texte;
+    // TODO: Parser la date en la recuperant comme ca
+    // this.date = date;["$date"]
     this.date = date;
 }
 
 
+/**
+ * Recupère et construit le code HTML correspondant à un commentaire.
+ */
 Commentaire.prototype.getHtml = function() {
     var retour;
     var variables_format = {id_commentaire: this.id,
@@ -14,44 +23,74 @@ Commentaire.prototype.getHtml = function() {
                             auteur_pseudo: this.auteur.pseudo_auteur,
                             date_commentaire: this.date};
 
-    $.get("html/commentaire.html", function(res) {
-        retour = Mustache.render(res, variables_format);
-    })
+    $.ajax({url: "html/commentaire.html",
+            success: function(res) {
+                retour = Mustache.render(res, variables_format);
+            },
+            async: false
+        });
 
     return retour;
 }
 
 
-function newCommentaire(id) {
-    var texte = $("textarea[NAME=nv_com]").val();
-    if (! env.noConnection) {
-        $.ajax({type: "GET",
-                url: url_site + "/services/commentaire/ajouterCommentaire",
-                data: "clef=" + env.clef + "&contenu=" + texte + "&id_message=" + id,
-                dataType: "json",
-                success: function(res) {
-                    newCommentaireReponse(id, res);
-                },
-                error: function(xhr, status, err) {
-                    func_erreur(status + ": " + err);
-                }
-            });
+function afficheCommentaires(id_message) {
+    $.ajax({type:"GET",
+            url: url_site + "/services/commentaire/listerCommentaires",
+            data: "clef=" + env.clef + "&id_message=" + id_message,
+            dataType:"text",
+            success: function(res) {
+                console.log("WWWWWW\n" + res);
+                afficheCommentairesReponse(res, id_message);
+            },
+            error: function(xhr, status, err) {
+                func_erreur(status + ": " + err);
+            }
+        });
+}
+
+
+function afficheCommentairesReponse(rep, id_message) {
+    if (rep.errorcode == undefined) {
+        var listeCommentaires = (JSON.parse(rep, revival)).commentaires;
+
+        for(var i=0; i < listeCommentaires.length; i++) {
+            var commentaire = listeCommentaires[i];
+            $("#message_" + id_message + " .commentaires").prepend(commentaire.getHtml());
+        }
+
+        $("#commentaire_" + listeCommentaires.length).appear();
+        $.force_appear();
     } else {
-        var com = new Commentaire(env.messages[id].comments.length + 1, {"id": env.id_utilisateur, "login": env.pseudo}, texte, this.date);
-        env.messages[id].comments.push(com);
-        //console.log("env.messages[id]",env.messages[id]);
-        newCommentaireReponse(id, JSON.stringify(com));
+        console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
+        func_erreur(rep.message);
     }
-    //JSON.parse(...) ?
-    return true;
+}
+
+
+function newCommentaire(id) {
+    // On recupère le texte du message à poster
+    var texte = $("textarea[NAME=nv_commentaire]").val();
+
+    // On vide le texte qui était dedans
+    $("textarea[NAME=nv_commentaire]").val('');
+
+    $.ajax({type: "GET",
+            url: url_site + "/services/commentaire/ajouterCommentaire",
+            data: "clef=" + env.clef + "&contenu=" + texte + "&id_message=" + id,
+            dataType: "json",
+            success: function(res) {
+                newCommentaireReponse(id, res);
+            },
+            error: function(xhr, status, err) {
+                func_erreur(status + ": " + err);
+            }
+        });
 }
 
 
 function newCommentaireReponse(id, rep) {
     if (rep.errorcode == undefined) {
-        //console.log("rep newCommentaireReponse", rep);
-        var msg = JSON.parse(rep, revival);
-        //console.log("msg",msg);
         refreshCommentaires(id);
     } else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
@@ -60,12 +99,43 @@ function newCommentaireReponse(id, rep) {
 }
 
 
-function refreshCommentaires(id){
-    var m=env.messages[id];
-    var el = $("#message_"+id+" .comments");
-    el.empty();
-    for(var i=0;i<m.comments.length ;i++){
-        var c=m.comments[i];
-        el.append(c.getHtml());
+function refreshCommentaires(id_message) {
+    $.ajax({type:"GET",
+            url: url_site + "/services/commentaire/listerCommentaires",
+            data: "clef=" + env.clef + "&id_message=" + id_message,
+            dataType:"text",
+            success: function(res) {
+                console.log("WWWWWW\n" + res);
+                refreshCommentairesReponse(res, id_message);
+            },
+            error: function(xhr, status, err) {
+                func_erreur(status + ": " + err);
+            }
+        });
+}
+
+
+function refreshCommentairesReponse(rep, id_message) {
+    if (rep.errorcode == undefined) {
+        // On nettoie les commentaires précédents
+        $("#message_" + id_message + " .commentaires").empty();
+
+        // On ajoute le code HTML de tous les commentaires
+        var listeCommentaires = (JSON.parse(rep, revival)).commentaires;
+        for (var i=0; i < listeCommentaires.length; i++) {
+            var commentaire = listeCommentaires[i];
+            console.log(commentaire)
+            $("#message_" + id_message + " .commentaires").prepend(commentaire.getHtml());
+        }
+
+        // On remplace la liste des commentaires actualisée dans le message
+        env.messages[id_message].comments = listeCommentaires;
+
+        // On fait apparaitre le commentaire
+        $("#commentaire_" + listeCommentaires.length).appear();
+        $.force_appear();
+    } else {
+        console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
+        func_erreur(rep.message);
     }
 }

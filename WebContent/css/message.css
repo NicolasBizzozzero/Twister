@@ -3,22 +3,32 @@
     padding: 0 10px;
     text-align: center;
 }
+
+
 .messageUtilisateur .text_message {
     text-align: left;
 }
+
+
 .info_message {
     text-align: right;
 }
+
+
 .likes {
     border: medium solid #256c50;
     display: inline-block;
     text-align: center;
 }
+
+
 .like {
     float: left;
     padding-top: 10px;
     width: 100px;
 }
+
+
 .like img {
     display: block;
     height: 18px;

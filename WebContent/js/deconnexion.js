@@ -45,20 +45,17 @@ function reponseDeconnection(rep) {
  * Envoie une requête au serveur pour deconnecter un utilisateur.
  */
 function disconnect(clef) {
-    console.log("Disconnect: " + clef);
-    if (!env.noConnection) {
-        $.ajax({type: "GET",
-                url: url_site + "/services/authentification/logout",
-                data: "clef=" + clef,
-                dataType: "json",
-                success: function(res) {
-                    reponseDeconnection(res);
-                },
-                error: function(xhr, status, err) {
-                    func_erreur(status + ": " + err);
-                }
-            });
-    }
+    $.ajax({type: "GET",
+            url: url_site + "/services/authentification/logout",
+            data: "clef=" + clef,
+            dataType: "json",
+            success: function(res) {
+                reponseDeconnection(res);
+            },
+            error: function(xhr, status, err) {
+                func_erreur(status + ": " + err);
+            }
+        });
 }
 
 

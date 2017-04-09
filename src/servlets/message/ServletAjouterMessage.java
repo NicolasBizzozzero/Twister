@@ -24,7 +24,7 @@ public class ServletAjouterMessage extends HttpServlet {
         JSONObject retour=new JSONObject();
 		retour = AjouterMessage.ajouterMessage(clef, contenu);
 		
-        reponse.setContentType("application/json");
+        reponse.setContentType("text/html;charset=UTF-8");
         reponse.getWriter().print(retour);
      }
 }

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import bd.tools.AmitiesTools;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
+import exceptions.ClefInexistanteException;
 import exceptions.tailles.MotDePasseTropGrandException;
 import exceptions.tailles.MotDePasseTropPetitException;
 import exceptions.tailles.PseudoTropGrandException;
@@ -38,12 +39,6 @@ public class Login {
 			// On recupere l'identifiant de l'utilisateur
 			String identifiant = UtilisateursTools.getIDByPseudo(pseudo);
 			
-			// On verifie que l'utilisateur n'est pas deja connecte
-			boolean isConnecte = SessionsTools.estConnecte(identifiant);
-			if (isConnecte) {
-				return ErrorJSON.serviceRefused("L'utilisateur est deja connecte", CodesErreur.ERREUR_UTILISATEUR_DEJA_CONNECTE);
-			}
-			
 			// On hash le mot de passe
 			motDePasse = outils.MesMethodes.hasherMotDePasse(motDePasse);
 			
@@ -52,10 +47,20 @@ public class Login {
 			if (! passwordOk) {
 				return ErrorJSON.serviceRefused("Erreur, mot de passe incorrect", CodesErreur.ERREUR_MDP_INCORRECT);
 			}
-
-			// On insere la session dans la base de donnees
-			boolean estAdministrateur = estAdministrateur(pseudo);
-			String key = SessionsTools.insertSession(identifiant, estAdministrateur);
+			
+			// On verifie que l'utilisateur n'est pas deja connecte
+			String key;
+			boolean estConnecte = SessionsTools.estConnecte(identifiant);
+			if (! estConnecte) {
+				// Si il ne l'est pas deja, on doit inserer sa clef de session dans la BDD
+				boolean estAdministrateur = estAdministrateur(pseudo);
+				key = SessionsTools.insertSession(identifiant, estAdministrateur);
+			} else {
+				// Sinon, on recupere sa clef puis on met a jour son timestamp
+				//TODO: Supprimer l'ancienne clef
+				key = SessionsTools.getClefById(identifiant);
+				SessionsTools.updateTempsCle(key);
+			}
 			
 			// On recupere la liste des id des gens suivis par l'utilisateur
 			JSONObject jsonIDSuivis = AmitiesTools.listerTousLesAmis(identifiant);
@@ -89,6 +94,8 @@ public class Login {
 			return ErrorJSON.serviceRefused("Erreur, mot de passe trop petit", CodesErreur.ERREUR_MDP_TROP_COURT);
 		} catch (MotDePasseTropGrandException e) {
 			return ErrorJSON.serviceRefused("Erreur, mot de passe trop grand", CodesErreur.ERREUR_MDP_TROP_LONG);
+		} catch (ClefInexistanteException e) {
+			return ErrorJSON.serviceRefused("Erreur, clef inexistante", CodesErreur.ERREUR_CLEF_INEXISTANTE);
 		} 
 	}
 	

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import exceptions.ClefInexistanteException;
 import services.CodesErreur;
 import services.ErrorJSON;
+import bd.tools.MessagesTools;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 
@@ -49,25 +50,21 @@ public class ListerMessages {
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s est inactif depuis trop longtemps", id_session), CodesErreur.ERREUR_UTILISATEUR_INACTIF);
 			}
 			
-			// On verifie que l'utilisateur existe
-			boolean isUser = UtilisateursTools.checkExistenceId(id_session);
-			if (! isUser) {
-				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'existe pas", id_utilisateur), CodesErreur.ERREUR_UTILISATEUR_INEXISTANT);
-			}
+			return MessagesTools.getTousLesMessages();
 	
-			// On recupere les messages
-			JSONObject reponse;
-			if (id_utilisateur.equals("-1")) {
-				reponse = bd.tools.MessagesTools.listerMessagesToutLeMonde(recherche, id_max, id_min, limite);
-			} else {
-				reponse = bd.tools.MessagesTools.listerMessagesUtilisateur(recherche, id_utilisateur, id_max, id_min, limite);
-			}			
-			
-			// On met a jour le temps d'inactivite
-			SessionsTools.updateTempsCle(clef);
-	
-			// On renvoie une reponse
-			return reponse;
+//			// On recupere les messages
+//			JSONObject reponse;
+//			if (id_utilisateur.equals("-1")) {
+//				reponse = bd.tools.MessagesTools.listerMessagesToutLeMonde(recherche, id_max, id_min, limite);
+//			} else {
+//				reponse = bd.tools.MessagesTools.listerMessagesUtilisateur(recherche, id_utilisateur, id_max, id_min, limite);
+//			}			
+//			
+//			// On met a jour le temps d'inactivite
+//			SessionsTools.updateTempsCle(clef);
+//	
+//			// On renvoie une reponse
+//			return reponse;
 		}  catch (InstantiationException e) {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (IllegalAccessException e) {

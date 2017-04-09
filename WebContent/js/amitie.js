@@ -1,9 +1,5 @@
 function ajouter_ami(){
-    if (!env.noConnection){
     $.ajax({type:"GET", url: url_site + "/services/ami/ajouterAmi", data:"clef="+env.clef+"&id_ami="+env.id_utilisateur, dataType:"json",success:function(res){ reponseFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
-    }else{
-        reponseFollow({});
-    }
 }
 
 function reponseFollow(){
@@ -11,11 +7,7 @@ function reponseFollow(){
 }
 
 function ne_plus_suivre(){
-    if (!env.noConnection){
     $.ajax({type:"GET", url: url_site + "/services/ami/suprimerAmi", data:"clef="+env.clef+"&id_ami="+env.id_utilisateur, dataType:"json",success:function(res){ reponseStopFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
-    }else{
-        reponseStopFollow({});
-    }
 }
 
 function reponseStopFollow(){
@@ -24,12 +16,7 @@ function reponseStopFollow(){
 
 
 function listerAmis(){
-    if (!env.noConnection){
     $.ajax({type:"GET", url: url_site + "/services/ami/listerAmis", data:"clef="+env.clef+"&id_utilisateur="+env.id_utilisateur+"&index_debut=0&nombre_demandes=10", dataType:"json",success:function(res){ reponseFollow(res);},error:function(xhr,status,err){func_erreur(status);}});
-    }else{
-        console.log("env.follows[env.fromId]",env.follows[env.fromId]);
-        reponseListerAmis(env.follows[env.fromId]);
-    }
 }
 
 
@@ -44,5 +31,4 @@ function reponseListerAmis(rep){
     });
     var el = $("#amis");
     el.append(s);
-    
 }

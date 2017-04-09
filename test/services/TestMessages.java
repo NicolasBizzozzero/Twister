@@ -11,29 +11,30 @@ import exceptions.ClefInexistanteException;
 public class TestMessages {
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, UnknownHostException, ClefInexistanteException {
-		bd.tools.MessagesTools.supprimerCollectionMessages();
-		bd.tools.MessagesTools.supprimerCollectionCompteurs();
-		bd.tools.MessagesTools.creerCollectionMessages();
-		bd.tools.MessagesTools.creerCollectionCompteurs();
-		
+//		bd.tools.MessagesTools.supprimerCollectionMessages();
+//		bd.tools.MessagesTools.supprimerCollectionCompteurs();
+//		bd.tools.MessagesTools.creerCollectionMessages();
+//		bd.tools.MessagesTools.creerCollectionCompteurs();
+//		
+//		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
+//		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
+//		
+//		testAjouterMessage();
+//		//testSupprimerMessage();
+//		//testListerMessages();
+//		
+//		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
+//		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
 		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
-		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
-		
-		testAjouterMessage();
-		//testSupprimerMessage();
-		//testListerMessages();
-		
-		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
-		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
 	}
 
 	private static void testAjouterMessage() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, ClefInexistanteException, NoSuchAlgorithmException, UnknownHostException {
 		System.out.println("Debut du test d'ajout de messages");
-		String clef ="";
+
 		// On commence par ajouter une personne dans notre base de donnees
 		bd.tools.UtilisateursTools.ajouterUtilisateur("500", "Test_utilisateur_500", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
 		bd.tools.SessionsTools.insertSession("500", false);
-		clef = bd.tools.SessionsTools.getClefById("500");
+		String clef = bd.tools.SessionsTools.getClefById("500");
 
 		System.out.println("S'il manque un des parametres (message, identifiant, pseudo) de l'utilisateur, il ne peut pas ajouter de messages:");
 		System.out.println(services.message.AjouterMessage.ajouterMessage(clef, null));

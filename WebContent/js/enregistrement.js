@@ -120,7 +120,6 @@ function reponseEnregistrement(rep) {
  * developpement.
  */
 function enregistrement(pseudo, password, email, prenom, nom, anniversaire) {
-	if (!env.noConnection) {
     $.ajax({type: "GET",
             url: url_site + "/services/utilisateur/creationUtilisateur",
             data: "pseudo=" + pseudo + "&motDePasse=" + password + "&email=" + email + "&prenom=" + prenom + "&nom=" + nom + "&anniversaire=" + anniversaire,
@@ -136,7 +135,4 @@ function enregistrement(pseudo, password, email, prenom, nom, anniversaire) {
                 func_erreur(status + ": " + err);
             }
         });
-	} else {
-		reponseEnregistrement({});
-	}
 }
