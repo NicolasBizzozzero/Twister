@@ -98,3 +98,62 @@ section>text{
   padding: 20px;
   margin: 30px;
 }
+
+body {
+    background-image: none;
+    background-color: #ffffff;
+}
+
+#image_plus{
+  width:20px;
+  cursor:pointer;
+}
+
+div.corp{
+  vertical-align: top;
+  display:inline-block;
+  padding:5px;
+  margin-top:20px;
+  width :40%;
+}
+section>form>textarea{
+  width:70%;
+}
+section>form>input{
+  color:#256c50;
+}
+.comments>div{
+  border: solid #b2e6cc;
+  margin:3%;
+  padding:5%;
+}
+
+#cote{
+  border:solid #256c50;
+  padding-bottom:55%;
+  width :20%;
+}
+
+#photo>img{
+  width:70%;
+}
+#link1{
+  cursor:pointer;
+  text-decoration:underline;
+  color:#256c50;
+}
+section{
+  border:solid #b2e6cc;
+  margin:10px;
+  padding:30px;
+  width :140%;
+}
+section>text{
+  font-family:"Courier New";
+}
+
+.messageUtilisateur{
+  border:solid #256c50;
+  padding: 20px;
+  margin: 30px;
+}

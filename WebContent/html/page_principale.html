@@ -6,13 +6,13 @@
         <link rel="stylesheet" type="text/css" href="css/commentaire.css"/>
     </head>
     <body>
-        <div id="cote" class="corp">
+        <div id="cote" class="corp"
+             onClick="javascript:makePageProfil(env.id_utilisateur)">
             <div id="photo">
-                <img src="res/image_profil.jpg" alt="Votre photo de profil" width="30px" height="200px"/>
+                <img src="res/image_profil.jpg" alt="Votre photo de profil"/>
             </div>
             <div id="profil">
-                <div id="link_profil"
-                     onClick="javascript:makeMainPanel(env.id_utilisateur)">
+                <div id="link_profil">
                     Mon profil
                 </div>
             </div>
@@ -35,4 +35,3 @@
         </div>
     </body>
 </html>
-                    
