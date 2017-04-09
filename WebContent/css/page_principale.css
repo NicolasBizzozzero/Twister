@@ -1,58 +1,71 @@
+
 body {
-    background-image: none;
     background-color: #ffffff;
+    background-image: none;
 }
-
-#image_plus{
-  width:20px;
-  cursor:pointer;
+#image_moins {
+    width: 20px;
+    cursor: pointer;
 }
-
-div.corp{
-  vertical-align: top;
-  display:inline-block;
-  padding:5px;
-  margin-top:20px;
-  width :40%;
+#image_plus {
+    cursor: pointer;
+    width: 20px;
 }
-section>form>textarea{
-  width:70%;
+div.corp {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 5px;
+    vertical-align: top;
+    width: 40%;
 }
-section>form>input{
-  color:#256c50;
+section > form > textarea {
+    width: 70%;
 }
-.comments>div{
-	border: solid #b2e6cc;
-	margin:3%;
-	padding:5%;
+section > form > input {
+    color: #256c50;
 }
-
-#cote{
-  border:solid #256c50;
-  padding-bottom:55%;
-  width :20%;
+.comments > div {
+    border: medium solid #b2e6cc;
+    margin: 3%;
+    padding: 5%;
 }
-
-#photo>img{
-  width:70%;
+#cote {
+    border-width: 1px;
+    height: 220px;
+    margin-top: 0;
+    text-align: center;
+    width: 230px;
+    border: solid #c4c4c4;
+    border-left: none;
+    cursor: pointer;
 }
-#link1{
-  cursor:pointer;
-  text-decoration:underline;
-  color:#256c50;
+#photo > img {
+    height: 180px;
+    width: 180px;
+    background-color: #e3e3e3;
+    padding: 2px;
+    margin-top: 10px;
+    margin-right: 4px;
 }
-section{
-  border:solid #b2e6cc;
-  margin:10px;
-  padding:30px;
-  width :140%;
+#link1 {
+    color: #256c50;
+    cursor: pointer;
+    text-decoration: underline;
 }
-section>text{
-  font-family:"Courier New";
+section {
+    border: medium solid #b2e6cc;
+    margin: 10px;
+    padding: 30px;
+    width: 140%;
 }
-
-.messageUtilisateur{
-  border:solid #256c50;
-  padding: 20px;
-  margin: 30px;
+section > text {
+    font-family: "Courier New";
+}
+.messageUtilisateur {
+    border: medium solid #256c50;
+    margin: 30px;
+    padding: 20px;
+}
+#nv_message {
+    text-align: center;
 }

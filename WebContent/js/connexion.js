@@ -69,7 +69,12 @@ function reponseConnection(rep) {
 		env.id_utilisateur = rep.id;
 		env.pseudo = rep.pseudo;
 		env.follows = rep.suivis
-		makeMainPanel(-1, env.pseudo);
+	    env.fromId = -1;
+	    env.query = undefined;
+	    env.messages = [];
+	    env.minId = Infinity;
+	    env.maxId = -Infinity;
+		makePagePrincipale();
 	} else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
 		func_erreur(rep.message);
