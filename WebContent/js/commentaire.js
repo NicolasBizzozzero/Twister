@@ -2,7 +2,6 @@
  * Construit un objet Commentaire.
  */
 function Commentaire(id, auteur, texte, date){
-    console.log("commentairedate" + date);
     this.id = id;
     this.auteur = auteur;
     this.texte = texte;
@@ -40,7 +39,6 @@ function afficheCommentaires(id_message) {
             data: "clef=" + env.clef + "&id_message=" + id_message,
             dataType:"text",
             success: function(res) {
-                console.log("WWWWWW\n" + res);
                 afficheCommentairesReponse(res, id_message);
             },
             error: function(xhr, status, err) {
@@ -105,7 +103,6 @@ function refreshCommentaires(id_message) {
             data: "clef=" + env.clef + "&id_message=" + id_message,
             dataType:"text",
             success: function(res) {
-                console.log("WWWWWW\n" + res);
                 refreshCommentairesReponse(res, id_message);
             },
             error: function(xhr, status, err) {
@@ -124,7 +121,6 @@ function refreshCommentairesReponse(rep, id_message) {
         var listeCommentaires = (JSON.parse(rep, revival)).commentaires;
         for (var i=0; i < listeCommentaires.length; i++) {
             var commentaire = listeCommentaires[i];
-            console.log(commentaire)
             $("#message_" + id_message + " .commentaires").prepend(commentaire.getHtml());
         }
 

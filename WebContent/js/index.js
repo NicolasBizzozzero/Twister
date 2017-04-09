@@ -3,7 +3,6 @@ function init() {
     NB_MESSAGES_PAR_SCROLL = 10;
 
     env = new Object();
-    env.noConnection = false;
 }
 
 
@@ -179,3 +178,16 @@ function makeMainPanel(fromId, query) {
 function func_erreur(message) {
     $("#div_erreur").text(message);
 }
+
+
+/**
+ * Retire un elemnent d'une Liste si il existe puis le retourne.
+ * Sinon, retourne undefined.
+ */
+Array.prototype.pull = function(object) {
+    for (i = 0; i < this.length; i++) {
+        if (this[i] == object) {
+            this.splice(i, 1);
+        }
+    }
+};

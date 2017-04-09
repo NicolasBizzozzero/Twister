@@ -2,7 +2,6 @@
  * Construit un objet Message.
  */
 function Message(id, auteur, texte, date, comments, nbComments, likes) {
-    console.log("messagedate" + date);
     this.id = id;
     this.auteur = auteur;
     this.texte = texte;
@@ -109,6 +108,8 @@ function refreshMessagesReponse(rep) {
         var listeMessages = (JSON.parse(rep, revival)).Messages;
         for (var i=0; i < listeMessages.length; i++) {
             var m = listeMessages[i];
+
+            //TODO: Ajouter si il n'est pas déjà chargé
             $("#messages").prepend(m.getHtml());
             env.messages[m.id] = m;
             
