@@ -1,0 +1,70 @@
+body {
+    background-image: url("../res/backgrounds/connexion.jpg");
+}
+
+
+#div_connexion h1 {
+    color: #369765;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+#div_connexion {
+    background-color: #f7fcf4;
+    border-radius: 5px;
+    box-shadow: 0 0 1px 0;
+    height: 270px;
+    left: 50%;
+    margin-bottom: auto;
+    margin-left: -200px;
+    margin-top: -135px;
+    opacity: 0.9;
+    padding: 2px 15px 8px;
+    position: absolute;
+    text-shadow: 0 0 1px;
+    top: 50%;
+    width: 400px;
+}
+
+
+#div_connexion form {
+    border: solid #b2e6cc;
+    padding: 15px;
+    position:relative;
+}
+
+
+#div_connexion .ids{
+    margin-left: 0px;
+    margin-top: 20px;
+    position: relative;
+    margin-right: 10px;
+}
+
+
+#div_connexion .ids>input{
+    left:40%;
+    width:60%;
+    position:absolute;
+}
+
+
+#div_connexion .boutons {
+    display: inline-block;
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-bottom: 5px;
+}
+
+
+#div_connexion .links {
+    color: #256c50;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: underline;
+    margin-left: 15px;
+    margin-top: 20px;
+}

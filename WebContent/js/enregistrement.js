@@ -1,52 +1,18 @@
 /**
- * Génère le code HTML du panneau d"enregistrement.
+ * Génère le code HTML du panneau d'enregistrement.
  */
 function makeEnregistrementPanel() {
-	var s = "<div id=\"div_inscription\">\n\
-      			<h1> Inscription </h1>\n\
-    			<form method=\"get\" action=\"javascript:(function(){return;})()\" onSubmit=\"javascript:enregistrementF(this)\">\n\
-          			<div class=\"ids_haut\">\n\
-            				<label for=\" prenom\"> Prénom </label>\n\
-            				<div>\n\
-            					<input type=\"text\" name=\"prenom\" id=\"prenom\"/>\n\
-            				</div>\n\
-          			</div>\n\
-          			<div class=\"ids_haut\">\n\
-            				<label for= \"nom\"> Nom</label>\n\
-            				<div>\n\
-            					<input type=\"text\" name=\"nom\" id=\"nom\"/>\n\
-           				</div>\n\
-          			</div>\n\
-          			<div class =\"ids\" >\n\
-            				<label for= \"anniversaire\">Anniversaire</label>\n\
-            				<input type=\"date\" name=\"anniversaire\" id=\"anniversaire\"/>\n\
-          			</div>\n\
-          			<div class =\"ids\" >\n\
-            				<label for= \"pseudo\"> Pseudo*</label>\n\
-          				<input type=\"text\" name=\"pseudo\" id=\"pseudo\"/>\n\
-          			</div>\n\
-          			<div class =\"ids\" >\n\
-            				<label for= \"email\"> Email*</label>\n\
-          				<input type=\"text\" name=\"email\" id=\"email\"/>\n\
-          			</div>\n\
-          			<div class =\"ids\" >\n\
-            				<label for= \"mdp\">Mot de passe*</label>\n\
-          				<input type=\"password\" name=\"mdp\" id=\"mdp\"/>\n\
-         			</div>\n\
-          			<div class =\"ids\" >\n\
-            				<label for= \"mdp2\"> Répéter le mot de passe</label>\n\
-          				<input type=\"password\" name=\"mdp2\" id=\"mdp2\"/>\n\
-          			</div>\n\
-          			<div class =\"boutons\" >\n\
-          				<input type=\"submit\" name=\"enregistrer\" id=\"enregistrer\" value=\"Inscription\"/>\n\
-            				<input type=\"button\" name=\"annuler\" id=\"annuler\" value=\"Annuler\" onClick=\"javascript:makeConnexionPanel()\"/>\n\
-          			</div>\n\
-         			<div class=\"champs_ob\">\n\
-           				<text> * Champs obligatoires</text>\n\
-          			</div>\n\
-      			</form>\n\
-    		</div>";
-	$("body").html(s);
+    $("body").load("html/enregistrement.html");
+}
+
+
+/**
+ * Génère le code HTML du panneau d'enregistrement avec un message.
+ */
+function makeEnregistrementPanelAvecMessage(message) {
+    $("body").load("html/enregistrement.html", function() {
+        func_erreur(message);
+    });
 }
 
 
@@ -99,9 +65,6 @@ function verif_formulaire_enregistrement(login, password1, password2, prenom, no
     } else if (password1.length > 128) {
         func_erreur("Votre mot de passe doit contenir plus de 64 caratères.");
         return false;
-    } else if (!mdpAssezSecurise(password1)) {
-        func_erreur("Votre mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.");
-        return false;
     }
 
     // On vérifie la validité du prénom
@@ -136,39 +99,6 @@ function verif_formulaire_enregistrement(login, password1, password2, prenom, no
 
 
 /**
- * Vérifie qu'un mot de passe est assez sécurisé.
- * Il doit contenir au moins:
- * - Une majuscule
- * - Une minuscule
- * - Un chiffre
- */
-function mdpAssezSecurise(mdp) {
-    //TODO: Remplir cette fonction
-    return true;
-}
-
-
-/**
- * Ajoute un message d'erreur dans la div prévue à cet effet.
- * @param {string} message - Le message à écrire dans la div.
- */
-function func_erreur(message) {
-	var s = "<div id=\"msg_err_enregistrement\">" + message + "</div>";
-	var old_mess = $("#msg_err_enregistrement");
-
-	// Cas où il n'y avait pas de message d'erreur
-	if (old_mess.length == 0) {
-		$("form").prepend(s);
-	} 
-
-	// Cas où il y'avait déjà un message d'erreur
-	else {
-		old_mess.replaceWith(s);
-	}
-}
-
-
-/**
  * Gère la réponse du serveur et construit le panneau de connexion si
  * l'utilisateur est enregistré, ou avec un message d'erreur sinon.
  */
@@ -176,8 +106,7 @@ function reponseEnregistrement(rep) {
   console.log(rep);
 	if (rep.errorcode == undefined) {
       console.log("Je make le connexion pannel");
-      makeConnexionPanel();
-      func_erreur("Enregistrement effectué avec succès. Veuillez vous connecter.");
+      makeConnexionPanelAvecMessage("Enregistrement effectué avec succès. Veuillez vous connecter.");
 	} else {
       console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
 		  func_erreur(rep.message);
@@ -191,7 +120,6 @@ function reponseEnregistrement(rep) {
  * developpement.
  */
 function enregistrement(pseudo, password, email, prenom, nom, anniversaire) {
-	if (!env.noConnection) {
     $.ajax({type: "GET",
             url: url_site + "/services/utilisateur/creationUtilisateur",
             data: "pseudo=" + pseudo + "&motDePasse=" + password + "&email=" + email + "&prenom=" + prenom + "&nom=" + nom + "&anniversaire=" + anniversaire,
@@ -207,7 +135,4 @@ function enregistrement(pseudo, password, email, prenom, nom, anniversaire) {
                 func_erreur(status + ": " + err);
             }
         });
-	} else {
-		reponseEnregistrement({});
-	}
 }

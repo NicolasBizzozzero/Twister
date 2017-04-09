@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/page_principale.css"/>
+        <link rel="stylesheet" type="text/css" href="css/message.css"/>
+        <link rel="stylesheet" type="text/css" href="css/commentaire.css"/>
+    </head>
+    <body>
+        <div id="cote" class="corp">
+            <div id="photo">
+                <img src="res/image_profil.jpg" alt="Votre photo de profil" width="30px" height="200px"/>
+            </div>
+            <div id="profil">
+                <div id="link_profil"
+                     onClick="javascript:makeMainPanel(env.id_utilisateur)">
+                    Mon profil
+                </div>
+            </div>
+        </div>
+        <div id="milieu" class="corp">
+            <section >
+                <form id="nv_message" method="post"
+                      action="javascript:(function(){return;})()"
+                      onSubmit="javascript:newMessage(this)">
+                    <textarea name="nv_message" form="nv_message"
+                              placeholder="Écrivez votre nouveau message."/>
+                    <input type="submit" value="Poster"/> 
+                </form >
+            </section>
+            <section id="messages">
+                <script type="text/javascript">
+                    $(completeMessages);
+                </script>
+            </section>
+        </div>
+    </body>
+</html>
+                    

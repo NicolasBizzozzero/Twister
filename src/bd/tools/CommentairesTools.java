@@ -136,6 +136,8 @@ public class CommentairesTools {
 		DBCursor curseur = messages.find(message);
 		if (! curseur.hasNext()) {
 			// Le message n'existe pas, donc le commentaire non plus
+			JSONObject reponseVide = new JSONObject();
+			reponseVide.put(Nom.CHAMP_COMMENTAIRES, new JSONArray());
 			return new JSONObject();
 		}
 		

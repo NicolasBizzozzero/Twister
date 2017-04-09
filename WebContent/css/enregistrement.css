@@ -1,0 +1,66 @@
+body {
+    background-image: url("../res/backgrounds/enregistrement.jpg");
+}
+
+
+#div_inscription h1 {
+    color: #369765;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+#div_inscription {
+    background-color: #f7fcf4;
+    border-radius: 5px;
+    box-shadow: 0 0 1px 0;
+    height: 452px;
+    left: 50%;
+    margin-bottom: auto;
+    margin-left: -325px;
+    margin-top: -226px;
+    opacity: 0.9;
+    padding: 2px 15px 15px;
+    position: absolute;
+    text-shadow: 0 0 1px;
+    top: 50%;
+    width: 650px;
+}
+
+
+#div_inscription form {
+    border: 3px solid #b2e6cc;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+
+#div_inscription .ids_haut {
+    display: inline-block;
+    margin-bottom: 18px;
+    margin-left: 10%;
+    margin-right: auto;
+    text-align: center;
+    width: 200px;
+}
+
+
+#div_inscription .ids {
+    margin-bottom: 18px;
+}
+
+
+#div_inscription .ids > input {
+    left: 30%;
+    margin-left: 10%;
+    position: absolute;
+    width: 51%;
+}
+
+
+#div_inscription .boutons {
+    margin-bottom: 10px;
+    margin-left: 32%;
+    margin-top: 10px;
+}

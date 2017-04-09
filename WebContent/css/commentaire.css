@@ -1,0 +1,15 @@
+.commentaireUtilisateur {
+    border: medium solid #256c50;
+    padding: 0 10px;
+    text-align: center;
+}
+
+
+.commentaireUtilisateur .text_commentaire {
+    text-align: left;
+}
+
+
+.info_commentaire {
+    text-align: right;
+}

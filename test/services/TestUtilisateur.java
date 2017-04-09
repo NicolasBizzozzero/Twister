@@ -36,11 +36,7 @@ public class TestUtilisateur {
 		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo + "x", motDePasse,
 				                                                                        mail, null, null, null));
 		bd.tools.UtilisateursTools.supprimerUtilisateurAvecPseudo(pseudo);
-		
-		System.out.println("\nOn ne peut pas creer d'utilisateur avec un mot de passe pas assez securise:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, "mdpmdpmdpmdp",
-				                                                                        "mail5@gmail.com", null, null, null));
-		
+
 		System.out.println("\nOn ne peut pas creer d'utilisateur avec un pseudo trop court:");
 		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur("",
 				                                                                        motDePasse,
@@ -69,23 +65,13 @@ public class TestUtilisateur {
 				                                                                        "adressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongueadressemailtreslongue@gmail.com",
 				                                                                        null, null, null));
 		
-		System.out.println("\nOn ne peut pas creer d'utilisateur avec un prenom trop court:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
-				                                                                        mail,
-				                                                                        "",
-				                                                                        null, null));
 		
 		System.out.println("\nOn ne peut pas creer d'utilisateur avec un prenom trop long:");
 		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
 				                                                                        mail,
 				                                                                        "CeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlongCeprenomestdrolementlong",
 				                                                                        null, null));
-		
-		System.out.println("\nOn ne peut pas creer d'utilisateur avec un nom trop court:");
-		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
-				                                                                        mail, null,
-				                                                                        "",
-				                                                                        null));
+
 		
 		System.out.println("\nOn ne peut pas creer d'utilisateur avec un nom trop long:");
 		System.out.println(services.utilisateur.CreationUtilisateur.creationUtilisateur(pseudo, motDePasse,
@@ -181,10 +167,7 @@ public class TestUtilisateur {
 		//TODO: Valider ce test
 		System.out.println("\nOn ne peut pas modifier d'utilisateur si le nouveau mail est deja prit:");
 		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, null, mail, null, null, null));		
-		
-		System.out.println("\nOn ne peut pas modifier d'utilisateur si le nouveau mot de passe est pas assez securise:");
-		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, "mdpmdpmdp", null, null, null, null));
-		
+
 		//TODO: Valider ce test
 		System.out.println("\nOn ne peut pas modifier d'utilisateur si le nouvel anniversaire est invalide:");
 		System.out.println(services.utilisateur.ModificationUtilisateur.modificationUtilisateur(clef, mdpUtilisateur, null, null, null, null, null, "Anniversaire invalide"));

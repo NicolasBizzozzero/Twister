@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/en_tete.css"/>
+    </head>
+    <body>
+        <header>
+            <div id="logo" class="entete">
+                <img src="res/logo.png" alt="Twister logo" width="50px" height="50px"/> 
+            </div>
+            <div id="titre" class="entete">
+                <h1> TWISTER </h1>
+            </div>
+            <form id= "recherche" class="entete">
+                <input type="text" id="recherche" name="recherche" value="Recherche"/>
+                <input type="image" src="res/loupe.jpg" alt="rechercher"/>
+            </form>
+            <div id="deconnexion" class="entete">
+                <div class="liens" onclick="javascript:deconnexion()"> Se déconnecter </div>
+                <div class="liens" onclick="javascript:makeMainPanel(-1, env.login)"> Retour page principale </div>
+            </div>
+        </header>
+        <div id="corp_page">
+        </div>
+    </body>
+</html>

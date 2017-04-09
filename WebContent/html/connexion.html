@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/connexion.css"/>
+    </head>
+    <body>
+        <div id="div_connexion">
+            <h1> Connexion </h1>
+            <div id="div_erreur"> &nbsp; </div>
+            <form method="get" action="javascript:(function(){return;})()" onSubmit="javascript:connexionF(this)">
+                <div class="ids">
+                    <label for="pseudo"> Pseudo </label>
+                    <input type="text" name="pseudo" id="pseudo" required/>
+                </div>
+                <div class ="ids">
+                    <label for= "mdp"> Mot de passe </label>
+                    <input type="password" name="mdp" id="mdp" required/>
+                </div>
+                <div class ="boutons">
+                    <input type="submit" name="connexion" id="connexion" value="Se connecter"/>
+                </div>
+                <div class="links">
+                    <div id="link1"> Mot de passe oublié ? </div>
+                    <div id="link2" onClick="javascript:makeEnregistrementPanel()"> Pas encore inscrit ? </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

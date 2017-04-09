@@ -203,7 +203,7 @@ public class MessagesTools {
 	
 	/**
 	 * Permet d'obtenir tous les messages contenus dans la collection "Messages"
-	 * Utilisee seulement à des fins de debugage
+	 * Utilisee seulement a des fins de debugage
 	 * @return Un JSONObject contenant tous les messages
 	 * @throws UnknownHostException
 	 */
