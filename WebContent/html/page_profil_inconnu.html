@@ -2,6 +2,8 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="css/page_profil.css"/>
+        <link rel="stylesheet" type="text/css" href="css/message.css"/>
+        <link rel="stylesheet" type="text/css" href="css/commentaire.css"/>
     </head>
     <body>
         <div id="corp">
@@ -24,7 +26,7 @@
                           action="javascript:(function(){return;})()"
                           onSubmit="javascript:newMessage(this)">
                         <textarea form="nv_message" name="nv_msg"
-                                  placeholder="Poster un nouveau message"/>
+                                  placeholder="Poster un nouveau message"></textarea>
                         <input type="submit" value="Poster"/>
                     </form>
                 </section>
@@ -38,7 +40,7 @@
                 <div id="amis">
                     Amis
                     <script type="text/javascript">
-                        $(listerAmis);
+                        $(listerAmis(env.id_ami));
                     </script>
                 </div>
             </div>
