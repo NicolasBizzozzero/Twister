@@ -139,7 +139,12 @@ public class AmitiesTools {
         JSONObject liste = new JSONObject();
         liste.put("Amis", new JSONArray());	// Liste vide au cas ou l'utilisateur n'a pas d'ami
         while (res.next()){
-        	liste.accumulate("Amis", res.getString("id_ami2"));
+        	String id_ami=res.getString("id_ami2");
+        	String pseudo = UtilisateursTools.getPseudoUtilisateur(id_ami);
+        	JSONObject ami = new JSONObject();
+        	ami.accumulate("id", id_ami);
+        	ami.accumulate("pseudo", pseudo);
+        	liste.accumulate("Amis", ami);
         }
         
         // Liberation des ressources
