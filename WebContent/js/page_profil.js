@@ -56,3 +56,29 @@ function makePageProfilInconnu(id_inconnu) {
         $("#corp_page").load("html/page_profil_inconnu.html");
     });
 }
+
+function recuperationInfoUtilisateur(id){
+	 $.ajax({type:"GET", url: url_site + "/services/utilisateur/recuperationInfoUtilisateur", data:"id="+id, dataType:"json",success:function(res){ reponseRecuperationInfoUtilisateur(res);},error:function(xhr,status,err){func_erreur(status);}});
+	
+}
+
+function reponseRecuperationInfoUtilisateur(rep){
+	var prenom="non remplis";
+	var nom="non remplis";
+	var anniversaire="non remplis";
+	if(rep.prenom!=undefined){
+		prenom=rep.prenom;
+	}
+	if(rep.nom!=undefined){
+		nom=rep.nom;
+	}
+	if(rep.anniversaire!=undefined){
+		anniversaire=rep.anniversaire;
+	}
+	var pseudo=rep.pseudo;
+	$("#informations").append('<div id="pseudo" >'+pseudo+'</div>');
+	$("#informations").append("Nom : "+nom+"<br>");
+	$("#informations").append("Prénom : "+prenom+"<br>");
+	$("#informations").append("Anniversaire : "+anniversaire+"<br>");
+	
+}

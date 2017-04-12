@@ -36,7 +36,7 @@ function reponseListerAmis(rep){
     amis.forEach(function (ami){
         //console.log("ami",ami);
         //console.log("ami.pseudo",ami.pseudo);
-        s+="<div class=\"liens_amis\" >"+ami.pseudo+"</div>";
+        s+="<div class=\"liens_amis\" onClick=\"javascript:makePageProfil("+ami.id+")\">"+ami.pseudo+"</div>";
         
     });
     var el = $("#amis");
