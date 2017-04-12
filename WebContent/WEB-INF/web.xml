@@ -70,6 +70,10 @@
 	<servlet> 
 		<servlet-name>ListerLikes</servlet-name> 
 		<servlet-class>servlets.like.ServletListerLikes</servlet-class> 
+	</servlet>
+	<servlet> 
+		<servlet-name>RecuperationInfoUtilisateur</servlet-name> 
+		<servlet-class>servlets.utilisateur.ServletRecuperationInfoUtilisateur</servlet-class> 
 	</servlet>	
 	
 	<servlet-mapping> 
@@ -94,7 +98,7 @@
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>SupprimerAmi</servlet-name> 
-		<url-pattern>/services/ami/supprimerAmis</url-pattern> 
+		<url-pattern>/services/ami/supprimerAmi</url-pattern> 
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>AjouterAmi</servlet-name> 
@@ -143,7 +147,10 @@
 		<servlet-name>ListerLikes</servlet-name> 
 		<url-pattern>/services/like/listerLikes</url-pattern> 
 	</servlet-mapping>
-	
+	<servlet-mapping>
+		<servlet-name>RecuperationInfoUtilisateur</servlet-name> 
+		<url-pattern>/services/utilisateur/recuperationInfoUtilisateur</url-pattern> 
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>html/index.html</welcome-file>
