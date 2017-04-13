@@ -108,7 +108,6 @@ public class MessagesTools {
 	 * @throws InstantiationException 
 	 */
 	public static void supprimerMessagesUtilisateur(String id_auteur) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		//TODO: tester
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 		
@@ -145,7 +144,6 @@ public class MessagesTools {
 	 * @throws UnknownHostException
 	 */
 	public static boolean messageExistant(String id_message) throws UnknownHostException {
-		//TODO: verifier si elle fonctionne
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 		
