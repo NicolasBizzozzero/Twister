@@ -22,8 +22,8 @@ public class ListerMessages {
 	 * @param recherche : Les mots clefs de la recherche (vide si pas de mot clef)
 	 * @param id_utilisateur : L'ID de l'utilisateur dont on veut les messages (-1 si
 	 * on est sur la page principale et que l'on souhaite avoir les messages de tout le monde)
-	 * @param id_max : l'ID de chaque message retourne doit etre inferieur a 'id_max'
-	 * @param id_min : l'ID de chaque message retourne doit etre superieur a 'id_min'
+	 * @param id_max : l'ID de chaque message retourne doit etre inferieur a 'id_max' (-1 si pas de limite)
+	 * @param id_min : l'ID de chaque message retourne doit etre superieur a 'id_min' (-1 si pas de limite)
 	 * @param limite : Nombre de messages a retourner (-1 si pas de limite)
 	 * @return Un JSONObject contenant les messages demandes
 	 */
@@ -49,22 +49,20 @@ public class ListerMessages {
 				SessionsTools.suppressionCle(clef);
 				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s est inactif depuis trop longtemps", id_session), CodesErreur.ERREUR_UTILISATEUR_INACTIF);
 			}
-			
-			return MessagesTools.getTousLesMessages();
 	
-//			// On recupere les messages
-//			JSONObject reponse;
-//			if (id_utilisateur.equals("-1")) {
-//				reponse = bd.tools.MessagesTools.listerMessagesToutLeMonde(recherche, id_max, id_min, limite);
-//			} else {
-//				reponse = bd.tools.MessagesTools.listerMessagesUtilisateur(recherche, id_utilisateur, id_max, id_min, limite);
-//			}			
-//			
-//			// On met a jour le temps d'inactivite
-//			SessionsTools.updateTempsCle(clef);
-//	
-//			// On renvoie une reponse
-//			return reponse;
+			// On recupere les messages
+			JSONObject reponse;
+			if (id_utilisateur.equals("-1")) {
+				reponse = bd.tools.MessagesTools.listerMessagesToutLeMonde(id_session, recherche, id_max, id_min, limite);
+			} else {
+				reponse = bd.tools.MessagesTools.listerMessagesUtilisateur(recherche, id_utilisateur, id_max, id_min, limite);
+			}			
+			
+			// On met a jour le temps d'inactivite
+			SessionsTools.updateTempsCle(clef);
+	
+			// On renvoie une reponse
+			return reponse;
 		}  catch (InstantiationException e) {
 			return ErrorJSON.serviceRefused("Erreur lors de la connexion a la base de donnees MySQL (InstantiationException)", CodesErreur.ERREUR_CONNEXION_BD_MYSQL);
 		} catch (IllegalAccessException e) {

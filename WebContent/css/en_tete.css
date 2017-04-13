@@ -1,20 +1,25 @@
-
 header {
     border-bottom: 1px solid #cfcfcf;
     height: 70px;
-    overflow: visible;
-    white-space: nowrap;
 }
+
+
 header .entete {
-    display: inline-block;
+    display: flex;
     text-align: center;
-    vertical-align: middle;
+    flex-direction: rox;
+    flex-flow: nowrap;
+    justify-content: space-between;
 }
+
+
 .liens {
     color: #256c50;
     cursor: pointer;
     text-decoration: underline;
 }
+
+
 #recherche *:nth-child(2) {
     height: 20px;
     margin-left: 8px;
@@ -22,9 +27,13 @@ header .entete {
     vertical-align: middle;
     width: 20px;
 }
+
+
 #titre {
     color: #256c50;
 }
+
+
 #titre h1 {
     font-size: 3.5em;
     height: 7px;
@@ -32,9 +41,13 @@ header .entete {
     margin-right: 150px;
     margin-top: 0;
 }
+
+
 body {
     margin: 0;
 }
+
+
 header #logo img {
     height: 60px;
     margin-left: 30px;

@@ -1,16 +1,19 @@
 
 body {
-    background-color: #ffffff;
+    background-color: #f3f3f3;
     background-image: none;
 }
+
 #image_moins {
     width: 20px;
     cursor: pointer;
 }
+
 #image_plus {
     cursor: pointer;
     width: 20px;
 }
+
 div.corp {
     display: inline-block;
     margin-top: 20px;
@@ -18,17 +21,21 @@ div.corp {
     vertical-align: top;
     width: 40%;
 }
+
 section > form > textarea {
     width: 70%;
 }
+
 section > form > input {
     color: #256c50;
 }
+
 .comments > div {
     border: medium solid #b2e6cc;
     margin: 3%;
     padding: 5%;
 }
+
 #cote {
     border-width: 1px;
     height: 220px;
@@ -39,6 +46,7 @@ section > form > input {
     border-left: none;
     cursor: pointer;
 }
+
 #photo > img {
     height: 180px;
     width: 180px;
