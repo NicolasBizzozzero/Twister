@@ -108,7 +108,6 @@ public class MessagesTools {
 	 * @throws InstantiationException 
 	 */
 	public static void supprimerMessagesUtilisateur(String id_auteur) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		//TODO: tester
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 		
@@ -145,7 +144,6 @@ public class MessagesTools {
 	 * @throws UnknownHostException
 	 */
 	public static boolean messageExistant(String id_message) throws UnknownHostException {
-		//TODO: verifier si elle fonctionne
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 		
@@ -160,44 +158,44 @@ public class MessagesTools {
 	
 	
 	public static JSONObject listerMessagesUtilisateur(String recherche, String id_utilisateur, String id_max, String id_min, String limite) throws UnknownHostException {
-//		// TODO: Implementer
-//		// On se connecte a la BDD puis on recupere les messages
-//		DBCollection messages = getCollectionMessages();
-//		
-//		// Creation de la requete
-//		BasicDBObject requete = new BasicDBObject();
-//		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
-//
-//		// On itere sur les resultats
-//		DBCursor curseur = messages.find(requete).skip(index_debut).limit(limite);
-//		JSONObject reponse = new JSONObject();
-//		while (curseur.hasNext()) {
-//			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
-//		}
-//				
-//		return reponse;
-		return null;
+		// On se connecte a la BDD puis on recupere les messages
+		DBCollection messages = getCollectionMessages();
+		
+		// TODO: Imposer limite superieure id_max + limite_nferieure id_min + sortby id_message
+		// Creation de la requete
+		BasicDBObject requete = new BasicDBObject();
+		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
+
+		// On itere sur les resultats
+		DBCursor curseur = messages.find(requete).limit(Integer.parseInt(limite));
+		JSONObject reponse = new JSONObject();
+		while (curseur.hasNext()) {
+			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
+		}
+				
+		return reponse;
 	}
 	
 	
-	public static JSONObject listerMessagesToutLeMonde(String recherche, String id_max, String id_min, String limite) throws UnknownHostException {
-//		// TODO: Implementer
-//		// On se connecte a la BDD puis on recupere les messages
-//		DBCollection messages = getCollectionMessages();
-//		
-//		// Creation de la requete
-//		BasicDBObject requete = new BasicDBObject();
-//		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
-//
-//		// On itere sur les resultats
-//		DBCursor curseur = messages.find(requete).skip(index_debut).limit(limite);
-//		JSONObject reponse = new JSONObject();
-//		while (curseur.hasNext()) {
-//			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
-//		}
-//				
-//		return reponse;
-		return null;
+	public static JSONObject listerMessagesToutLeMonde(String id_utilisateur, String recherche, String id_max, String id_min, String limite) throws UnknownHostException {
+		// On se connecte a la BDD puis on recupere les messages
+		DBCollection messages = getCollectionMessages();
+		
+		// On recupere les id des amis de l'utilisateur
+		String[] id_amis = ;
+		
+		// Creation de la requete
+		BasicDBObject requete = new BasicDBObject();
+		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
+
+		// On itere sur les resultats
+		DBCursor curseur = messages.find(requete).limit(limite);
+		JSONObject reponse = new JSONObject();
+		while (curseur.hasNext()) {
+			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
+		}
+				
+		return reponse;
 	}
 	
 	
