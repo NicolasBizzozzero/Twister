@@ -182,14 +182,14 @@ public class MessagesTools {
 		DBCollection messages = getCollectionMessages();
 		
 		// On recupere les id des amis de l'utilisateur
-		String[] id_amis = ;
+		String[] id_amis = null;
 		
 		// Creation de la requete
 		BasicDBObject requete = new BasicDBObject();
 		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
 
 		// On itere sur les resultats
-		DBCursor curseur = messages.find(requete).limit(limite);
+		DBCursor curseur = messages.find(requete).limit(Integer.parseInt(limite));
 		JSONObject reponse = new JSONObject();
 		while (curseur.hasNext()) {
 			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
