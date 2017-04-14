@@ -1,17 +1,20 @@
 header {
-    border-bottom: 1px solid #cfcfcf;
-    height: 70px;
-}
-
-
-header .entete {
+    align-items: center;
     display: flex;
-    text-align: center;
-    flex-direction: rox;
-    flex-flow: nowrap;
+    flex-flow: row nowrap;
+    height: 70px;
     justify-content: space-between;
+    text-align: center;
+    background-color: #ffffff;
+    border-bottom-color: #9c9c9c;
+    border-bottom: solid;
+    border-bottom-width: 1px;
 }
 
+header #titre {
+    margin-right: auto;
+    color: #008000;
+}
 
 .liens {
     color: #256c50;
@@ -19,6 +22,11 @@ header .entete {
     text-decoration: underline;
 }
 
+#header #recherche {
+    display: inline-block;
+    overflow: visible;
+    white-space: nowrap;
+}
 
 #recherche *:nth-child(2) {
     height: 20px;
@@ -54,4 +62,9 @@ header #logo img {
     margin-right: 30px;
     margin-top: 5px;
     width: 60px;
+}
+header #deconnexion {
+    margin-right: 20px;
+    color: #008000;
+    text-color: #008000;
 }

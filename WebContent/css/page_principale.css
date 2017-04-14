@@ -5,8 +5,8 @@ body {
 }
 
 #image_moins {
-    width: 20px;
     cursor: pointer;
+    width: 20px;
 }
 
 #image_plus {
@@ -15,11 +15,11 @@ body {
 }
 
 div.corp {
-    display: inline-block;
     margin-top: 20px;
     padding: 5px;
     vertical-align: top;
-    width: 40%;
+    width: 100%;
+    display: inline-block;
 }
 
 section > form > textarea {
@@ -37,23 +37,25 @@ section > form > input {
 }
 
 #cote {
+    background-color: #ffffff;
+    border-bottom-right-radius: 10px;
+    border-color: #9c9c9c;
+    border-style: none solid solid none;
     border-width: 1px;
+    cursor: pointer;
     height: 220px;
     margin-top: 0;
     text-align: center;
     width: 230px;
-    border: solid #c4c4c4;
-    border-left: none;
-    cursor: pointer;
 }
 
 #photo > img {
+    background-color: #f3f3f3;
     height: 180px;
-    width: 180px;
-    background-color: #e3e3e3;
-    padding: 2px;
-    margin-top: 10px;
     margin-right: 4px;
+    margin-top: 10px;
+    padding: 1px;
+    width: 180px;
 }
 #link1 {
     color: #256c50;
@@ -61,7 +63,7 @@ section > form > input {
     text-decoration: underline;
 }
 section {
-    border: medium solid #b2e6cc;
+    border: 1px solid #9c9c9c;
     margin: 10px;
     padding: 30px;
     width: 140%;
@@ -70,10 +72,18 @@ section > text {
     font-family: "Courier New";
 }
 .messageUtilisateur {
-    border: medium solid #256c50;
+    border: 1px solid #9c9c9c;
     margin: 30px;
     padding: 20px;
 }
+#messages {
+    background-color: #ffffff;
+}
 #nv_message {
     text-align: center;
+}
+#milieu {
+    width: 40%;
+    margin: auto;
+    padding-left: 50px;
 }
