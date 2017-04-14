@@ -1,4 +1,3 @@
-
 header {
     align-items: center;
     display: flex;
@@ -11,20 +10,24 @@ header {
     border-bottom: solid;
     border-bottom-width: 1px;
 }
+
 header #titre {
     margin-right: auto;
     color: #008000;
 }
+
 .liens {
     color: #256c50;
     cursor: pointer;
     text-decoration: underline;
 }
+
 #header #recherche {
     display: inline-block;
     overflow: visible;
     white-space: nowrap;
 }
+
 #recherche *:nth-child(2) {
     height: 20px;
     margin-left: 8px;
@@ -32,9 +35,13 @@ header #titre {
     vertical-align: middle;
     width: 20px;
 }
+
+
 #titre {
     color: #256c50;
 }
+
+
 #titre h1 {
     font-size: 3.5em;
     height: 7px;
@@ -42,9 +49,13 @@ header #titre {
     margin-right: 150px;
     margin-top: 0;
 }
+
+
 body {
     margin: 0;
 }
+
+
 header #logo img {
     height: 60px;
     margin-left: 30px;

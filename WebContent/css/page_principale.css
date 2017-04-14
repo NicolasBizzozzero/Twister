@@ -3,14 +3,17 @@ body {
     background-color: #f3f3f3;
     background-image: none;
 }
+
 #image_moins {
     cursor: pointer;
     width: 20px;
 }
+
 #image_plus {
     cursor: pointer;
     width: 20px;
 }
+
 div.corp {
     margin-top: 20px;
     padding: 5px;
@@ -18,17 +21,21 @@ div.corp {
     width: 100%;
     display: inline-block;
 }
+
 section > form > textarea {
     width: 70%;
 }
+
 section > form > input {
     color: #256c50;
 }
+
 .comments > div {
     border: medium solid #b2e6cc;
     margin: 3%;
     padding: 5%;
 }
+
 #cote {
     background-color: #ffffff;
     border-bottom-right-radius: 10px;
@@ -41,6 +48,7 @@ section > form > input {
     text-align: center;
     width: 230px;
 }
+
 #photo > img {
     background-color: #f3f3f3;
     height: 180px;
