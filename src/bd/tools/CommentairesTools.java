@@ -26,7 +26,7 @@ public class CommentairesTools {
 		Integer id_commentaire = getIDNouveauCommentaire(id_message);
 		
 		// Creation du commentaire
-		String date = new Date().toString();
+		Date date = new Date();
 		BasicDBObject commentaire = new BasicDBObject();
 		commentaire.put(Nom.CHAMP_CONTENU, contenu);
 		commentaire.put(Nom.CHAMP_DATE, date);
