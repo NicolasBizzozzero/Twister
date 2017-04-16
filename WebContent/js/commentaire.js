@@ -69,7 +69,7 @@ function afficheCommentairesReponse(rep, id_message) {
 function newCommentaire(id) {	
     // On recupère le texte du message à poster
     var texte = $("textarea[NAME=nv_commentaire]").val();
-
+    console.log("texte",texte);
     // On vide le texte qui était dedans
     $("textarea[NAME=nv_commentaire]").val('');
 
