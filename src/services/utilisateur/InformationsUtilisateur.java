@@ -1,15 +1,17 @@
 package services.utilisateur;
 
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import exceptions.tailles.ClefInvalideException;
 import exceptions.tailles.PseudoTropGrandException;
 import exceptions.tailles.PseudoTropPetitException;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class InformationsUtilisateur {
 
@@ -40,7 +42,11 @@ public class InformationsUtilisateur {
 			return ErrorJSON.serviceRefused("Erreur, pseudo trop grand", CodesErreur.ERREUR_PSEUDO_TROP_GRAND);
 		} catch (ClefInvalideException e) {
 			return ErrorJSON.serviceRefused(String.format("Erreur, clef de session %s invalide", clef), CodesErreur.ERREUR_CLEF_INVALIDE);
-		} 
+		} catch (JSONException e) {
+			return ErrorJSON.serviceRefused("Erreur de JSON", CodesErreur.ERREUR_JSON);
+		} catch (UnknownHostException e) {
+			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.ERREUR_HOTE_INCONNU);
+		}
 	}
 
 	

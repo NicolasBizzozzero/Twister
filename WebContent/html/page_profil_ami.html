@@ -3,6 +3,8 @@
     <head>
         <link rel="stylesheet" type="text/css" href="css/page_principale.css"/>
         <link rel="stylesheet" type="text/css" href="css/page_profil.css"/>
+        <link rel="stylesheet" type="text/css" href="css/commentaire.css"/>
+        <link rel="stylesheet" type="text/css" href="css/message.css"/>
     </head>
     <body>
         <div id="corp">
@@ -14,12 +16,16 @@
                     Ne plus suivre
                 </button>
                 <div id="informations">
-                    Nom:<br>
-                    Prénom:<br>
-                    Date de naissance:
+                	<p>
+                		Pseudo: {{pseudo_utilisateur}}<br>
+	                    Prenom: {{prenom_utilisateur}}<br>
+	                    Nom: {{nom_utilisateur}}<br>
+	                    Anniversaire: {{date_de_naissance}}<br>
+	                    Nombre de messages: {{nb_messages}}<br>
+                    </p>
                 </div>
                 <div id="amis">
-                    Amis
+                    <p>Amis :<br></p>
                     <script type="text/javascript">
                         $(listerAmis);
                     </script>
@@ -30,7 +36,7 @@
                     <form id="nv_message" method="post"
                           action="javascript:(function(){return;})()"
                           onSubmit="javascript:newMessage(this)">
-                        <textarea form="nv_message" name="nv_msg"
+                        <textarea form="nv_message" name="nv_message"
                                   placeholder="Poster un nouveau message"></textarea>
                         <input type="submit" value="Poster"/>
                     </form>

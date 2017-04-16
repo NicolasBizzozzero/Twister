@@ -6,9 +6,9 @@ import org.json.JSONObject;
 
 import bd.tools.SessionsTools;
 import exceptions.tailles.ClefInvalideException;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 
 public class Logout {

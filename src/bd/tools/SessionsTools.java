@@ -10,7 +10,7 @@ import java.util.Date;
 import bd.Database;
 import exceptions.ClefInexistanteException;
 import outils.MesMethodes;
-import services.Tailles;
+import outils.Tailles;
 
 public class SessionsTools {
 	public static final int TEMPS_AVANT_DECONNEXION = 3600000; // En millisecondes, = 60 minutes
@@ -51,7 +51,7 @@ public class SessionsTools {
         Connection connection = Database.getMySQLConnection();
 
         // Creation et execution de la requete
-        String requete = "INSERT INTO Sessions Values (?, ?, null, ?);";
+        String requete = "INSERT INTO Sessions Values (?, ?, NOW(), ?);";
         PreparedStatement statement = connection.prepareStatement(requete);
         statement.setString(1, cle);
         statement.setInt(2, Integer.parseInt(identifiant));

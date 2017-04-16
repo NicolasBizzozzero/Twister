@@ -3,6 +3,8 @@
     <head>
         <link rel="stylesheet" type="text/css" href="css/page_principale.css"/>
         <link rel="stylesheet" type="text/css" href="css/page_profil.css"/>
+        <link rel="stylesheet" type="text/css" href="css/commentaire.css"/>
+        <link rel="stylesheet" type="text/css" href="css/message.css"/>
     </head>
     <body>
         <div id="corp">
@@ -11,23 +13,19 @@
                     <img src="res/image_profil.jpg" alt="votre photo de profil"/>
                 </div>
                 <div id="informations">
-<<<<<<< HEAD
                 	<p>
-	                    {{prenom_utilisateur}}<br>
-	                    {{nom_utilisateur}}<br>
-	                    {{date_de_naissance}}
+                		Pseudo: {{pseudo_utilisateur}}<br>
+	                    Prenom: {{prenom_utilisateur}}<br>
+	                    Nom: {{nom_utilisateur}}<br>
+	                    Anniversaire: {{date_de_naissance}}<br>
+	                    Nombre de messages: {{nb_messages}}<br>
                     </p>
                 </div>
                 <div id="amis">
-                    Amis
+                    <p>Amis :<br></p>
                     <script type="text/javascript">
                         $(listerAmis);
                     </script>
-=======
-                    Nom :<br>
-                    Prénom:<br>
-                    Date de naissance:
->>>>>>> parent of b8efc94... Plein de trucs !
                 </div>
             </div>
             <div id="milieu" class="corp">
@@ -35,7 +33,7 @@
                     <form id="nv_message" method="post"
                           action="javascript:(function(){return;})()"
                           onSubmit="javascript:newMessage(this)">
-                        <textarea form="nv_message" name="nv_msg"
+                        <textarea form="nv_message" name="nv_message"
                                   placeholder="Poster un nouveau message"></textarea>
                         <input type="submit" value="Poster"/> 
                     </form >

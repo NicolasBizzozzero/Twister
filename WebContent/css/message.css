@@ -17,6 +17,11 @@
     text-align: center;
     border-width: 1px;
 }
+
+.likes :hover {
+	cursor: pointer;
+}
+
 #like_4 {
     border-right: medium none;
 }

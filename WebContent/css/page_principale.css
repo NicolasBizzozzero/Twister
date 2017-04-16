@@ -62,6 +62,7 @@ section > form > input {
     text-decoration: underline;
 }
 section {
+    background-color: #ffffff;
     border: 1px solid #9c9c9c;
     margin: 10px;
     padding: 30px;

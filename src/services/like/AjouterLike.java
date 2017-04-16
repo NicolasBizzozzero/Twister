@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 import bd.tools.LikesTools;
 import bd.tools.SessionsTools;
 import exceptions.ClefInexistanteException;
@@ -19,6 +18,7 @@ import exceptions.tailles.MessageTropGrandException;
 import exceptions.tailles.MessageTropPetitException;
 import exceptions.tailles.TypeLikeTropGrandException;
 import exceptions.tailles.TypeLikeTropPetitException;
+import outils.Tailles;
 
 public class AjouterLike {
 

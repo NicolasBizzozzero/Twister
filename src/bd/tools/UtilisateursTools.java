@@ -4,8 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -603,7 +605,7 @@ public class UtilisateursTools {
 	}
 
 
-	public static JSONObject getInformationsUtilisateur(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static JSONObject getInformationsUtilisateur(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, JSONException, UnknownHostException {
 		// Connection a la base de donnees
         Connection connection = Database.getMySQLConnection();
         
@@ -633,7 +635,8 @@ public class UtilisateursTools {
         		                               .put("mail", mail)
         		                               .put("prenom", prenom)
         		                               .put("nom", nom)
-        		                               .put("anniversaire", anniversaire);
+        		                               .put("anniversaire", (anniversaire == null) ? null : anniversaire.toString())
+        		                               .put("nb_messages", bd.tools.MessagesTools.getNombreDeMessagesPostes(Integer.toString(id)));
 
         return reponse;
 	}
