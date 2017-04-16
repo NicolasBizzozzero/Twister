@@ -3,7 +3,7 @@
  */
 function makePagePrincipale() {
     env.fromId = -1;
-    env.query = undefined;
+    env.query = "";
     env.messages = [];
     env.minId = Infinity;
     env.maxId = -Infinity;

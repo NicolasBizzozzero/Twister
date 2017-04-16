@@ -4,12 +4,20 @@
  * ou un inconnu.
  */
 function makePageProfil(id_utilisateur) {
+	env.fromId = id_utilisateur
+    env.messages = [];
+    env.minId = Infinity;
+    env.maxId = -Infinity;
+
     if (id_utilisateur == env.id_utilisateur) {
         makePageProfilUtilisateur();
-    } else if (env.follows[id_utilisateur] != undefined) {
-        makePageProfilAmi(id_utilisateur);
-    } else {
+    } else if ((env.follows[env.id_utilisateur] == undefined)||(!env.follows[env.id_utilisateur].has(id_utilisateur))){
+	console.log("choix de makePageProfilInconnu"); 
         makePageProfilInconnu(id_utilisateur);
+    //} else if (env.follows[id_utilisateur] != undefined) {
+    } else {  
+	console.log("choix de makePageProfilAmi"); 
+        makePageProfilAmi(id_utilisateur);
     }
 }
 
@@ -30,6 +38,7 @@ function makePageProfilUtilisateur() {
  * l'utilisateur.
  */
 function makePageProfilAmi(id_ami) {
+    console.log("entree ds makePageProfilAmi"); 
     $("body").load("html/en_tete.html", function() {
         $("#corp_page").load("html/page_profil_ami.html");
     });
@@ -40,7 +49,8 @@ function makePageProfilAmi(id_ami) {
  * Charge le contenu de la page HTML du header + celle du profil d'un inconnu
  */
 function makePageProfilInconnu(id_inconnu) {
+    console.log("entree ds makePageProfilInconnu"); 
     $("body").load("html/en_tete.html", function() {
-        $("#corp_page").load("html/page_profil_icnonnu.html");
+        $("#corp_page").load("html/page_profil_inconnu.html");
     });
 }

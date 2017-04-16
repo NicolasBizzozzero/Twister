@@ -49,7 +49,7 @@ Message.prototype.getHtml = function() {
 function completeMessages() {
     $.ajax({type: "GET",
             url: url_site + "/services/message/listerMessages",
-            data: "clef=" + env.clef + "&recherche=" + env.query + "&id_utilisateur=" + env.fromId + "&limite=" + NB_MESSAGES_PAR_SCROLL + "&id_min=" + env.mindId + "&id_max=" + env.maxId,
+            data: "clef=" + env.clef + "&recherche=" + env.query + "&id_utilisateur=" + env.fromId + "&limite=" + NB_MESSAGES_PAR_SCROLL + "&id_min=-1&id_max=-1",
             dataType: "text",
             success: function(res) {
                 completeMessagesReponse(res);
@@ -63,10 +63,10 @@ function completeMessages() {
 
 function completeMessagesReponse(rep) {
     if (rep.errorcode == undefined) {
-        var listeMessages = (JSON.parse(rep, revival)).Messages;
+        var listeMessages = (JSON.parse(rep, revival)).messages;
         for(var i=0; i < listeMessages.length; i++) {
             var m = listeMessages[i];
-            $("#messages").prepend(m.getHtml());
+            $("#messages").append(m.getHtml());
             env.messages[m.id] = m;
             
             if (m.id > env.maxId) {
@@ -78,7 +78,7 @@ function completeMessagesReponse(rep) {
             }
         }
 
-        var last_id = env.messages[listeMessages.length - 1].id;
+        var last_id = listeMessages[listeMessages.length - 1].id;
         $("#message_" + last_id).appear();
         $.force_appear();
     } else {
@@ -91,7 +91,7 @@ function completeMessagesReponse(rep) {
 function refreshMessages() {
     $.ajax({type:"GET",
             url: url_site + "/services/message/listerMessages",
-            data: "clef=" + env.clef + "&recherche=" + env.query + "&id_utilisateur=" + env.fromId + "&limite=-1&id_min=" + env.maxId + "&id_max=" + env.maxId,
+            data: "clef=" + env.clef + "&recherche=" + env.query + "&id_utilisateur=" + env.fromId + "&limite=" + NB_MESSAGES_PAR_SCROLL + "&id_min=-1&id_max=" + env.minId,
             dataType:"text",
             success: function(res) {
                 refreshMessagesReponse(res);
@@ -105,26 +105,27 @@ function refreshMessages() {
 
 function refreshMessagesReponse(rep) {
     if (rep.errorcode == undefined) {
-        var listeMessages = (JSON.parse(rep, revival)).Messages;
-        for (var i=0; i < listeMessages.length; i++) {
-            var m = listeMessages[i];
-
-            //TODO: Ajouter si il n'est pas déjà chargé
-            $("#messages").prepend(m.getHtml());
-            env.messages[m.id] = m;
-            
-            if (m.id > env.maxId) {
-                env.maxId = m.id;
-            }
-
-            if (m.id < env.minId) {
-                env.minId = m.id;
-            }
+        var listeMessages = (JSON.parse(rep, revival)).messages;
+        if (listeMessages.length != 0) {
+	        for (var i=0; i < listeMessages.length; i++) {
+	            var m = listeMessages[i];
+	
+	            $("#messages").append(m.getHtml());
+	            env.messages[m.id] = m;
+	            
+	            if (m.id > env.maxId) {
+	                env.maxId = m.id;
+	            }
+	
+	            if (m.id < env.minId) {
+	                env.minId = m.id;
+	            }
+	        }
+	
+	        var last_id = listeMessages[listeMessages.length - 1].id;
+	        $("#message_" + last_id).appear();
+	        $.force_appear();
         }
-
-        var last_id = env.messages[listeMessages.length - 1].id;
-        $("#message_" + last_id).appear();
-        $.force_appear();
     } else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
         func_erreur(rep.message);
@@ -142,7 +143,7 @@ function newMessage(form) {
     $.ajax({type:"GET",
             url: url_site + "/services/message/ajouterMessage",
             data:"clef=" + env.clef + "&contenu=" + texte,
-            dataType: "json",
+            dataType: "text",
             success: function(res) {
                 newMessageReponse(res);
             },
@@ -155,7 +156,21 @@ function newMessage(form) {
 
 function newMessageReponse(rep) {
     if (rep.errorcode == undefined) {
-        refreshMessages();
+        var nouveau_message = JSON.parse(rep, revival);
+        env.messages[nouveau_message.id] = nouveau_message;
+        $("#messages").prepend(nouveau_message.getHtml());
+        
+        if (nouveau_message.id > env.maxId) {
+            env.maxId = nouveau_message.id;
+        }
+
+        if (nouveau_message.id < env.minId) {
+            env.minId = nouveau_message.id;
+        }
+
+        var last_id = nouveau_message.id;
+        $("#message_" + last_id).appear();
+        $.force_appear();
     } else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
         func_erreur(rep.message);
