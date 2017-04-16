@@ -6,6 +6,16 @@
         <link rel="stylesheet" type="text/css" href="css/commentaire.css"/>
     </head>
     <body>
+    	<script type="text/javascript">
+ 	    	$(document).ready(function(){
+ 			    $(window).scroll(_.debounce(function(e) {   
+ 			    	if ($(window).scrollTop() + $(window).height() >= $(document).height() - 50) {
+ 			    		console.log("Fire refreshMessages !\nminId: " + env.minId + ", maxId: " + env.maxId);
+ 			        	refreshMessages();
+ 			   		}
+ 				}, 5000));
+ 			});
+     	</script>
         <div id="cote" class="corp"
              onClick="javascript:makePageProfil(env.id_utilisateur, env.pseudo, env.nom, env.prenom, env.anniversaire)">
             <div id="photo">
