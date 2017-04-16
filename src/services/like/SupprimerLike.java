@@ -14,9 +14,9 @@ import exceptions.tailles.IDTropGrandException;
 import exceptions.tailles.IDTropPetitException;
 import exceptions.tailles.TypeLikeTropGrandException;
 import exceptions.tailles.TypeLikeTropPetitException;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class SupprimerLike {
 

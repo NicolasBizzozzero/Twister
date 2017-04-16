@@ -633,7 +633,7 @@ public class UtilisateursTools {
         		                               .put("mail", mail)
         		                               .put("prenom", prenom)
         		                               .put("nom", nom)
-        		                               .put("anniversaire", anniversaire);
+        		                               .put("anniversaire", (anniversaire == null) ? null : anniversaire.toString());
 
         return reponse;
 	}

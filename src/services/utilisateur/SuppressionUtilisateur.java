@@ -13,12 +13,12 @@ import exceptions.tailles.ClefInvalideException;
 import exceptions.tailles.MotDePasseTropGrandException;
 import exceptions.tailles.MotDePasseTropPetitException;
 import mails.MailsTools;
+import outils.Tailles;
 import bd.tools.AmitiesTools;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class SuppressionUtilisateur {
 

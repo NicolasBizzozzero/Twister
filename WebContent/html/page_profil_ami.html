@@ -14,12 +14,16 @@
                     Ne plus suivre
                 </button>
                 <div id="informations">
-                    Nom:<br>
-                    Prénom:<br>
-                    Date de naissance:
+                	<p>
+                		Pseudo: {{pseudo_utilisateur}}<br>
+	                    Prenom: {{prenom_utilisateur}}<br>
+	                    Nom: {{nom_utilisateur}}<br>
+	                    Anniversaire: {{date_de_naissance}}<br>
+	                    Nombre de messages: {{nb_messages}}<br>
+                    </p>
                 </div>
                 <div id="amis">
-                    Amis
+                    <p>Amis :<br></p>
                     <script type="text/javascript">
                         $(listerAmis);
                     </script>

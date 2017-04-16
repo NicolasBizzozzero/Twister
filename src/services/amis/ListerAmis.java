@@ -17,9 +17,9 @@ import exceptions.tailles.IndexDebutTropGrandException;
 import exceptions.tailles.IndexDebutTropPetitException;
 import exceptions.tailles.NombreDemandesTropGrandException;
 import exceptions.tailles.NombreDemandesTropPetitException;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class ListerAmis {
 	

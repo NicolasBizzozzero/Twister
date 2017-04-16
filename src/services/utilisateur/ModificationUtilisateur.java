@@ -23,11 +23,11 @@ import exceptions.tailles.PrenomTropGrandException;
 import exceptions.tailles.PrenomTropPetitException;
 import exceptions.tailles.PseudoTropGrandException;
 import exceptions.tailles.PseudoTropPetitException;
+import outils.Tailles;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class ModificationUtilisateur {
 	public static JSONObject modificationUtilisateur(String clef, String motDePasse, String nouveauPseudo, String nouveauMotDePasse, String nouvelEmail, String nouveauPrenom, String nouveauNom, String nouvelAnniversaire) {

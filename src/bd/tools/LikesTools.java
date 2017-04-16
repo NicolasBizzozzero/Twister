@@ -10,6 +10,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
+import outils.Noms;
+
 public class LikesTools {
 	public static final int NOMBRE_LIKE_DIFFERENTS = 5;
 	
@@ -32,11 +34,11 @@ public class LikesTools {
 		
 		// Recuperation du message
 		BasicDBObject query = new BasicDBObject();
-		query.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		query.put(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
 		DBObject message = collectionMessages.find(query).next();
 		
 		// Recuperation des likes
-		DBObject likes = (DBObject) message.get(Nom.CHAMP_LIKES);
+		DBObject likes = (DBObject) message.get(Noms.CHAMP_LIKES);
 		JSONObject reponse = new JSONObject();
 		
 		// Modification de la map des likes en map des nombre de likes
@@ -82,8 +84,8 @@ public class LikesTools {
 		DBCollection messages = MessagesTools.getCollectionMessages();
 		
 		// On ajoute le like
-		BasicDBObject searchQuery = new BasicDBObject(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
-		BasicDBObject updateQuery = new BasicDBObject("$push", new BasicDBObject(String.format("%s.%s", Nom.CHAMP_LIKES, type_like), id_likeur));
+		BasicDBObject searchQuery = new BasicDBObject(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		BasicDBObject updateQuery = new BasicDBObject("$push", new BasicDBObject(String.format("%s.%s", Noms.CHAMP_LIKES, type_like), id_likeur));
 		messages.update(searchQuery, updateQuery);
 	}
 	
@@ -103,8 +105,8 @@ public class LikesTools {
 		DBCollection messages = MessagesTools.getCollectionMessages();
 		
 		// On supprime le like
-		BasicDBObject searchQuery = new BasicDBObject(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
-		BasicDBObject updateQuery = new BasicDBObject("$pull", new BasicDBObject(String.format("%s.%s", Nom.CHAMP_LIKES, type_like), id_delikeur));
+		BasicDBObject searchQuery = new BasicDBObject(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		BasicDBObject updateQuery = new BasicDBObject("$pull", new BasicDBObject(String.format("%s.%s", Noms.CHAMP_LIKES, type_like), id_delikeur));
 		messages.update(searchQuery, updateQuery);
 	}
 
@@ -122,7 +124,7 @@ public class LikesTools {
 		
 		// Creation du message
 		BasicDBObject message = new BasicDBObject();
-		message.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		message.put(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
 
 		// On verifie si le message existe
 		DBCursor curseur = messages.find(message);
@@ -133,7 +135,7 @@ public class LikesTools {
 		
 		// On recupere le JSONObject des likes
 		JSONObject reponse_message = new JSONObject(JSON.serialize(curseur.next()));
-		JSONObject likes = reponse_message.getJSONObject(Nom.CHAMP_LIKES);
+		JSONObject likes = reponse_message.getJSONObject(Noms.CHAMP_LIKES);
 		
 		// On retourne ce JSONObject des likes
 		return likes;

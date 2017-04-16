@@ -7,9 +7,9 @@ import org.json.JSONObject;
 import exceptions.tailles.ClefInvalideException;
 import exceptions.tailles.PseudoTropGrandException;
 import exceptions.tailles.PseudoTropPetitException;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class InformationsUtilisateur {
 

@@ -14,9 +14,9 @@ import org.json.JSONObject;
 import bd.tools.UtilisateursTools;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 import exceptions.tailles.*;
 import mails.MailsTools;
+import outils.Tailles;
 
 
 public class CreationUtilisateur {

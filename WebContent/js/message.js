@@ -49,7 +49,7 @@ Message.prototype.getHtml = function() {
 function completeMessages() {
     $.ajax({type: "GET",
             url: url_site + "/services/message/listerMessages",
-            data: "clef=" + env.clef + "&recherche=" + env.query + "&id_utilisateur=" + env.fromId + "&limite=" + NB_MESSAGES_PAR_SCROLL + "&id_min=" + env.mindId + "&id_max=" + env.maxId,
+            data: "clef=" + env.clef + "&recherche=" + env.query + "&id_utilisateur=" + env.fromId + "&limite=" + NB_MESSAGES_PAR_SCROLL + "&id_min=-1&id_max=-1",
             dataType: "text",
             success: function(res) {
                 completeMessagesReponse(res);

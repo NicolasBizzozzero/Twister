@@ -8,13 +8,13 @@ import org.json.JSONObject;
 
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 import bd.tools.CommentairesTools;
 import bd.tools.SessionsTools;
 import exceptions.ClefInexistanteException;
 import exceptions.tailles.ClefInvalideException;
 import exceptions.tailles.IDTropGrandException;
 import exceptions.tailles.IDTropPetitException;
+import outils.Tailles;
 
 public class ListerCommentaires {
 	

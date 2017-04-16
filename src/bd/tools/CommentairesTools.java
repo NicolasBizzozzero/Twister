@@ -14,7 +14,7 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 import bd.tools.MessagesTools;
-import bd.tools.Nom;
+import outils.Noms;
 
 public class CommentairesTools {
 	
@@ -26,20 +26,20 @@ public class CommentairesTools {
 		Integer id_commentaire = getIDNouveauCommentaire(id_message);
 		
 		// Creation du commentaire
-		Date date = new Date();
+		String date = new Date().toString();
 		BasicDBObject commentaire = new BasicDBObject();
-		commentaire.put(Nom.CHAMP_CONTENU, contenu);
-		commentaire.put(Nom.CHAMP_DATE, date);
-		commentaire.put(Nom.CHAMP_ID_COMMENTAIRE, id_commentaire);
+		commentaire.put(Noms.CHAMP_CONTENU, contenu);
+		commentaire.put(Noms.CHAMP_DATE, date);
+		commentaire.put(Noms.CHAMP_ID_COMMENTAIRE, id_commentaire);
 		// Ajout de l'auteur
 		BasicDBObject auteur = new BasicDBObject();
-		auteur.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
-		auteur.put(Nom.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
-		commentaire.put(Nom.CHAMP_AUTEUR, auteur);
+		auteur.put(Noms.CHAMP_ID_AUTEUR, id_auteur);
+		auteur.put(Noms.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
+		commentaire.put(Noms.CHAMP_AUTEUR, auteur);
 		
 		// On ajoute le commentaire
-		BasicDBObject searchQuery = new BasicDBObject(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
-		BasicDBObject updateQuery = new BasicDBObject("$push", new BasicDBObject(Nom.CHAMP_COMMENTAIRES, commentaire));
+		BasicDBObject searchQuery = new BasicDBObject(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		BasicDBObject updateQuery = new BasicDBObject("$push", new BasicDBObject(Noms.CHAMP_COMMENTAIRES, commentaire));
 		messages.update(searchQuery, updateQuery);
 		
 		// On retourne une reponse
@@ -64,11 +64,11 @@ public class CommentairesTools {
 		DBCollection collectionMessages = MessagesTools.getCollectionMessages();
 		
 		DBObject doc = collectionMessages.findAndModify(
-	             new BasicDBObject(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message)), null, null, false,
-	             new BasicDBObject("$inc", new BasicDBObject(Nom.CHAMP_NOMBRE_DE_COMMENTAIRES, 1)),
+	             new BasicDBObject(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message)), null, null, false,
+	             new BasicDBObject("$inc", new BasicDBObject(Noms.CHAMP_NOMBRE_DE_COMMENTAIRES, 1)),
 	             true, true);
 
-	    return (Integer) doc.get(Nom.CHAMP_NOMBRE_DE_COMMENTAIRES);
+	    return (Integer) doc.get(Noms.CHAMP_NOMBRE_DE_COMMENTAIRES);
 	}
 	
 	
@@ -77,8 +77,8 @@ public class CommentairesTools {
 		DBCollection messages = MessagesTools.getCollectionMessages();
 		
 		// On supprime le commentaire
-		BasicDBObject searchQuery = new BasicDBObject(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
-		BasicDBObject updateQuery = new BasicDBObject(Nom.CHAMP_COMMENTAIRES, new BasicDBObject(Nom.CHAMP_ID_COMMENTAIRE, Integer.parseInt(id_commentaire)));
+		BasicDBObject searchQuery = new BasicDBObject(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		BasicDBObject updateQuery = new BasicDBObject(Noms.CHAMP_COMMENTAIRES, new BasicDBObject(Noms.CHAMP_ID_COMMENTAIRE, Integer.parseInt(id_commentaire)));
 		messages.update(searchQuery, new BasicDBObject("$pull", updateQuery));
 		
 		// On retourne une reponse
@@ -99,7 +99,7 @@ public class CommentairesTools {
 		
 		// Creation du message
 		BasicDBObject message = new BasicDBObject();
-		message.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		message.put(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
 
 		// On verifie si le message existe
 		DBCursor curseur = messages.find(message);
@@ -110,12 +110,12 @@ public class CommentairesTools {
 		
 		// On recupere la liste des commentaires
 		JSONObject reponse_message = new JSONObject(JSON.serialize(curseur.next()));
-		JSONArray commentaires = reponse_message.getJSONArray(Nom.CHAMP_COMMENTAIRES);
+		JSONArray commentaires = reponse_message.getJSONArray(Noms.CHAMP_COMMENTAIRES);
 		
 		// On itere dessus jusqu'au bout ou jusqu'a trouver le commentaire
 		for (int i=0; i < commentaires.length(); i++) {
 			  JSONObject commentaire = commentaires.getJSONObject(i);
-			  if (commentaire.getInt(Nom.CHAMP_ID_COMMENTAIRE) == (Integer.parseInt(id_commentaire))) {
+			  if (commentaire.getInt(Noms.CHAMP_ID_COMMENTAIRE) == (Integer.parseInt(id_commentaire))) {
 				  return true;
 			  }
 		}
@@ -130,24 +130,24 @@ public class CommentairesTools {
 		
 		// Creation du message
 		BasicDBObject message = new BasicDBObject();
-		message.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		message.put(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
 
 		// On verifie si le message existe
 		DBCursor curseur = messages.find(message);
 		if (! curseur.hasNext()) {
 			// Le message n'existe pas, donc le commentaire non plus
 			JSONObject reponseVide = new JSONObject();
-			reponseVide.put(Nom.CHAMP_COMMENTAIRES, new JSONArray());
+			reponseVide.put(Noms.CHAMP_COMMENTAIRES, new JSONArray());
 			return new JSONObject();
 		}
 		
 		// On recupere la liste des commentaires
 		JSONObject reponse_message = new JSONObject(JSON.serialize(curseur.next()));
-		JSONArray commentaires = reponse_message.getJSONArray(Nom.CHAMP_COMMENTAIRES);
+		JSONArray commentaires = reponse_message.getJSONArray(Noms.CHAMP_COMMENTAIRES);
 		
 		// On retourne cette liste des commentaires
 		JSONObject reponse = new JSONObject();
-		reponse.put(Nom.CHAMP_COMMENTAIRES, commentaires);
+		reponse.put(Noms.CHAMP_COMMENTAIRES, commentaires);
 		return reponse;
 	}
 }

@@ -10,9 +10,9 @@ import exceptions.ClefInexistanteException;
 import exceptions.tailles.ClefInvalideException;
 import exceptions.tailles.MessageTropGrandException;
 import exceptions.tailles.MessageTropPetitException;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import bd.tools.MessagesTools;
@@ -25,7 +25,7 @@ public class AjouterMessage {
 	 * Ajoute le message d'un utilisateur dans la BDD MongoDB
 	 * @param clef : La clef de session de l'utilisateur ajoutant le message
 	 * @param contenu : Le contenu du message a ajouter
-	 * @return Un JSONObject vide si tout va bien, ou avec un champ d'erreur sinon
+	 * @return Un JSONObject contenant le message si tout va bien, ou avec un champ d'erreur sinon
 	 */
 	public static JSONObject ajouterMessage(String clef, String contenu) {
 		try {
@@ -60,13 +60,12 @@ public class AjouterMessage {
 			}
 			
 			// On ajoute le message a la BDD
-			MessagesTools.ajouterMessage(id_auteur, contenu);
+			JSONObject reponse = MessagesTools.ajouterMessage(id_auteur, contenu);
 			
 			// On met a jour le temps d'inactivite
 			SessionsTools.updateTempsCle(clef);
 	
 			// On renvoie une reponse
-			JSONObject reponse = new JSONObject();
 			return reponse;
 		} catch (UnknownHostException e) {
 			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.ERREUR_HOTE_INCONNU);

@@ -1,4 +1,4 @@
-package services;
+package outils;
 
 public class Tailles {
 	public static final int TAILLE_CLEF = 32;

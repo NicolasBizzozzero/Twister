@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -235,4 +236,37 @@ public class AmitiesTools {
         statement.close();
         connection.close();
 	}
+	
+	
+
+	 /**		
+	  * Retourne tous les id des utilisateurs suivis par id_utilisateur dans une ArrayList		
+	  * @param id_utilisateur		
+	  * @throws SQLException 		
+	  * @throws ClassNotFoundException 		
+      * @throws IllegalAccessException 		
+	  * @throws InstantiationException 		
+	  */		
+	 public static ArrayList<String> getAmisEnArrayList(String id_utilisateur) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {		
+	     // Connection a la base de donnees		
+	     Connection connection = Database.getMySQLConnection();		
+	        		
+	     // Creation et execution de la requete		
+	     String requete = "SELECT id_ami2 FROM Amities WHERE id_ami1=?;";		
+	     PreparedStatement statement = connection.prepareStatement(requete);		
+	     statement.setInt(1, Integer.parseInt(id_utilisateur));		
+	     ResultSet res = statement.executeQuery();		
+	      		
+	     // creation d'un JSONObject dans lequel on met les amis		
+	     ArrayList<String> liste = new ArrayList<String>();		
+	     while (res.next()){		
+		 	liste.add(res.getString("id_ami2"));		
+	     }		
+	   		
+	     // Liberation des ressources		
+	     statement.close();		
+	     connection.close();		
+	       		
+	 	 return liste;		
+	 }
 }

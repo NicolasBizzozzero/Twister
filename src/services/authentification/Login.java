@@ -2,6 +2,7 @@ package services.authentification;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,9 +16,9 @@ import exceptions.tailles.MotDePasseTropPetitException;
 import exceptions.tailles.PseudoTropGrandException;
 import exceptions.tailles.PseudoTropPetitException;
 import outils.PseudosAdmins;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class Login {
 	public static JSONObject login(String pseudo, String motDePasse) {
@@ -67,13 +68,22 @@ public class Login {
 			
 			// On transforme le JSONObject en JSONArray
 			JSONArray listeIDSuivis = jsonIDSuivis.getJSONArray("Amis");
-
+			
+			// On recupere les informations restantes
+			JSONObject informations = bd.tools.UtilisateursTools.getInformationsUtilisateur(pseudo);
+			String prenom = informations.getString("prenom");
+			String nom = informations.getString("nom");
+			String anniversaire = informations.getString("anniversaire");
+			
 			// On genere une reponse
 			JSONObject retour = new JSONObject();
 			retour.put("id", identifiant);
 			retour.put("pseudo", pseudo);
 			retour.put("clef", key);
 			retour.put("suivis", listeIDSuivis);
+			retour.put("prenom", prenom);
+			retour.put("nom", nom);
+			retour.put("anniversaire", anniversaire);
 			return retour;
 
 		} catch (SQLException e) {
