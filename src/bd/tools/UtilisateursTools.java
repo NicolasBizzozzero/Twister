@@ -611,7 +611,7 @@ public class UtilisateursTools {
         String requete = "SELECT * FROM Utilisateurs WHERE pseudo=?;";
         PreparedStatement statement = connection.prepareStatement(requete);
         statement.setString(1, pseudo);
-        statement.executeUpdate();
+        statement.executeQuery();
         
         // Recuperation des donnees
         ResultSet resultSet = statement.getResultSet();

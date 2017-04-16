@@ -49,3 +49,33 @@ function makePageProfilInconnu(id_inconnu) {
         $("#corp_page").load("html/page_profil_inconnu.html");
     });
 }
+
+
+function voirProfil(form) {
+    // On recupère le pseudo de l'ami a voir
+    var pseudo = $("input[NAME=voirprofil]").val();
+
+    // On vide le texte qui était dedans
+    $("input[NAME=voirprofil]").val('');
+
+    $.ajax({type:"GET",
+            url: url_site + "/services/utilisateur/informationsUtilisateur",
+            data:"clef=" + env.clef + "&pseudo=" + pseudo,
+            dataType: "json",
+            success: function(res) {
+                voirProfilReponse(res);
+            },
+            error: function(xhr, status, err) {
+                func_erreur(status + ": " + err);
+            }
+        });
+}
+
+
+function voirProfilReponse(res) {
+	if (res.id != undefined) {
+		makePageProfil(res.id)
+	} else {
+		func_erreur("L'utilisateur n'existe pas");
+	}
+}

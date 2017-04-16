@@ -67,29 +67,3 @@ function reponseListerAmis(rep){
     var el = $("#amis");
     el.append(s);
 }
-
-
-function voirProfil(form) {
-    // On recupère le pseudo de l'ami a voir
-    var pseudo = $("input[NAME=voirprofil]").val();
-
-    // On vide le texte qui était dedans
-    $("input[NAME=voirprofil]").val('');
-
-    $.ajax({type:"GET",
-            url: url_site + "/services/utilisateur/informationsUtilisateur",
-            data:"clef=" + env.clef + "&pseudo=" + pseudo,
-            dataType: "json",
-            success: function(res) {
-                voirProfilReponse(res);
-            },
-            error: function(xhr, status, err) {
-                func_erreur(status + ": " + err);
-            }
-        });
-}
-
-
-function voirProfilReponse(res) {
-	makePageProfil(res.id)
-}
