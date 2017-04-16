@@ -4,11 +4,6 @@
  * ou un inconnu.
  */
 function makePageProfil(id_utilisateur) {
-	env.fromId = id_utilisateur
-    env.messages = [];
-    env.minId = Infinity;
-    env.maxId = -Infinity;
-
     if (id_utilisateur == env.id_utilisateur) {
         makePageProfilUtilisateur();
     } else if ((env.follows[env.id_utilisateur] == undefined)||(!env.follows[env.id_utilisateur].has(id_utilisateur))){
@@ -53,4 +48,34 @@ function makePageProfilInconnu(id_inconnu) {
     $("body").load("html/en_tete.html", function() {
         $("#corp_page").load("html/page_profil_inconnu.html");
     });
+}
+
+
+function voirProfil(form) {
+    // On recupère le pseudo de l'ami a voir
+    var pseudo = $("input[NAME=voirprofil]").val();
+
+    // On vide le texte qui était dedans
+    $("input[NAME=voirprofil]").val('');
+
+    $.ajax({type:"GET",
+            url: url_site + "/services/utilisateur/informationsUtilisateur",
+            data:"clef=" + env.clef + "&pseudo=" + pseudo,
+            dataType: "json",
+            success: function(res) {
+                voirProfilReponse(res);
+            },
+            error: function(xhr, status, err) {
+                func_erreur(status + ": " + err);
+            }
+        });
+}
+
+
+function voirProfilReponse(res) {
+	if (res.id != undefined) {
+		makePageProfil(res.id)
+	} else {
+		func_erreur("L'utilisateur n'existe pas");
+	}
 }

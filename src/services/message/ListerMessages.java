@@ -22,8 +22,8 @@ public class ListerMessages {
 	 * @param recherche : Les mots clefs de la recherche (vide si pas de mot clef)
 	 * @param id_utilisateur : L'ID de l'utilisateur dont on veut les messages (-1 si
 	 * on est sur la page principale et que l'on souhaite avoir les messages de tout le monde)
-	 * @param id_max : l'ID de chaque message retourne doit etre strictement inferieur a 'id_max' (-1 si pas de limite)
-	 * @param id_min : l'ID de chaque message retourne doit etre strictement superieur a 'id_min' (-1 si pas de limite)
+	 * @param id_max : l'ID de chaque message retourne doit etre inferieur a 'id_max' (-1 si pas de limite)
+	 * @param id_min : l'ID de chaque message retourne doit etre superieur a 'id_min' (-1 si pas de limite)
 	 * @param limite : Nombre de messages a retourner (-1 si pas de limite)
 	 * @return Un JSONObject contenant les messages demandes
 	 */
@@ -55,7 +55,7 @@ public class ListerMessages {
 			if (id_utilisateur.equals("-1")) {
 				reponse = bd.tools.MessagesTools.listerMessagesToutLeMonde(id_session, recherche, id_max, id_min, limite);
 			} else {
-				reponse = bd.tools.MessagesTools.listerMessagesUtilisateur(id_utilisateur, recherche, id_max, id_min, limite);
+				reponse = bd.tools.MessagesTools.listerMessagesUtilisateur(recherche, id_utilisateur, id_max, id_min, limite);
 			}			
 			
 			// On met a jour le temps d'inactivite

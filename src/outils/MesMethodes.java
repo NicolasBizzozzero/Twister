@@ -3,7 +3,6 @@ package outils;
 import java.lang.Math;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -106,12 +105,9 @@ public abstract class MesMethodes {
 	 * en fonction de sa date de derniere activite.
 	 * @param derniereActivite : Date de la derniere activite de l'utilisateur
 	 * @return En millisecondes, le temps d'inactivite de l'utilisateur
-	 * @throws ParseException 
 	 */
-	public static long getTempsInactivite(Date derniereActivite) throws ParseException {
-        java.text.SimpleDateFormat parser = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
-		String maintenant_s  = parser.format(new Date());
-		Date maintenant = parser.parse(maintenant_s);
+	public static long getTempsInactivite(Date derniereActivite) {
+		Date maintenant = new GregorianCalendar().getTime();
 		return maintenant.getTime() - derniereActivite.getTime();
 	}
 }
