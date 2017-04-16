@@ -15,6 +15,10 @@
 		<servlet-class>servlets.utilisateur.ServletSuppressionUtilisateur</servlet-class>
 	</servlet>
 	<servlet> 
+		<servlet-name>InformationsUtilisateur</servlet-name> 
+		<servlet-class>servlets.utilisateur.ServletInformationsUtilisateur</servlet-class>
+	</servlet>
+	<servlet> 
 		<servlet-name>Login</servlet-name> 
 		<servlet-class>servlets.authentification.ServletLogin</servlet-class>
 	</servlet>
@@ -83,6 +87,10 @@
 	<servlet-mapping> 
 		<servlet-name>SuppressionUtilisateur</servlet-name> 
 		<url-pattern>/services/utilisateur/suppressionUtilisateur</url-pattern>
+	</servlet-mapping>  
+	<servlet-mapping> 
+		<servlet-name>InformationsUtilisateur</servlet-name> 
+		<url-pattern>/services/utilisateur/informationsUtilisateur</url-pattern>
 	</servlet-mapping> 
 	<servlet-mapping>
 		<servlet-name>Login</servlet-name> 

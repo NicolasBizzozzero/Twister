@@ -57,3 +57,4 @@ function supprimeLike(idMessage, typeLike) {
 function refreshLikes(idMessage, typeLike) {
     $("#message_" + idMessage + " #like_" + typeLike + " p").text(env.messages[idMessage].likes[typeLike].length);
 }
+

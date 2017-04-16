@@ -4,11 +4,6 @@
  * ou un inconnu.
  */
 function makePageProfil(id_utilisateur) {
-	env.fromId = id_utilisateur
-    env.messages = [];
-    env.minId = Infinity;
-    env.maxId = -Infinity;
-
     if (id_utilisateur == env.id_utilisateur) {
         makePageProfilUtilisateur();
     } else if ((env.follows[env.id_utilisateur] == undefined)||(!env.follows[env.id_utilisateur].has(id_utilisateur))){

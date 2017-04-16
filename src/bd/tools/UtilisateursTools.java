@@ -2,6 +2,10 @@ package bd.tools;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
+
+import org.json.JSONObject;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -596,5 +600,41 @@ public class UtilisateursTools {
         connection.close();
         
         return mail;
+	}
+
+
+	public static JSONObject getInformationsUtilisateur(String pseudo) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT * FROM Utilisateurs WHERE pseudo=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, pseudo);
+        statement.executeUpdate();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        resultSet.next();
+        int id = resultSet.getInt("id");
+        String mail = resultSet.getString("mail");
+        String prenom = resultSet.getString("prenom");
+        String nom = resultSet.getString("nom");
+        Date anniversaire = resultSet.getDate("anniversaire");
+
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        // Construction de la reponse
+        JSONObject reponse = (new JSONObject()).put("id", id)
+        		                               .put("pseudo", pseudo)
+        		                               .put("mail", mail)
+        		                               .put("prenom", prenom)
+        		                               .put("nom", nom)
+        		                               .put("anniversaire", anniversaire);
+
+        return reponse;
 	}
 }

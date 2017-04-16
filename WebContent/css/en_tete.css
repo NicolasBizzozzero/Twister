@@ -1,33 +1,35 @@
+
 header {
     align-items: center;
+    background-color: #ffffff;
+    border-bottom: 1px solid;
     display: flex;
     flex-flow: row nowrap;
     height: 70px;
     justify-content: space-between;
     text-align: center;
-    background-color: #ffffff;
-    border-bottom-color: #9c9c9c;
-    border-bottom: solid;
-    border-bottom-width: 1px;
 }
-
 header #titre {
-    margin-right: auto;
     color: #008000;
+    margin-right: auto;
 }
-
 .liens {
     color: #256c50;
     cursor: pointer;
     text-decoration: underline;
 }
-
 #header #recherche {
     display: inline-block;
     overflow: visible;
     white-space: nowrap;
 }
-
+#voirprofil *:nth-child(2) {
+    height: 20px;
+    width: 20px;
+    margin-left: 8px;
+    margin-right: 150px;
+    vertical-align: middle;
+}
 #recherche *:nth-child(2) {
     height: 20px;
     margin-left: 8px;
@@ -35,13 +37,9 @@ header #titre {
     vertical-align: middle;
     width: 20px;
 }
-
-
 #titre {
     color: #256c50;
 }
-
-
 #titre h1 {
     font-size: 3.5em;
     height: 7px;
@@ -49,13 +47,9 @@ header #titre {
     margin-right: 150px;
     margin-top: 0;
 }
-
-
 body {
     margin: 0;
 }
-
-
 header #logo img {
     height: 60px;
     margin-left: 30px;
@@ -64,7 +58,6 @@ header #logo img {
     width: 60px;
 }
 header #deconnexion {
-    margin-right: 20px;
     color: #008000;
-    text-color: #008000;
+    margin-right: 20px;
 }
