@@ -51,7 +51,7 @@ public class SessionsTools {
         Connection connection = Database.getMySQLConnection();
 
         // Creation et execution de la requete
-        String requete = "INSERT INTO Sessions Values (?, ?, null, ?);";
+        String requete = "INSERT INTO Sessions Values (?, ?, NOW(), ?);";
         PreparedStatement statement = connection.prepareStatement(requete);
         statement.setString(1, cle);
         statement.setInt(2, Integer.parseInt(identifiant));
@@ -229,9 +229,11 @@ public class SessionsTools {
 		}
 		
 		Date derniereActivite = getDateByClef(clef);
+		System.out.println("derniereactivite: " + derniereActivite.getTime());
 //		System.out.println("Date:");
 //		System.out.println(derniereActivite);
 		long tempsInactivite = MesMethodes.getTempsInactivite(derniereActivite);
+		System.out.println("tempsinactivite: " + tempsInactivite);
 //		System.out.println("Temps :");
 //		System.out.println(tempsInactivite);
 		
@@ -287,15 +289,45 @@ public class SessionsTools {
         	throw new ClefInexistanteException(String.format("La clef %s n'est pas presente dans la Base de donnees", clef));
         
         String resultat = resultSet.getString("timestamp");
-        java.text.SimpleDateFormat parser = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        System.out.println("resultat: " + resultat);
+        java.text.SimpleDateFormat parser = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
 		java.util.Date date  = parser.parse(resultat);		
-
+	
         // Liberation des ressources
         resultSet.close();
         statement.close();
         connection.close();
         
         return date;
+	}
+	
+	
+	public static long getTimestampByClef(String clef) throws SQLException, ClefInexistanteException, InstantiationException, IllegalAccessException, ClassNotFoundException, ParseException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT timestamp FROM Sessions WHERE clef=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, clef);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        boolean contientUnResultat = resultSet.next();
+        
+        // Si la requete n'a genere aucun resultat, on leve une exception
+        if (! contientUnResultat)
+        	throw new ClefInexistanteException(String.format("La clef %s n'est pas presente dans la Base de donnees", clef));
+        
+        long resultat = resultSet.getLong("timestamp");	
+
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return resultat;
 	}
 	
 	

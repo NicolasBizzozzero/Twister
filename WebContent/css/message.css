@@ -26,6 +26,11 @@
     padding-top: 10px;
     width: 60px;
 }
+
+.likes :hover {
+	cursor: pointer
+}
+
 .like img {
     display: block;
     height: 18px;

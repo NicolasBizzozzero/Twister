@@ -2,10 +2,20 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="css/page_principale.css"/>
-        <link rel="stylesheet" type="text/css" href="css/message.css"/>
         <link rel="stylesheet" type="text/css" href="css/commentaire.css"/>
+        <link rel="stylesheet" type="text/css" href="css/message.css"/>
     </head>
     <body>
+    	<script type="text/javascript">
+	    	$(document).ready(function(){
+			    $(window).scroll(_.debounce(function(e) {   
+			    	if ($(window).scrollTop() + $(window).height() >= $(document).height() - 50) {
+			    		console.log("Fire refreshMessages !\nminId: " + env.minId + ", maxId: " + env.maxId);
+			        	refreshMessages();
+			   		}
+				}, 5000));
+			});
+    	</script>
         <div id="cote" class="corp"
              onClick="javascript:makePageProfil(env.id_utilisateur)">
             <div id="photo">
@@ -23,7 +33,7 @@
                       action="javascript:(function(){return;})()"
                       onSubmit="javascript:newMessage(this)">
                     <textarea name="nv_message" form="nv_message"
-                              placeholder="Écrivez votre nouveau message."/>
+                              placeholder="Ecrivez votre nouveau message."></textarea>
                     <input type="submit" value="Poster"/> 
                 </form >
             </section>

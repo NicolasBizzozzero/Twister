@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;
@@ -28,7 +29,7 @@ public class MessagesTools {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public static void ajouterMessage(String id_auteur, String contenu) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static JSONObject ajouterMessage(String id_auteur, String contenu) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// On se connecte a la BDD puis on recupere la collection
 		DBCollection messages = getCollectionMessages();
 		
@@ -36,9 +37,10 @@ public class MessagesTools {
 		Integer id_message = getIDNouveauMessage();
 		
 		// Creation du message
+		String date = new Date().toString();
 		BasicDBObject message = new BasicDBObject();
 		message.put(Nom.CHAMP_CONTENU, contenu);
-		message.put(Nom.CHAMP_DATE, new Date());
+		message.put(Nom.CHAMP_DATE, date);
 		message.put(Nom.CHAMP_ID_MESSAGE, id_message);
 		message.put(Nom.CHAMP_NOMBRE_DE_COMMENTAIRES, 0);
 		message.put(Nom.CHAMP_COMMENTAIRES, new ArrayList<BasicDBObject>());
@@ -56,6 +58,25 @@ public class MessagesTools {
 
 		// On ajoute le message dans la collection
 		messages.insert(message);
+		
+		// On renvoie une reponse
+		JSONObject reponse = new JSONObject();
+		reponse.put(Nom.CHAMP_CONTENU, contenu);
+		reponse.put(Nom.CHAMP_DATE, date);
+		reponse.put(Nom.CHAMP_ID_MESSAGE, id_message);
+		reponse.put(Nom.CHAMP_NOMBRE_DE_COMMENTAIRES, 0);
+		reponse.put(Nom.CHAMP_COMMENTAIRES, new JSONArray());
+		JSONObject auteur_rep = new JSONObject();
+		auteur_rep.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
+		auteur_rep.put(Nom.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
+		reponse.put(Nom.CHAMP_AUTEUR, auteur_rep);
+		JSONObject likes_rep = new JSONObject();
+		for (Integer indexLike=0; indexLike < LikesTools.NOMBRE_LIKE_DIFFERENTS; indexLike++) {
+			likes_rep.put(indexLike.toString(), new JSONArray());
+		}
+		reponse.put(Nom.CHAMP_LIKES, likes_rep);
+		
+		return reponse;
 	}
 	
 	
@@ -157,18 +178,30 @@ public class MessagesTools {
 	}
 	
 	
-	public static JSONObject listerMessagesUtilisateur(String recherche, String id_utilisateur, String id_max, String id_min, String limite) throws UnknownHostException {
+	public static JSONObject listerMessagesUtilisateur(String id_utilisateur, String recherche, String id_max, String id_min, String limite) throws UnknownHostException {
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 		
-		// TODO: Imposer limite superieure id_max + limite_nferieure id_min + sortby id_message
 		// Creation de la requete
 		BasicDBObject requete = new BasicDBObject();
-		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
-
+		ArrayList<BasicDBObject> listeAnd = new ArrayList<BasicDBObject>();
+		if (! id_min.equals("-1")) {
+			listeAnd.add(new BasicDBObject(Nom.CHAMP_ID_MESSAGE, new BasicDBObject("$gt", Integer.parseInt(id_min))));
+		}
+		if (! id_max.equals("-1")) {
+			listeAnd.add(new BasicDBObject(Nom.CHAMP_ID_MESSAGE, new BasicDBObject("$lt", Integer.parseInt(id_max))));
+		}
+		if (listeAnd.size() != 0) {
+			requete.put("$and", listeAnd);
+		}
+		requete.put(String.format("%s.%s", Nom.CHAMP_AUTEUR, Nom.CHAMP_ID_AUTEUR), id_utilisateur);
+		System.out.println(requete.toString());
+		
 		// On itere sur les resultats
-		DBCursor curseur = messages.find(requete).limit(Integer.parseInt(limite));
 		JSONObject reponse = new JSONObject();
+		reponse.put(Nom.CHAMP_MESSAGES, new JSONArray());
+		DBCursor curseur = messages.find(requete).sort(new BasicDBObject(Nom.CHAMP_ID_MESSAGE, -1))
+                                                 .limit(Integer.parseInt(limite));
 		while (curseur.hasNext()) {
 			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
 		}
@@ -177,20 +210,34 @@ public class MessagesTools {
 	}
 	
 	
-	public static JSONObject listerMessagesToutLeMonde(String id_utilisateur, String recherche, String id_max, String id_min, String limite) throws UnknownHostException {
+	public static JSONObject listerMessagesToutLeMonde(String id_utilisateur, String recherche, String id_max, String id_min, String limite) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 		
 		// On recupere les id des amis de l'utilisateur
-		String[] id_amis = null;
+		ArrayList<String> id_amis = bd.tools.AmitiesTools.getAmisEnArrayList(id_utilisateur);
+		id_amis.add(id_utilisateur);
 		
 		// Creation de la requete
 		BasicDBObject requete = new BasicDBObject();
-		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
+		ArrayList<BasicDBObject> listeAnd = new ArrayList<BasicDBObject>();
+		if (! id_min.equals("-1")) {
+			listeAnd.add(new BasicDBObject(Nom.CHAMP_ID_MESSAGE, new BasicDBObject("$gt", Integer.parseInt(id_min))));
+		}
+		if (! id_max.equals("-1")) {
+			listeAnd.add(new BasicDBObject(Nom.CHAMP_ID_MESSAGE, new BasicDBObject("$lt", Integer.parseInt(id_max))));
+		}
+		if (listeAnd.size() != 0) {
+			requete.put("$and", listeAnd);
+		}
+		requete.put(String.format("%s.%s", Nom.CHAMP_AUTEUR, Nom.CHAMP_ID_AUTEUR), new BasicDBObject("$in", id_amis));
+		System.out.println(requete.toString());
 
 		// On itere sur les resultats
-		DBCursor curseur = messages.find(requete).limit(Integer.parseInt(limite));
 		JSONObject reponse = new JSONObject();
+		reponse.put(Nom.CHAMP_MESSAGES, new JSONArray());
+		DBCursor curseur = messages.find(requete).sort(new BasicDBObject(Nom.CHAMP_ID_MESSAGE, -1))
+                                                 .limit(Integer.parseInt(limite));
 		while (curseur.hasNext()) {
 			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
 		}
