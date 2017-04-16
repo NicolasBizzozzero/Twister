@@ -1,10 +1,12 @@
 package services.authentification;
 
+import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Date;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import bd.tools.AmitiesTools;
@@ -106,6 +108,10 @@ public class Login {
 			return ErrorJSON.serviceRefused("Erreur, mot de passe trop grand", CodesErreur.ERREUR_MDP_TROP_LONG);
 		} catch (ClefInexistanteException e) {
 			return ErrorJSON.serviceRefused("Erreur, clef inexistante", CodesErreur.ERREUR_CLEF_INEXISTANTE);
+		} catch (JSONException e) {
+			return ErrorJSON.serviceRefused("Erreur de JSON", CodesErreur.ERREUR_JSON);
+		} catch (UnknownHostException e) {
+			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.ERREUR_HOTE_INCONNU);
 		} 
 	}
 	

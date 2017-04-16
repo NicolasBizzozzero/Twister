@@ -394,7 +394,19 @@ public class MessagesTools {
 	}
 	
 	
-	public static int getNombreDeMessagesPostes(String idUtilisateur) {
-		return 0;
+	public static int getNombreDeMessagesPostes(String idUtilisateur) throws UnknownHostException {
+  		// On se connecte a la BDD puis on recupere les messages
+  		DBCollection messages = getCollectionMessages();
+		  		
+  		// Creation de la requete
+  		BasicDBObject requete = new BasicDBObject();
+		requete.put(String.format("%s.%s", Noms.CHAMP_AUTEUR, Noms.CHAMP_ID_AUTEUR), idUtilisateur);
+		
+  		// On itere sur les resultats
+  		JSONObject reponse = new JSONObject();
+ 		reponse.put(Noms.CHAMP_MESSAGES, new JSONArray());
+ 		DBCursor curseur = messages.find(requete);
+ 		
+ 		return curseur.count();
 	}
 }
