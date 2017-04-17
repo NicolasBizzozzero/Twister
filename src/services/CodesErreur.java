@@ -59,6 +59,8 @@ public abstract class CodesErreur {
 	public static final int ERREUR_ID_MESSAGE_TROP_LONG = 54;
 	public static final int ERREUR_ID_COMMENTAIRE_TROP_COURT = 55;
 	public static final int ERREUR_ID_COMMENTAIRE_TROP_LONG = 56;
+	public static final int ERREUR_LIKE_NON_PRESENT = 57;
+	public static final int ERREUR_LIKE_DEJA_PRESENT = 58;
 	public static final int ERREUR_JSON = 100;
 	public static final int ERREUR_SQL = 1000;
 	public static final int ERREUR_JAVA = 10000;

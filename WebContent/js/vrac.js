@@ -3,6 +3,9 @@ function init() {
     NB_MESSAGES_PAR_SCROLL = 10;
 
     env = new Object();
+    
+    // Initialisation des locks
+    lock_liste_messages = false;
 }
 
 

@@ -105,6 +105,21 @@ function voirProfil(form) {
 }
 
 
+function voirSonProfil() {
+    $.ajax({type:"GET",
+        url: url_site + "/services/utilisateur/informationsUtilisateur",
+        data:"clef=" + env.clef + "&pseudo=" + env.pseudo,
+        dataType: "json",
+        success: function(res) {
+            voirProfilReponse(res);
+        },
+        error: function(xhr, status, err) {
+            func_erreur(status + ": " + err);
+        }
+    });
+}
+
+
 function voirProfilReponse(res) {
 	if (res.id != undefined) {
 		makePageProfil(res.id, res.pseudo, res.nom, res.prenom, res.anniversaire, res.nb_messages)
