@@ -467,6 +467,38 @@ public class UtilisateursTools {
         return pseudo;
 	}
 	
+	public static JSONObject getInfoUtilisateur(String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// Connection a la base de donnees
+        Connection connection = Database.getMySQLConnection();
+        
+        // Creation et execution de la requete
+        String requete = "SELECT pseudo, prenom, nom, anniversaire FROM Utilisateurs WHERE id=?;";
+        PreparedStatement statement = connection.prepareStatement(requete);
+        statement.setString(1, id);
+        statement.executeQuery();
+        
+        // Recuperation des donnees
+        ResultSet resultSet = statement.getResultSet();
+        resultSet.next();
+        String pseudo = resultSet.getString("pseudo");
+        String nom = resultSet.getString("nom");
+        String prenom = resultSet.getString("prenom");
+        String anniversaire= resultSet.getString("anniversaire");
+        
+        // creation d'un JSONObject dans lequel on met les informations
+        JSONObject infos = new JSONObject();
+        infos.accumulate("pseudo", pseudo);
+        infos.accumulate("prenom", prenom);
+        infos.accumulate("nom", nom);
+        infos.accumulate("anniversaire", anniversaire);
+        
+        // Liberation des ressources
+        resultSet.close();
+        statement.close();
+        connection.close();
+        
+        return infos;
+	}
 	
 	/**
 	 * Execute une commande DSQL pour remettre a la valeur 1
