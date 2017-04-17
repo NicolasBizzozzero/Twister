@@ -4,7 +4,7 @@ Lieu ou se trouve le service					services/like/listerLikes
 
 URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/like/listerLikes
 
-Description du service							liste les likes associé à un message
+Description du service							liste les likes associÃ© Ã  un message
 
 Parametres en entree							String clef, String id_message
 
