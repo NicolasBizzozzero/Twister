@@ -4,7 +4,7 @@ Lieu ou se trouve le service					services/like/supprimerLikes
 
 URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/like/supprimerLikes
 
-Description du service							supprime le like passé en paramètre
+Description du service							supprime le like passÃ© en paramÃ¨tre
 
 Parametres en entree							String clef, String id_message, String type_like
 
