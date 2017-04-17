@@ -2,7 +2,7 @@
 
 Lieu ou se trouve le service					services/utilisateur/CreationUtilisateur
 
-URL du service Web								/services/utilisateur/creation
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/utilisateur/creation
 
 Description du service							Creer un nouvel utilisateur
 
@@ -19,6 +19,16 @@ Erreurs possibles								-1: Nombre de parametres incorrect
 												11: Mot de passe trop court
 												12: Mot de passe trop long
 												13: Erreur durant le hashage du mot de passe
+												26: pseudo trop court
+												27: pseudo trop long
+												28: email trop court
+												29: email trop long
+												30: prenom trop court
+												31: prenom trop long
+												32: nom trop court
+												33: nom trop long
+												35: anniversaire trop court
+												36: anniversaire trop long
 												1000: Erreur SQL
 												
 Avancement du Service							Fonctionnel
