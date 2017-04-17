@@ -4,6 +4,7 @@ function ajouter_ami() {
     	    data:"clef=" + env.clef + "&id_ami=" + env.id_ami,
     	    dataType:"json",
     	    success: function(res) {
+    	    	env.follows.pull(env.id_ami);
     	    	reponseFollow(res);
     	    },
     	    error: function(xhr, status, err) {
@@ -25,6 +26,7 @@ function ne_plus_suivre(){
     	    data:"clef=" + env.clef + "&id_ami=" + env.id_ami,
     	    dataType:"json",
     	    success: function(res) {
+    	    	env.follows.push(env.id_ami);
     	    	reponseStopFollow(res);
     	    },
     	    error: function(xhr, status, err) {
@@ -44,9 +46,10 @@ function faireListeAmis(rep,id){
     	env.follows[id].add(ami.id);
     });
     console.log("env.follows[id]",env.follows[id]);
+}
 
 
-function listerAmis(id){
+function listerAmis(id) {
     $.ajax({type: "GET",
     	    url: url_site + "/services/ami/listerAmis",
     	    data: "clef=" + env.clef + "&id_utilisateur=" + id + "&index_debut=0&nombre_demandes=10",
@@ -75,18 +78,3 @@ function reponseListerAmis(rep){
     var el = $("#amis");
     el.append(s);
 }
-/*function reponseListerAmis(rep){
-var listeAmis = (JSON.parse(rep, revival).Amis);
-console.log("entree dans reponseListerAmis");
-console.log("rep",rep);
-//var amis =rep.Amis;
-//console.log("Amis", amis);
-var s="";
-listerAmis.forEach(function (ami){
-    console.log("ami",ami);
-    s+="<div class=\"liens_amis\" >"+ami.pseudo+"</div>";
-    
-});
-var el = $("#amis");
-el.append(s);
-}*/

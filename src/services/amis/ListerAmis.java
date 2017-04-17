@@ -66,7 +66,7 @@ public class ListerAmis {
 
 	        // On liste les amis
 			JSONObject reponse = AmitiesTools.listerAmis(id_utilisateur, index_debut, nombre_demandes);
-			
+
 			// On met a jour le temps d'inactivite
 			SessionsTools.updateTempsCle(clef);
 	

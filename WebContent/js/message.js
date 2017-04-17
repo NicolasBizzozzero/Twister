@@ -47,6 +47,7 @@ Message.prototype.getHtml = function() {
 
 
 function completeMessages() {
+    lock_liste_messages = true;
     $.ajax({type: "GET",
             url: url_site + "/services/message/listerMessages",
             data: "clef=" + env.clef + "&recherche=" + env.query + "&id_utilisateur=" + env.fromId + "&limite=" + NB_MESSAGES_PAR_SCROLL + "&id_min=-1&id_max=-1",
@@ -56,6 +57,7 @@ function completeMessages() {
             },
             error: function(xhr, status, err) {
                 func_erreur(status + ": " + err);
+                lock_liste_messages = false;
             }
         });
 }
@@ -85,6 +87,7 @@ function completeMessagesReponse(rep) {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
         func_erreur(rep.message);
     }
+    lock_liste_messages = false;
 }
 
 
@@ -98,6 +101,7 @@ function refreshMessages() {
             },
             error: function(xhr, status, err) {
                 func_erreur(status + ": " + err);
+                lock_liste_messages = false;
             }
         });
 }
@@ -126,11 +130,11 @@ function refreshMessagesReponse(rep) {
 	        $("#message_" + last_id).appear();
 	        $.force_appear();
         }
-        lock_liste_messages = false;
     } else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
         func_erreur(rep.message);
     }
+    lock_liste_messages = false;
 }
 
 
