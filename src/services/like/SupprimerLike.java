@@ -63,6 +63,11 @@ public class SupprimerLike {
 				return ErrorJSON.serviceRefused(String.format("Le type de like \"%s\" n'existe pas.", type_like), CodesErreur.ERREUR_TYPE_LIKE_INCONNU);
 			}
 			
+			// On verifie que l'utilisateur a deja like
+			if (! LikesTools.aDejaLike(id_delikeur, id_message, type_like)) {
+				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'a pas deja like de type %s le message %s.", id_delikeur, type_like, id_message), CodesErreur.ERREUR_LIKE_NON_PRESENT);
+			}
+			
 			// On supprime le like du message
 			LikesTools.supprimerLike(id_delikeur, id_message, type_like);
 			

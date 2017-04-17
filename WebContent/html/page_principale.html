@@ -10,10 +10,13 @@
  	    	$(document).ready(function(){
  			    $(window).scroll(_.debounce(function(e) {   
  			    	if ($(window).scrollTop() + $(window).height() >= $(document).height() - 50) {
- 			    		console.log("Fire refreshMessages !\nminId: " + env.minId + ", maxId: " + env.maxId);
- 			        	refreshMessages();
+ 			    		if (lock_liste_messages == false) {
+ 			    			lock_liste_messages = true;
+	 			    		console.log("Fire refreshMessages !\nminId: " + env.minId + ", maxId: " + env.maxId);
+	 			        	refreshMessages();
+ 			        	}
  			   		}
- 				}, 5000));
+ 				}, 50));
  			});
      	</script>
         <div id="cote" class="corp"

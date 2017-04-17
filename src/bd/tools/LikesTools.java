@@ -143,8 +143,22 @@ public class LikesTools {
 	
 	
 	
-	public static boolean aDejaLike(String id_utilisateur, String id_message, String type_like) {
-		//TODO: Faire cette fonction
-		return false;
+	public static boolean aDejaLike(String id_utilisateur, String id_message, String type_like) throws UnknownHostException {
+		// Connection a la BDD et recuperation de la collection
+		DBCollection collectionMessages = MessagesTools.getCollectionMessages();
+		
+		// Recuperation du message
+		BasicDBObject query = new BasicDBObject();
+		query.put(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		DBObject message = collectionMessages.find(query).next();
+		
+		// Recuperation des likes
+		DBObject likes = (DBObject) message.get(Noms.CHAMP_LIKES);
+		@SuppressWarnings("unchecked")
+		ArrayList<DBObject> listeLikes = (ArrayList<DBObject>) likes.get(type_like);
+		
+		// On check si l'utilisateur est dedans
+		return listeLikes.contains(id_utilisateur);
+
 	}
 }

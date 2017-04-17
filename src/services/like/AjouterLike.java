@@ -64,6 +64,11 @@ public class AjouterLike {
 			if (! LikesTools.likeExiste(type_like)) {
 				return ErrorJSON.serviceRefused(String.format("Le type de like \"%s\" n'existe pas.", type_like), CodesErreur.ERREUR_TYPE_LIKE_INCONNU);
 			}
+
+			// On verifie que l'utilisateur n'a pas deja like
+			if (LikesTools.aDejaLike(id_likeur, id_message, type_like)) {
+				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s a deja like de type %s le message %s.", id_likeur, type_like, id_message), CodesErreur.ERREUR_LIKE_DEJA_PRESENT);
+			}
 			
 			// On ajoute le like au message
 			LikesTools.ajouterLike(id_likeur, id_message, type_like);

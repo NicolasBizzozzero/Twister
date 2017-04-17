@@ -126,6 +126,7 @@ function refreshMessagesReponse(rep) {
 	        $("#message_" + last_id).appear();
 	        $.force_appear();
         }
+        lock_liste_messages = false;
     } else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
         func_erreur(rep.message);
