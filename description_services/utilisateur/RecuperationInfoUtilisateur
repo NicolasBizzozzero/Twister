@@ -1,0 +1,23 @@
+Nom du service Web								recuperationInfoUtilisateur
+
+Lieu ou se trouve le service					services/utilisateur/RecuperationInfoUtilisateur
+
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/utilisateur/recuperationInfoUtilisateur
+
+Description du service							Retourne le nom, le prénom, le pseudo, et l'anniversaire de la personne ayant pour iddentifiant, 
+												l'iddentifiant passé en paramètres
+
+Parametres en entree							id : iddentifiant de la personne dont on veut le nom, le prénom...
+
+Format de sortie								JSON ou erreur
+
+Exemple de sortie								{"pseudo":"Paul_87", "prenom":"Paul", "nom":"Dupont","anniversaire":12-12-1987} si ok , {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								0: Erreur connexion a la base de donnees												
+												1000: Erreur SQL
+												
+Avancement du Service							Fonctionnel
+
+Classes JAVA en rapport avec le service Web		servlets.utilisateur.ServletRecuperatioInfoUtilisateur
+												bd.tools.UtilisateursTools
+																								

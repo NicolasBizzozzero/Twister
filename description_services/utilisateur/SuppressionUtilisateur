@@ -2,7 +2,7 @@ Nom du service Web								creationUtilisateur
 
 Lieu ou se trouve le service					services/utilisateur/SuppressionUtilisateur
 
-URL du service Web								/services/utilisateur/suppression
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/services/utilisateur/suppression
 
 Description du service							Supprimer un utilisateur ainsi que ses donnees
 
@@ -13,6 +13,15 @@ Format de sortie								JSON, ok ou erreur
 Exemple de sortie								{} si ok , {"error_code":XXX, "message":"..."} si erreur
 
 Erreurs possibles								-1: Nombre de parametres incorrect
+												0: Erreur connexion a la base de donnees
+												4: mot de passe incorrecte
+												11: Mot de passe trop court
+												12: Mot de passe trop long
+												13: Erreur durant le hashage du mot de passe
+												19: Clef inexistante
+												22: erreur de date
+												34: clef invalide												
+												1000: Erreur SQL
 												
 												
 Avancement du Service							Fonctionnel, mais ne supprime pas les donnees

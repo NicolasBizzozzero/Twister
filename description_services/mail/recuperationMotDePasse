@@ -1,0 +1,25 @@
+Nom du service Web								recuperationMotDePasse
+
+Lieu ou se trouve le service					services/mail/recuperationMotDePasse
+
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/mail/recuperationMotDePasse
+
+Description du service							envoie un mail avec le mot de passe de l'utilisateur
+
+Parametres en entree							String email
+
+Format de sortie								ok ou erreur
+
+exemple de sortie								{"email":utilisateur@email.fr} si ok {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												 0: Connexion avec MySQL impossible										
+											     6: Connexion avec MongoDB impossible
+											     13: erreur lors du hashage du mot de passe
+											     28: email trop court
+											     29: email trop long
+											     45: email innexistant
+											     46: erreur lors de l'envoi du mail											     
+											     1000: Erreur de requete SQL
+
+Avancement du Service							Fonctionnel mais non implémenté sur le site

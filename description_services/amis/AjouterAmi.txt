@@ -26,4 +26,3 @@ Classes JAVA en rapport avec le service Web		servlets.amis.ServletAjouterAmi
 												
 Avancement du Service							Fonctionnel
 
-Informations additionnelles

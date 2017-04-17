@@ -1,0 +1,31 @@
+Nom du service Web								supprimerCommentaire
+
+Lieu ou se trouve le service					services/commentaire/supprimerCommentaire
+
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/commentaire/supprimerCommentaire
+
+Description du service							supprime le commentaire dont l'id est passé en paramètre
+
+Parametres en entree							String clef, String id_message, String id_commentaire
+
+Format de sortie								ok ou erreur
+
+Exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												 0: Connexion avec MySQL impossible
+												 2: utilisateur inexistant
+											     6: Connexion avec MongoDB impossible
+											     18: message innexistant
+											     19: Clef inexistante
+											     20: session innexistante
+											     21: utilisteur inactif
+											     34: clef invalide
+											     53: iddentifiant message trop court
+											     54: iddentifiant message trop long
+											     55: iddentifiant commentaire trop court
+											     56: iddentifiant commentaire trop long
+											     1000: Erreur de requete SQL
+											     22: erreur de date
+
+Avancement du Service							Fonctionnel mais pas utilisée

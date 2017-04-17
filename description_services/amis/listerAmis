@@ -11,15 +11,15 @@ Parametres en entree							clef, id_utilisateur, index_debut, nombre_demandes
 
 Format de sortie								JSON contenant les amis ou erreur
 
-Exemple de sortie								{"Amis": [{"id_ami2":123},'"id_ami2":546}, ...]} si ok , {"error_code":XXX, "message":"..."} si erreur
+Exemple de sortie								{"Amis": [{"id_ami":123,"pseudo":"Pierre"},{"id_ami":546,"pseudo":"Paul"}, ...]} si ok , {"error_code":XXX, "message":"..."} si erreur
 
 Erreurs possibles								-1: Un des arguments est null
  												0: Erreur lors de la connexion a MySQL
                                                 2: L'id_utilisateur est inexistant
                                                 14: L'index precise en parametre est invalide
                                                 20: L'utilisateur n'est pas connecte
+                                                21: utilisteur inactif
                                                 1000: Requete SQL Incorrecte
 
 Avancement du Service							Fonctionnel
 
-Informations additionnelles

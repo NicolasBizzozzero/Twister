@@ -1,0 +1,31 @@
+Nom du service Web								supprimerLikes
+
+Lieu ou se trouve le service					services/like/supprimerLikes
+
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/like/supprimerLikes
+
+Description du service							supprime le like passé en paramètre
+
+Parametres en entree							String clef, String id_message, String type_like
+
+Format de sortie								ok ou erreur
+
+exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
+
+Erreurs possibles								-1: Nombre de parametres incorrect
+												 0: Connexion avec MySQL impossible										
+											     6: Connexion avec MongoDB impossible
+											     18: message innexistant
+											     19: Clef inexistante
+											     20: session innexistante
+											     21: utilisateur innactif
+											     22: erreur de date
+											     25: type de like inconnu
+											     34: clef invalide
+											     39: iddentifiant trop court
+											     40: iddentifiant trop long
+											     49: type de like trop court
+											     50: type de like trop long
+											     1000: Erreur de requete SQL
+
+Avancement du Service							Fonctionnel

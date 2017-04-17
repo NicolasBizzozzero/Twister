@@ -2,7 +2,7 @@ Nom du service Web								ajouterMessage
 
 Lieu ou se trouve le service					services/message/AjouterMessage
 
-URL du service Web								/message/ajouterMessage
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/message/ajouterMessage
 
 Description du service							Ajoute un message dans la BDD MongoDB
 
@@ -14,10 +14,15 @@ exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
 
 Erreurs possibles								-1: Nombre de parametres incorrect
 												 0: Connexion avec MySQL impossible
+												 2: utilisateur innexistant
 											     6: Connexion avec MongoDB impossible
 											     19: Clef inexistante
+											     20: session innexistante
+											     21: utilisateur innactif
+											     22: erreur de date
+											     47: message trop court
+											     48: message trop long
 											     1000: Erreur de requete SQL
 
 Avancement du Service							Fonctionnel
 
-Informations additionnelles
