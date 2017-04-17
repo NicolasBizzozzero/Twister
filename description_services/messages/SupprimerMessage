@@ -2,7 +2,7 @@ Nom du service Web								SupprimerMessage
 
 Lieu ou se trouve le service					services/message/SupprimerMessage
 
-URL du service Web								/message/supprimerMessage
+URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/message/supprimerMessage
 
 Description du service							Supprime le message de la collection "Messages" de la base de MongoDB
 
@@ -13,12 +13,17 @@ Format de sortie								ok ou erreur
 Exemple de sortie								{} si ok {"error_code":XXX, "message":"..."} si erreur
 
 Erreurs possibles								-1: Nombre de parametres incorrect
-												0: Erreur connexion a la base de donnees
-												2: L'utilisateur a ajouter n'existe pas
+												0: Erreur connexion à la base de données
+												2: utilisateur innexistant
 												6: Connexion avec MongoDB impossible
+												18: message innexistant
 												19: Clef inexistante
+												20: session innexistante
+											    21: utilisateur innactif
+											    22: erreur de date
+											    34: clef invalide
+											    53: iddentifiant message trop court
+											    54: identifiant message trop long
 												1000: Erreur de requete SQL
 												
-Avancement du Service							Fonctionnel
-
-Informations additionnelles
+Avancement du Service							Fonctionnel mais non utilisé
