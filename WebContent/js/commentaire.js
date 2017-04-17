@@ -71,7 +71,7 @@ function newCommentaire(id) {
     var texte = $("textarea[NAME=nv_commentaire_"+id+"]").val();
     console.log("texte commentaire",texte);
     // On vide le texte qui était dedans
-    $("textarea[NAME=nv_commentaire]").val('');
+    $("textarea[NAME=nv_commentaire_"+id+"]").val('');
 
     $.ajax({type: "GET",
             url: url_site + "/services/commentaire/ajouterCommentaire",
