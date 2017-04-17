@@ -142,6 +142,9 @@ public class AmitiesTools {
         while (res.next()){
         	String id_ami=res.getString("id_ami2");
         	String pseudo = UtilisateursTools.getPseudoUtilisateur(id_ami);
+        	if (pseudo == null) {
+        		continue;
+        	}
         	JSONObject ami = new JSONObject();
         	ami.accumulate("id", id_ami);
         	ami.accumulate("pseudo", pseudo);

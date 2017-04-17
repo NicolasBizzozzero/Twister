@@ -456,7 +456,12 @@ public class UtilisateursTools {
         
         // Recuperation des donnees
         ResultSet resultSet = statement.getResultSet();
-        resultSet.next();
+        
+        // Cas ou le pseduo n'existait plus
+        if (! resultSet.first()) {
+        	return null;
+        }
+
         String pseudo = resultSet.getString("pseudo");
         
         // Liberation des ressources

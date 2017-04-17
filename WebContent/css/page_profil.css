@@ -1,74 +1,10 @@
-section>form>textarea{
-  width:70%;
-}
-section>form>input{
-  color:#256c50;
-}
-#recherche :nth-child(2){
-  width:20px;
-}
-.comments>div{
-	border: solid #b2e6cc;
-	margin:3%;
-	padding:5%;
-}
-
-#titre{
-  color:#256c50;
-  padding-left:50px;
-  padding-right:50px;
-}
-#titre h1{
-  font-family:"Courier New";
-}
-div.corp{
-  vertical-align: top;
-  display:inline-block;
-  padding:5px;
-  margin-top:20px;
-  width :50%;
-}
-
-#corp{
-  width:100%;
-  margin:auto;
-  display:inline-block;
-}
-
-#photo>img{
-  width:70%;
-}
-
-#image_plus{
-  width:20px;
-  cursor:pointer;
-}
-
-#cote{
-  border:solid #256c50;
-  padding-bottom:60%;
-  width :20%;
-}
 #cote>button{
-  margin-top:30px;
-  color: #256c50; 
+  margin-top:20px;
 }
 #informations{
-  margin-top:30px;
+  margin-top:20px;
 }
-section{
-  border:solid #b2e6cc;
-  margin:auto;
-  margin-bottom:10px;
-  padding:10px;
-  width :80%;
-}
-section>text{
-  font-family:"Courier New";
-}
-#messages{
-  padding-bottom:100%;
-}
+
 #amis{
   color:red;
   text-align:center;
@@ -83,22 +19,6 @@ section>text{
   text-align:center;
   color:#256c50;
 }
-.messageUtilisateur{
-  border:solid #256c50;
-  padding: 20px;
-  margin: 30px;
-}
-
-body {
-    background-image: none;
-    background-color: #ffffff;
-}
-
-#image_plus{
-  width:20px;
-  cursor:pointer;
-}
-
 
 #link1{
   cursor:pointer;
@@ -108,9 +28,8 @@ body {
 
 #informations>div{
 	color: #256c50;
-	font-size: 2em;
-	font-family:Georgia;
-	font-weight: bold;
+}
+
 #cote {
 	cursor: default;
 }
@@ -118,4 +37,3 @@ body {
 #cote button {
     cursor: pointer;
 }
-

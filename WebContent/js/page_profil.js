@@ -11,7 +11,7 @@ function makePageProfil(id_utilisateur, pseudo, nom, prenom, anniversaire, nb_me
 
     if (id_utilisateur == env.id_utilisateur) {
         makePageProfilUtilisateur(nb_messages);
-    } else if ((env.follows[env.id_utilisateur] == undefined) || (!env.follows[env.id_utilisateur].has(id_utilisateur))) {
+    } else if (env.follows.includes(id_utilisateur)) {
         env.id_ami = id_utilisateur;
         makePageProfilInconnu(id_utilisateur, pseudo, nom, prenom, anniversaire, nb_messages);
     } else {
