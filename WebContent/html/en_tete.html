@@ -9,12 +9,22 @@
                 <img src="res/logo.png" alt="Twister logo"/> 
             </div>
             <div id="titre" class="entete">
-                <h1> TWISTER </h1>
+                <h1> Twister </h1>
             </div>
-            <form id= "recherche" class="entete">
-                <input type="text" id="recherche" name="recherche" placeholder="Rechercher"/>
-                <input type="image" src="res/loupe.jpg" alt="rechercher"/>
-            </form>
+            <div id="recherches" class="entete">
+                <form id="voirprofil" class="entete"
+                      action="javascript:(function(){return;})()"
+                      onSubmit="javascript:voirProfil(this)">
+	                <input type="text" id="voirprofil" name="voirprofil" placeholder="Voir le profil"/>
+	                <input type="image" src="res/suivre.png" alt="Voir le profil d'un ami"/>
+	            </form>
+	            <form id= "recherche" class="entete"
+                      action="javascript:(function(){return;})()"
+                      onSubmit="javascript:rechercherMessage(this)">
+	                <input type="text" id="recherche" name="recherche" placeholder="Rechercher"/>
+	                <input type="image" src="res/loupe.jpg" alt="rechercher"/>
+	            </form>
+            </div>
             <div id="deconnexion" class="entete">
                 <div class="liens" onclick="javascript:deconnexion()"> Se déconnecter </div>
                 <div class="liens" onclick="javascript:makePagePrincipale()"> Retour page principale </div>

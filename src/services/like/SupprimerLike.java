@@ -14,9 +14,9 @@ import exceptions.tailles.IDTropGrandException;
 import exceptions.tailles.IDTropPetitException;
 import exceptions.tailles.TypeLikeTropGrandException;
 import exceptions.tailles.TypeLikeTropPetitException;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class SupprimerLike {
 
@@ -61,6 +61,11 @@ public class SupprimerLike {
 			// On verifie que le type de like a supprimer existe
 			if (! LikesTools.likeExiste(type_like)) {
 				return ErrorJSON.serviceRefused(String.format("Le type de like \"%s\" n'existe pas.", type_like), CodesErreur.ERREUR_TYPE_LIKE_INCONNU);
+			}
+			
+			// On verifie que l'utilisateur a deja like
+			if (! LikesTools.aDejaLike(id_delikeur, id_message, type_like)) {
+				return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'a pas deja like de type %s le message %s.", id_delikeur, type_like, id_message), CodesErreur.ERREUR_LIKE_NON_PRESENT);
 			}
 			
 			// On supprime le like du message

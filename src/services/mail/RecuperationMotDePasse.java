@@ -10,9 +10,9 @@ import org.json.JSONObject;
 import exceptions.tailles.EmailTropGrandException;
 import exceptions.tailles.EmailTropPetitException;
 import mails.TypeDeMail;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class RecuperationMotDePasse {
 

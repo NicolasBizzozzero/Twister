@@ -1,14 +1,19 @@
 package services;
 
+import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+
+import org.json.JSONException;
+
 import exceptions.ClefInexistanteException;
 
 public class TestUtilisateur {
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, ClefInexistanteException {
-		testCreationUtilisateur();
-		testSuppressionUtilisateur();
-		testModificationUtilisateur();
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, ClefInexistanteException, JSONException, UnknownHostException {
+//		testCreationUtilisateur();
+//		testSuppressionUtilisateur();
+//		testModificationUtilisateur();
+		testInformationsUtilisateur();
 	}
 	
 	private static void testCreationUtilisateur() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
@@ -201,5 +206,13 @@ public class TestUtilisateur {
 		bd.tools.UtilisateursTools.supprimerUtilisateurAvecId(idUtilisateur);
 		
 		System.out.println("\n#####\n# Fin du test de modification d'utilisateurs\n#####");
+	}
+
+	private static void testInformationsUtilisateur() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, JSONException, UnknownHostException {
+		System.out.println("#####\n# Debut du test d'informations d'utilisateurs\n#####");
+
+		System.out.println(bd.tools.UtilisateursTools.getInformationsUtilisateur("NicolasBi").toString());
+		
+		System.out.println("\n#####\n# Fin du test d'informations d'utilisateurs\n#####");
 	}
 }

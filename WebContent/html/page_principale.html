@@ -6,8 +6,21 @@
         <link rel="stylesheet" type="text/css" href="css/commentaire.css"/>
     </head>
     <body>
+    	<script type="text/javascript">
+ 	    	$(document).ready(function(){
+ 			    $(window).scroll(_.debounce(function(e) {   
+ 			    	if ($(window).scrollTop() + $(window).height() >= $(document).height() - 50) {
+ 			    		if (lock_liste_messages == false) {
+ 			    			lock_liste_messages = true;
+	 			    		console.log("Fire refreshMessages !\nminId: " + env.minId + ", maxId: " + env.maxId);
+	 			        	refreshMessages();
+ 			        	}
+ 			   		}
+ 				}, 50));
+ 			});
+     	</script>
         <div id="cote" class="corp"
-             onClick="javascript:makePageProfil(env.id_utilisateur)">
+             onClick="javascript:voirSonProfil()">
             <div id="photo">
                 <img src="res/image_profil.jpg" alt="Votre photo de profil"/>
             </div>
@@ -23,7 +36,7 @@
                       action="javascript:(function(){return;})()"
                       onSubmit="javascript:newMessage(this)">
                     <textarea name="nv_message" form="nv_message"
-                              placeholder="Ecrivez votre nouveau message."></textarea>
+                              placeholder="Écrivez votre nouveau message."></textarea>
                     <input type="submit" value="Poster"/> 
                 </form >
             </section>

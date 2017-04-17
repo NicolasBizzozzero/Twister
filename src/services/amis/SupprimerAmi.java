@@ -12,9 +12,9 @@ import exceptions.ClefInexistanteException;
 import exceptions.tailles.ClefInvalideException;
 import exceptions.tailles.IDTropGrandException;
 import exceptions.tailles.IDTropPetitException;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class SupprimerAmi {
 	

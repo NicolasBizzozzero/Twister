@@ -15,9 +15,9 @@ import exceptions.tailles.CommentaireTropGrandException;
 import exceptions.tailles.CommentaireTropPetitException;
 import exceptions.tailles.IDTropGrandException;
 import exceptions.tailles.IDTropPetitException;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class AjouterCommentaire {
 	

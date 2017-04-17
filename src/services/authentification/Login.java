@@ -1,9 +1,12 @@
 package services.authentification;
 
+import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import bd.tools.AmitiesTools;
@@ -15,9 +18,9 @@ import exceptions.tailles.MotDePasseTropPetitException;
 import exceptions.tailles.PseudoTropGrandException;
 import exceptions.tailles.PseudoTropPetitException;
 import outils.PseudosAdmins;
+import outils.Tailles;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class Login {
 	public static JSONObject login(String pseudo, String motDePasse) {
@@ -67,13 +70,22 @@ public class Login {
 			
 			// On transforme le JSONObject en JSONArray
 			JSONArray listeIDSuivis = jsonIDSuivis.getJSONArray("Amis");
-
+			
+			// On recupere les informations restantes
+			JSONObject informations = bd.tools.UtilisateursTools.getInformationsUtilisateur(pseudo);
+			String prenom = informations.getString("prenom");
+			String nom = informations.getString("nom");
+			String anniversaire = informations.getString("anniversaire");
+			
 			// On genere une reponse
 			JSONObject retour = new JSONObject();
 			retour.put("id", identifiant);
 			retour.put("pseudo", pseudo);
 			retour.put("clef", key);
 			retour.put("suivis", listeIDSuivis);
+			retour.put("prenom", prenom);
+			retour.put("nom", nom);
+			retour.put("anniversaire", anniversaire);
 			return retour;
 
 		} catch (SQLException e) {
@@ -96,6 +108,10 @@ public class Login {
 			return ErrorJSON.serviceRefused("Erreur, mot de passe trop grand", CodesErreur.ERREUR_MDP_TROP_LONG);
 		} catch (ClefInexistanteException e) {
 			return ErrorJSON.serviceRefused("Erreur, clef inexistante", CodesErreur.ERREUR_CLEF_INEXISTANTE);
+		} catch (JSONException e) {
+			return ErrorJSON.serviceRefused("Erreur de JSON", CodesErreur.ERREUR_JSON);
+		} catch (UnknownHostException e) {
+			return ErrorJSON.serviceRefused("Hote inconnu", CodesErreur.ERREUR_HOTE_INCONNU);
 		} 
 	}
 	

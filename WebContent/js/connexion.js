@@ -69,13 +69,9 @@ function reponseConnection(rep) {
 		env.id_utilisateur = rep.id;
 		env.pseudo = rep.pseudo;
 		env.follows = rep.suivis;
-		console.log("rep.suivis",rep.suivis);
-	    env.fromId = -1;
-	    env.query = undefined;
-	    env.messages = [];
-	    env.minId = Infinity;
-	    env.maxId = -Infinity;
-            env.id_ami=undefined;
+		env.prenom = rep.prenom;
+		env.nom = rep.nom;
+		env.anniversaire = rep.anniversaire;
 		makePagePrincipale();
 	} else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);

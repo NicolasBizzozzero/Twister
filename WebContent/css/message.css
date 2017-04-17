@@ -1,34 +1,36 @@
+
 .messageUtilisateur {
-    border: medium solid #256c50;
+    background-color: #ffffff;
     padding: 0 10px;
     text-align: center;
 }
-
-
 .messageUtilisateur .text_message {
     text-align: left;
 }
-
-
 .info_message {
     text-align: right;
 }
-
-
 .likes {
-    border: medium solid #256c50;
+    border: medium solid;
+    border-radius: 10px;
     display: inline-block;
     text-align: center;
+    border-width: 1px;
 }
 
+.likes :hover {
+	cursor: pointer;
+}
 
+#like_4 {
+    border-right: medium none;
+}
 .like {
+    border-right: 1px solid #9c9c9c;
     float: left;
     padding-top: 10px;
-    width: 50px;
+    width: 60px;
 }
-
-
 .like img {
     display: block;
     height: 18px;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;
@@ -14,6 +15,8 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
+
+import outils.Noms;
 
 public class MessagesTools {
 	
@@ -28,7 +31,7 @@ public class MessagesTools {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public static void ajouterMessage(String id_auteur, String contenu) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static JSONObject ajouterMessage(String id_auteur, String contenu) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		// On se connecte a la BDD puis on recupere la collection
 		DBCollection messages = getCollectionMessages();
 		
@@ -36,26 +39,47 @@ public class MessagesTools {
 		Integer id_message = getIDNouveauMessage();
 		
 		// Creation du message
+		String date = new Date().toString();
 		BasicDBObject message = new BasicDBObject();
-		message.put(Nom.CHAMP_CONTENU, contenu);
-		message.put(Nom.CHAMP_DATE, new Date());
-		message.put(Nom.CHAMP_ID_MESSAGE, id_message);
-		message.put(Nom.CHAMP_NOMBRE_DE_COMMENTAIRES, 0);
-		message.put(Nom.CHAMP_COMMENTAIRES, new ArrayList<BasicDBObject>());
+		message.put(Noms.CHAMP_CONTENU, contenu);
+		message.put(Noms.CHAMP_DATE, date);
+		message.put(Noms.CHAMP_ID_MESSAGE, id_message);
+		message.put(Noms.CHAMP_NOMBRE_DE_COMMENTAIRES, 0);
+		message.put(Noms.CHAMP_COMMENTAIRES, new ArrayList<BasicDBObject>());
 		// Ajout de l'auteur
 		BasicDBObject auteur = new BasicDBObject();
-		auteur.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
-		auteur.put(Nom.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
-		message.put(Nom.CHAMP_AUTEUR, auteur);
+		auteur.put(Noms.CHAMP_ID_AUTEUR, id_auteur);
+		auteur.put(Noms.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
+		message.put(Noms.CHAMP_AUTEUR, auteur);
 		// Ajout des likes
 		BasicDBObject likes = new BasicDBObject();
 		for (Integer indexLike=0; indexLike < LikesTools.NOMBRE_LIKE_DIFFERENTS; indexLike++) {
 			likes.put(indexLike.toString(), new ArrayList<BasicDBObject>());
 		}
-		message.put(Nom.CHAMP_LIKES, likes);
+		message.put(Noms.CHAMP_LIKES, likes);
 
 		// On ajoute le message dans la collection
 		messages.insert(message);
+		
+		
+		// On renvoie une reponse		
+		JSONObject reponse = new JSONObject();		
+		reponse.put(Noms.CHAMP_CONTENU, contenu);		
+		reponse.put(Noms.CHAMP_DATE, date);		
+		reponse.put(Noms.CHAMP_ID_MESSAGE, id_message);		
+		reponse.put(Noms.CHAMP_NOMBRE_DE_COMMENTAIRES, 0);		
+		reponse.put(Noms.CHAMP_COMMENTAIRES, new JSONArray());		
+		JSONObject auteur_rep = new JSONObject();		
+		auteur_rep.put(Noms.CHAMP_ID_AUTEUR, id_auteur);		
+		auteur_rep.put(Noms.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));		
+		reponse.put(Noms.CHAMP_AUTEUR, auteur_rep);		
+		JSONObject likes_rep = new JSONObject();		
+		for (Integer indexLike=0; indexLike < LikesTools.NOMBRE_LIKE_DIFFERENTS; indexLike++) {		
+			likes_rep.put(indexLike.toString(), new JSONArray());		
+		}		
+		reponse.put(Noms.CHAMP_LIKES, likes_rep);		
+				
+		return reponse;
 	}
 	
 	
@@ -70,10 +94,10 @@ public class MessagesTools {
 		DBCollection collectionCompteurs = getCollectionCompteurs();
 		
 		DBObject doc = collectionCompteurs.findAndModify(
-	             new BasicDBObject("_id", Nom.ID_DOCUMENT_COMPTEURS), null, null, false,
-	             new BasicDBObject("$inc", new BasicDBObject(Nom.CHAMP_NOMBRE_DE_MESSAGES, 1)),
+	             new BasicDBObject("_id", Noms.ID_DOCUMENT_COMPTEURS), null, null, false,
+	             new BasicDBObject("$inc", new BasicDBObject(Noms.CHAMP_NOMBRE_DE_MESSAGES, 1)),
 	             true, true);
-	     return (Integer) doc.get(Nom.CHAMP_NOMBRE_DE_MESSAGES);
+	     return (Integer) doc.get(Noms.CHAMP_NOMBRE_DE_MESSAGES);
 	}
 	
 	
@@ -90,7 +114,7 @@ public class MessagesTools {
 		
 		// Creation du message
 		BasicDBObject query = new BasicDBObject();
-		query.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		query.put(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
 
 		// On retire le message
 		collectionMessages.remove(query);
@@ -108,16 +132,15 @@ public class MessagesTools {
 	 * @throws InstantiationException 
 	 */
 	public static void supprimerMessagesUtilisateur(String id_auteur) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		//TODO: tester
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 		
 		// Creation de la requete
 		BasicDBObject requete = new BasicDBObject();
 		BasicDBObject auteur = new BasicDBObject();
-		auteur.put(Nom.CHAMP_ID_AUTEUR, id_auteur);
-		auteur.put(Nom.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
-		requete.put(Nom.CHAMP_AUTEUR, auteur);
+		auteur.put(Noms.CHAMP_ID_AUTEUR, id_auteur);
+		auteur.put(Noms.CHAMP_PSEUDO_AUTEUR, bd.tools.UtilisateursTools.getPseudoUtilisateur(id_auteur));
+		requete.put(Noms.CHAMP_AUTEUR, auteur);
 
 		// On retire les messages correspondants a la requete
 		messages.remove(requete);
@@ -145,13 +168,12 @@ public class MessagesTools {
 	 * @throws UnknownHostException
 	 */
 	public static boolean messageExistant(String id_message) throws UnknownHostException {
-		//TODO: verifier si elle fonctionne
 		// On se connecte a la BDD puis on recupere les messages
 		DBCollection messages = getCollectionMessages();
 		
 		// Creation du message
 		BasicDBObject message = new BasicDBObject();
-		message.put(Nom.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		message.put(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
 
 		// On verifie si le message existe
 		DBCursor curseur = messages.find(message);
@@ -159,46 +181,71 @@ public class MessagesTools {
 	}
 	
 	
-	public static JSONObject listerMessagesUtilisateur(String recherche, String id_utilisateur, String id_max, String id_min, String limite) throws UnknownHostException {
-//		// TODO: Implementer
-//		// On se connecte a la BDD puis on recupere les messages
-//		DBCollection messages = getCollectionMessages();
-//		
-//		// Creation de la requete
-//		BasicDBObject requete = new BasicDBObject();
-//		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
-//
-//		// On itere sur les resultats
-//		DBCursor curseur = messages.find(requete).skip(index_debut).limit(limite);
-//		JSONObject reponse = new JSONObject();
-//		while (curseur.hasNext()) {
-//			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
-//		}
-//				
-//		return reponse;
-		return null;
-	}
+	public static JSONObject listerMessagesUtilisateur(String id_utilisateur, String recherche, String id_max, String id_min, String limite) throws UnknownHostException {
+  		// On se connecte a la BDD puis on recupere les messages
+  		DBCollection messages = getCollectionMessages();
+		  		
+  		// Creation de la requete
+  		BasicDBObject requete = new BasicDBObject();
+ 		ArrayList<BasicDBObject> listeAnd = new ArrayList<BasicDBObject>();
+		if (! id_min.equals("-1")) {
+			listeAnd.add(new BasicDBObject(Noms.CHAMP_ID_MESSAGE, new BasicDBObject("$gt", Integer.parseInt(id_min))));
+		}
+		if (! id_max.equals("-1")) {
+			listeAnd.add(new BasicDBObject(Noms.CHAMP_ID_MESSAGE, new BasicDBObject("$lt", Integer.parseInt(id_max))));
+		}
+		if (listeAnd.size() != 0) {
+			requete.put("$and", listeAnd);
+		}
+		requete.put(String.format("%s.%s", Noms.CHAMP_AUTEUR, Noms.CHAMP_ID_AUTEUR), id_utilisateur);
+		System.out.println(requete.toString());
+		
+  		// On itere sur les resultats
+  		JSONObject reponse = new JSONObject();
+ 		reponse.put(Noms.CHAMP_MESSAGES, new JSONArray());
+ 		DBCursor curseur = messages.find(requete).sort(new BasicDBObject(Noms.CHAMP_ID_MESSAGE, -1))
+                                                 .limit(Integer.parseInt(limite));
+  		while (curseur.hasNext()) {
+  			reponse.accumulate(Noms.CHAMP_MESSAGES, curseur.next());
+  		}
+  		return reponse;
+  	}
 	
 	
-	public static JSONObject listerMessagesToutLeMonde(String recherche, String id_max, String id_min, String limite) throws UnknownHostException {
-//		// TODO: Implementer
-//		// On se connecte a la BDD puis on recupere les messages
-//		DBCollection messages = getCollectionMessages();
-//		
-//		// Creation de la requete
-//		BasicDBObject requete = new BasicDBObject();
-//		requete.put(Nom.CHAMP_ID_AUTEUR, id_utilisateur);
-//
-//		// On itere sur les resultats
-//		DBCursor curseur = messages.find(requete).skip(index_debut).limit(limite);
-//		JSONObject reponse = new JSONObject();
-//		while (curseur.hasNext()) {
-//			reponse.accumulate(Nom.CHAMP_MESSAGES, curseur.next());
-//		}
-//				
-//		return reponse;
-		return null;
-	}
+	public static JSONObject listerMessagesToutLeMonde(String id_utilisateur, String recherche, String id_max, String id_min, String limite) throws UnknownHostException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+  		// On se connecte a la BDD puis on recupere les messages
+  		DBCollection messages = getCollectionMessages();
+  		
+  		// On recupere les id des amis de l'utilisateur
+		ArrayList<String> id_amis = bd.tools.AmitiesTools.getAmisEnArrayList(id_utilisateur);
+		id_amis.add(id_utilisateur);
+  		
+  		// Creation de la requete
+  		BasicDBObject requete = new BasicDBObject();
+ 		ArrayList<BasicDBObject> listeAnd = new ArrayList<BasicDBObject>();
+		if (! id_min.equals("-1")) {
+			listeAnd.add(new BasicDBObject(Noms.CHAMP_ID_MESSAGE, new BasicDBObject("$gt", Integer.parseInt(id_min))));
+		}
+		if (! id_max.equals("-1")) {
+			listeAnd.add(new BasicDBObject(Noms.CHAMP_ID_MESSAGE, new BasicDBObject("$lt", Integer.parseInt(id_max))));
+		}
+		if (listeAnd.size() != 0) {
+			requete.put("$and", listeAnd);
+ 		}
+		requete.put(String.format("%s.%s", Noms.CHAMP_AUTEUR, Noms.CHAMP_ID_AUTEUR), new BasicDBObject("$in", id_amis));
+		System.out.println(requete.toString());
+  
+  		// On itere sur les resultats
+  		JSONObject reponse = new JSONObject();
+		reponse.put(Noms.CHAMP_MESSAGES, new JSONArray());
+		DBCursor curseur = messages.find(requete).sort(new BasicDBObject(Noms.CHAMP_ID_MESSAGE, -1))
+                                                 .limit(Integer.parseInt(limite));
+  		while (curseur.hasNext()) {
+  			reponse.accumulate(Noms.CHAMP_MESSAGES, curseur.next());
+  		}
+ 				
+ 		return reponse;
+ 	}
 	
 	
 	/**
@@ -230,8 +277,8 @@ public class MessagesTools {
 	public static int getNombreDeMessages() throws UnknownHostException {
 		DBCollection collectionCompteurs = getCollectionCompteurs();
 		
-		DBObject doc = collectionCompteurs.findOne(new BasicDBObject("_id", Nom.ID_DOCUMENT_COMPTEURS));
-		return (Integer) doc.get(Nom.CHAMP_NOMBRE_DE_MESSAGES);
+		DBObject doc = collectionCompteurs.findOne(new BasicDBObject("_id", Noms.ID_DOCUMENT_COMPTEURS));
+		return (Integer) doc.get(Noms.CHAMP_NOMBRE_DE_MESSAGES);
 	}
 	
 
@@ -263,8 +310,8 @@ public class MessagesTools {
 	 */
 	public static DB seConnecterAMongoDB() throws UnknownHostException {
 		Mongo mongo = null;
-		mongo = new Mongo(Nom.SERVEUR, Nom.PORT_SERVEUR);
-		return mongo.getDB(Nom.BDD_MONGODB);
+		mongo = new Mongo(Noms.SERVEUR, Noms.PORT_SERVEUR);
+		return mongo.getDB(Noms.BDD_MONGODB);
 	}
 
 	
@@ -274,7 +321,7 @@ public class MessagesTools {
 	 * @throws UnknownHostException
 	 */
 	public static DBCollection getCollectionMessages() throws UnknownHostException {
-		return seConnecterAMongoDB().getCollection(Nom.COLLECTION_MESSAGES);
+		return seConnecterAMongoDB().getCollection(Noms.COLLECTION_MESSAGES);
 	}
 	
 	
@@ -284,7 +331,7 @@ public class MessagesTools {
 	 * @throws UnknownHostException
 	 */
 	public static DBCollection getCollectionCompteurs() throws UnknownHostException {
-		return seConnecterAMongoDB().getCollection(Nom.COLLECTION_COMPTEURS);
+		return seConnecterAMongoDB().getCollection(Noms.COLLECTION_COMPTEURS);
 	}
 	
 	
@@ -293,7 +340,7 @@ public class MessagesTools {
 	 * @throws UnknownHostException 
 	 */
 	public static void creerCollectionMessages() throws UnknownHostException {
-		seConnecterAMongoDB().getCollection(Nom.COLLECTION_MESSAGES);
+		seConnecterAMongoDB().getCollection(Noms.COLLECTION_MESSAGES);
 	}
 	
 	
@@ -304,9 +351,9 @@ public class MessagesTools {
 	public static void creerCollectionCompteurs() throws UnknownHostException {
 		DB db = seConnecterAMongoDB();
 		BasicDBObject doc = new BasicDBObject();
-		doc.put("_id", Nom.ID_DOCUMENT_COMPTEURS);
-		doc.put(Nom.CHAMP_NOMBRE_DE_MESSAGES, 0);
-		db.getCollection(Nom.COLLECTION_COMPTEURS).insert(doc);
+		doc.put("_id", Noms.ID_DOCUMENT_COMPTEURS);
+		doc.put(Noms.CHAMP_NOMBRE_DE_MESSAGES, 0);
+		db.getCollection(Noms.COLLECTION_COMPTEURS).insert(doc);
 	}
 	
 	
@@ -316,8 +363,8 @@ public class MessagesTools {
 	 */
 	public static void supprimerCollectionMessages() throws UnknownHostException {
 		DB db = seConnecterAMongoDB();
-		if (db.collectionExists(Nom.COLLECTION_MESSAGES)) {
-			db.getCollection(Nom.COLLECTION_MESSAGES).drop();
+		if (db.collectionExists(Noms.COLLECTION_MESSAGES)) {
+			db.getCollection(Noms.COLLECTION_MESSAGES).drop();
 		}
 	}
 	
@@ -328,8 +375,8 @@ public class MessagesTools {
 	 */
 	public static void supprimerCollectionCompteurs() throws UnknownHostException {
 		DB db = seConnecterAMongoDB();
-		if (db.collectionExists(Nom.COLLECTION_COMPTEURS)) {
-			db.getCollection(Nom.COLLECTION_COMPTEURS).drop();
+		if (db.collectionExists(Noms.COLLECTION_COMPTEURS)) {
+			db.getCollection(Noms.COLLECTION_COMPTEURS).drop();
 		}
 	}
 	
@@ -344,5 +391,22 @@ public class MessagesTools {
 		for (String nom : collections) {
 			System.out.println(nom);
 		}
+	}
+	
+	
+	public static int getNombreDeMessagesPostes(String idUtilisateur) throws UnknownHostException {
+  		// On se connecte a la BDD puis on recupere les messages
+  		DBCollection messages = getCollectionMessages();
+		  		
+  		// Creation de la requete
+  		BasicDBObject requete = new BasicDBObject();
+		requete.put(String.format("%s.%s", Noms.CHAMP_AUTEUR, Noms.CHAMP_ID_AUTEUR), idUtilisateur);
+		
+  		// On itere sur les resultats
+  		JSONObject reponse = new JSONObject();
+ 		reponse.put(Noms.CHAMP_MESSAGES, new JSONArray());
+ 		DBCursor curseur = messages.find(requete);
+ 		
+ 		return curseur.count();
 	}
 }

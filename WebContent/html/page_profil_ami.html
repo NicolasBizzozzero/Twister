@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="css/page_principale.css"/>
         <link rel="stylesheet" type="text/css" href="css/page_profil.css"/>
-        <link rel="stylesheet" type="text/css" href="css/message.css"/>
         <link rel="stylesheet" type="text/css" href="css/commentaire.css"/>
+        <link rel="stylesheet" type="text/css" href="css/message.css"/>
     </head>
     <body>
         <div id="corp">
@@ -15,8 +16,18 @@
                     Ne plus suivre
                 </button>
                 <div id="informations">
+                	<p>
+                		Pseudo: {{pseudo_utilisateur}}<br>
+	                    Prenom: {{prenom_utilisateur}}<br>
+	                    Nom: {{nom_utilisateur}}<br>
+	                    Anniversaire: {{date_de_naissance}}<br>
+	                    Nombre de messages: {{nb_messages}}<br>
+                    </p>
+                </div>
+                <div id="amis">
+                    <p>Amis :<br></p>
                     <script type="text/javascript">
-                        $(recuperationInfoUtilisateur(env.id_ami));
+                        $(listerAmis(env.id_ami));
                     </script>
                 </div>
             </div>
@@ -25,7 +36,7 @@
                     <form id="nv_message" method="post"
                           action="javascript:(function(){return;})()"
                           onSubmit="javascript:newMessage(this)">
-                        <textarea form="nv_message" name="nv_msg"
+                        <textarea form="nv_message" name="nv_message"
                                   placeholder="Poster un nouveau message"></textarea>
                         <input type="submit" value="Poster"/>
                     </form>
@@ -35,14 +46,6 @@
                         $(completeMessages);
                     </script>
                 </section>
-            </div>
-            <div id="cote" class="corp">
-                <div id="amis">
-                    Amis
-                    <script type="text/javascript">
-                        $(listerAmis(env.id_ami));
-                    </script>
-                </div>
             </div>
         </div>
     </body>

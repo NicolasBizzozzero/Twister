@@ -1,6 +1,6 @@
-package bd.tools;
+package outils;
 
-public abstract class Nom {
+public abstract class Noms {
 	public final static String BDD_MONGODB = "gr2-2017-bourmaud-bizzozzero";
 	public final static String SERVEUR = "li328.lip6.fr";
 	public final static int PORT_SERVEUR = 27130;

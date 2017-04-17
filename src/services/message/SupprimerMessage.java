@@ -12,11 +12,11 @@ import exceptions.tailles.IDTropGrandException;
 import exceptions.tailles.IDTropPetitException;
 import exceptions.tailles.MessageTropGrandException;
 import exceptions.tailles.MessageTropPetitException;
+import outils.Tailles;
 import bd.tools.SessionsTools;
 import bd.tools.UtilisateursTools;
 import services.CodesErreur;
 import services.ErrorJSON;
-import services.Tailles;
 
 public class SupprimerMessage {
 
