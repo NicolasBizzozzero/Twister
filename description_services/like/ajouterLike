@@ -4,7 +4,7 @@ Lieu ou se trouve le service					services/like/AjouterLike
 
 URL du service Web								li328.lip6.fr:8280/gr2_Bourmaud_Bizzozzero/like/ajouterLike
 
-Description du service							Ajoute un like à un message passé en paramètre
+Description du service							Ajoute un like Ã  un message passÃ© en paramÃ¨tre
 
 Parametres en entree							String clef, String id_message, String type_like
 
