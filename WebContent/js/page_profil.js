@@ -11,7 +11,7 @@ function makePageProfil(id_utilisateur, pseudo, nom, prenom, anniversaire, nb_me
 
     if (id_utilisateur == env.id_utilisateur) {
         makePageProfilUtilisateur(nb_messages);
-    } else if (env.follows.includes(id_utilisateur)) {
+    } else if (! env.follows.includes(id_utilisateur.toString())) {
         env.id_ami = id_utilisateur;
         makePageProfilInconnu(id_utilisateur, pseudo, nom, prenom, anniversaire, nb_messages);
     } else {
@@ -111,6 +111,21 @@ function voirSonProfil() {
     $.ajax({type:"GET",
         url: url_site + "/services/utilisateur/informationsUtilisateur",
         data:"clef=" + env.clef + "&pseudo=" + env.pseudo,
+        dataType: "json",
+        success: function(res) {
+            voirProfilReponse(res);
+        },
+        error: function(xhr, status, err) {
+            func_erreur(status + ": " + err);
+        }
+    });
+}
+
+
+function voirProfilAmi(pseudo) {
+    $.ajax({type:"GET",
+        url: url_site + "/services/utilisateur/informationsUtilisateur",
+        data:"clef=" + env.clef + "&pseudo=" + pseudo,
         dataType: "json",
         success: function(res) {
             voirProfilReponse(res);
