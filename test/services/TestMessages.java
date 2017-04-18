@@ -19,7 +19,7 @@ public class TestMessages {
 //		System.out.println(bd.tools.MessagesTools.getTousLesMessages().toString(4));
 //		System.out.println(bd.tools.MessagesTools.getTousLesCompteurs().toString(4));
 //		
-//		testAjouterMessage();
+		testAjouterMessage();
 //		//testSupprimerMessage();
 //		//testListerMessages();
 //		
@@ -32,7 +32,7 @@ public class TestMessages {
 		System.out.println("Debut du test d'ajout de messages");
 
 		// On commence par ajouter une personne dans notre base de donnees
-		bd.tools.UtilisateursTools.ajouterUtilisateur("500", "Test_utilisateur_500", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail1@gmail.com", null, null, null);
+		bd.tools.UtilisateursTools.ajouterUtilisateur("500", "Test_utilisateur_500", outils.MesMethodes.hasherMotDePasse("MotDePasse"), "mail500@gmail.com", null, null, null);
 		bd.tools.SessionsTools.insertSession("500", false);
 		String clef = bd.tools.SessionsTools.getClefById("500");
 

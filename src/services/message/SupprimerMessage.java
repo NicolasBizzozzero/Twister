@@ -58,7 +58,7 @@ public class SupprimerMessage {
 				}
 				
 				// On verifie que l'utilisateur supprimant est bien l'auteur du message
-				if (bd.tools.MessagesTools.getIDAuteur(id_message) != id) {
+				if (! bd.tools.MessagesTools.getIDAuteur(id_message).equals(id)) {
 					return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'est pas l'auteur du message %s.", id, id_message), CodesErreur.ERREUR_PAS_AUTEUR);
 				}
 				

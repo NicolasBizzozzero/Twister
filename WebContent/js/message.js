@@ -242,7 +242,7 @@ function supprimerMessage(id){
         data: "clef=" + env.clef+ "&id_message=" +id,
         dataType: "text",
         success: function(res) {
-            supprimerMessageReponse(id);
+            supprimerMessageReponse(res, id);
         },
         error: function(xhr, status, err) {
             func_erreur(status + ": " + err);
@@ -251,8 +251,8 @@ function supprimerMessage(id){
     });
 }
 
-function supprimerMessageReponse(id){
-	$("#message_" + id).remove();
-	
-    
+function supprimerMessageReponse(res, id) {
+	if (res.errorcode == undefined) {
+		$("#message_" + id).remove();
+	}
 }
