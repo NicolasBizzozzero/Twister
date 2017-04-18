@@ -233,3 +233,24 @@ function replieMessage(id_message) {
         });
     $("#message_" + id_message + " #image_moins").replaceWith(image_plus);
 }
+
+function supprimerMessage(id){
+	$.ajax({type: "GET",
+        url: url_site + "/services/message/supprimerMessage",
+        data: "clef=" + env.clef+ "&id_message=" +id,
+        dataType: "text",
+        success: function(res) {
+            supprimerMessageReponse(id);
+        },
+        error: function(xhr, status, err) {
+            func_erreur(status + ": " + err);
+            lock_liste_messages = false;
+        }
+    });
+}
+
+function supprimerMessageReponse(id){
+	$("#message_" + id).remove();
+	
+    
+}
