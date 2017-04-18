@@ -4,7 +4,7 @@ function ajouter_ami() {
     	    data:"clef=" + env.clef + "&id_ami=" + env.id_ami,
     	    dataType:"json",
     	    success: function(res) {
-    	    	env.follows.pull(env.id_ami);
+    	    	env.follows.push(env.id_ami);
     	    	reponseFollow(res);
     	    },
     	    error: function(xhr, status, err) {
@@ -26,7 +26,7 @@ function ne_plus_suivre(){
     	    data:"clef=" + env.clef + "&id_ami=" + env.id_ami,
     	    dataType:"json",
     	    success: function(res) {
-    	    	env.follows.push(env.id_ami);
+    	    	env.follows.pull(env.id_ami);
     	    	reponseStopFollow(res);
     	    },
     	    error: function(xhr, status, err) {
@@ -70,9 +70,7 @@ function reponseListerAmis(rep){
     //console.log("Amis", amis);
     var s="";
     amis.forEach(function (ami){
-        //console.log("ami",ami);
-        //console.log("ami.pseudo",ami.pseudo);
-        s+="<div class=\"liens_amis\" onClick=\"javascript:makePageProfil("+ami.id+")\">"+ami.pseudo+"</div>";
+        s+="<div class=\"liens_amis\" onClick=\"javascript:voirProfilAmi('" + ami.pseudo + "')\">" + ami.pseudo + "</div>";
         
     });
     var el = $("#amis");

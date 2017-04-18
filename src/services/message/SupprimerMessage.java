@@ -57,6 +57,11 @@ public class SupprimerMessage {
 					return ErrorJSON.serviceRefused(String.format("Le message %s n'existe pas", id_message), CodesErreur.ERREUR_MESSAGE_INEXISTANT);
 				}
 				
+				// On verifie que l'utilisateur supprimant est bien l'auteur du message
+				if (bd.tools.MessagesTools.getIDAuteur(id_message) != id) {
+					return ErrorJSON.serviceRefused(String.format("L'utilisateur %s n'est pas l'auteur du message %s.", id, id_message), CodesErreur.ERREUR_PAS_AUTEUR);
+				}
+				
 				// On supprime le message de la BDD
 				bd.tools.MessagesTools.supprimerMessage(clef, id_message);
 				
