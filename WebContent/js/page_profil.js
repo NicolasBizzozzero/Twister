@@ -8,10 +8,9 @@ function makePageProfil(id_utilisateur, pseudo, nom, prenom, anniversaire, nb_me
 	env.messages = [];
 	env.minId = Infinity;
 	env.maxId = -Infinity;
-
     if (id_utilisateur == env.id_utilisateur) {
         makePageProfilUtilisateur(nb_messages);
-    } else if (! env.follows.indexOf(id_utilisateur.toString()) > -1) {
+    } else if ( env.follows.indexOf(id_utilisateur.toString()) <= -1 ) {
         env.id_ami = id_utilisateur;
         makePageProfilInconnu(id_utilisateur, pseudo, nom, prenom, anniversaire, nb_messages);
     } else {
