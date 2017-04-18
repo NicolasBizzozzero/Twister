@@ -4,7 +4,7 @@ function ajouter_ami() {
     	    data:"clef=" + env.clef + "&id_ami=" + env.id_ami,
     	    dataType:"json",
     	    success: function(res) {
-    	    	env.follows.pull(env.id_ami);
+    	    	env.follows.push(env.id_ami);
     	    	reponseFollow(res);
     	    },
     	    error: function(xhr, status, err) {
@@ -26,7 +26,7 @@ function ne_plus_suivre(){
     	    data:"clef=" + env.clef + "&id_ami=" + env.id_ami,
     	    dataType:"json",
     	    success: function(res) {
-    	    	env.follows.push(env.id_ami);
+    	    	env.follows.pull(env.id_ami);
     	    	reponseStopFollow(res);
     	    },
     	    error: function(xhr, status, err) {
