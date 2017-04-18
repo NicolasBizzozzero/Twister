@@ -38,3 +38,7 @@
     margin-right: auto;
     width: 18px;
 }
+#supprimer_msg{
+	width: 18px;
+	cursor: pointer;
+}
