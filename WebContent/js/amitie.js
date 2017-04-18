@@ -72,7 +72,8 @@ function reponseListerAmis(rep){
     amis.forEach(function (ami){
         //console.log("ami",ami);
         //console.log("ami.pseudo",ami.pseudo);
-        s+="<div class=\"liens_amis\" onClick=\"javascript:makePageProfil("+ami.id+")\">"+ami.pseudo+"</div>";
+    	ami_pseudo= '"'+ami.pseudo+'"';
+        s+="<div class=\"liens_amis\" onClick=\"javascript:voirProfilAmi('{{ami_pseudo}}')\">"+ami_pseudo+"</div>";
         
     });
     var el = $("#amis");
