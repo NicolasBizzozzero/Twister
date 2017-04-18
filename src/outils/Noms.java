@@ -7,6 +7,7 @@ public abstract class Noms {
 
 	public final static String COLLECTION_MESSAGES = "Messages";
 	public final static String COLLECTION_COMPTEURS = "Compteurs";
+	public final static String COLLECTION_INDEX_INVERSES = "Index_inverses";
 
 	public final static String CHAMP_NOM_COLLECTION = "nom_collection";
 	public final static String CHAMP_ID_MESSAGE = "id_message";

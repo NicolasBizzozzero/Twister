@@ -79,6 +79,10 @@
 		<servlet-name>RecuperationInfoUtilisateur</servlet-name> 
 		<servlet-class>servlets.utilisateur.ServletRecuperationInfoUtilisateur</servlet-class> 
 	</servlet>	
+	<servlet> 
+		<servlet-name>RecuperationMotDePasse</servlet-name> 
+		<servlet-class>servlets.mail.ServletRecuperationMotDePasse</servlet-class> 
+	</servlet>	
 	
 	<servlet-mapping> 
 		<servlet-name>CreationUtilisateur</servlet-name> 
@@ -158,6 +162,10 @@
 	<servlet-mapping>
 		<servlet-name>RecuperationInfoUtilisateur</servlet-name> 
 		<url-pattern>/services/utilisateur/recuperationInfoUtilisateur</url-pattern> 
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RecuperationMotDePasse</servlet-name> 
+		<url-pattern>/services/mail/recuperationMotDePasse</url-pattern> 
 	</servlet-mapping>
 
 	<welcome-file-list>

@@ -68,10 +68,10 @@ function afficheCommentairesReponse(rep, id_message) {
 
 function newCommentaire(id) {
     // On recupère le texte du message à poster
-    var texte = $("textarea[NAME=nv_commentaire_"+id+"]").val();
+    var texte = $("textarea[NAME=nv_commentaire_" + id + "]").val();
     console.log("texte commentaire",texte);
     // On vide le texte qui était dedans
-    $("textarea[NAME=nv_commentaire_"+id+"]").val('');
+    $("textarea[NAME=nv_commentaire_" + id + "]").val('');
 
     $.ajax({type: "GET",
             url: url_site + "/services/commentaire/ajouterCommentaire",
