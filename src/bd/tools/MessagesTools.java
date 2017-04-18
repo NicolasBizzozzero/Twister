@@ -409,4 +409,22 @@ public class MessagesTools {
  		
  		return curseur.count();
 	}
+
+
+	public static String getIDAuteur(String id_message) throws UnknownHostException {
+		// On se connecte a la BDD puis on recupere les messages
+  		DBCollection messages = getCollectionMessages();
+		  		
+  		// Creation de la requete
+  		BasicDBObject requete = new BasicDBObject();
+		requete.put(Noms.CHAMP_ID_MESSAGE, Integer.parseInt(id_message));
+		
+  		// On recupere le resultat de la requete);
+ 		DBCursor curseur = messages.find(requete);
+ 		DBObject resultat = curseur.next();
+ 		
+ 		// On retourne l'ID de l'auteur
+  		DBObject auteur =  (DBObject) resultat.get(Noms.CHAMP_AUTEUR);
+  		return (String) auteur.get(Noms.CHAMP_ID_AUTEUR);
+	}
 }

@@ -66,23 +66,25 @@ function completeMessages() {
 function completeMessagesReponse(rep) {
     if (rep.errorcode == undefined) {
         var listeMessages = (JSON.parse(rep, revival)).messages;
-        for(var i=0; i < listeMessages.length; i++) {
-            var m = listeMessages[i];
-            $("#messages").append(m.getHtml());
-            env.messages[m.id] = m;
-            
-            if (m.id > env.maxId) {
-                env.maxId = m.id;
-            }
-
-            if (m.id < env.minId) {
-                env.minId = m.id;
-            }
+        if (listeMessages.length != 0) {
+	        for (var i=0; i < listeMessages.length; i++) {
+	            var m = listeMessages[i];
+	            $("#messages").append(m.getHtml());
+	            env.messages[m.id] = m;
+	            
+	            if (m.id > env.maxId) {
+	                env.maxId = m.id;
+	            }
+	
+	            if (m.id < env.minId) {
+	                env.minId = m.id;
+	            }
+	        }
+	
+	        var last_id = listeMessages[listeMessages.length - 1].id;
+	        $("#message_" + last_id).appear();
+	        $.force_appear();
         }
-
-        var last_id = listeMessages[listeMessages.length - 1].id;
-        $("#message_" + last_id).appear();
-        $.force_appear();
     } else {
         console.log(rep.message + ", ERROR_CODE: " + rep.errorcode);
         func_erreur(rep.message);
