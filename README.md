@@ -30,8 +30,8 @@ Mdp: nz5QcHdRLNHCPpjK
 * Ajouter un petit message ou un petit design de site différent lorsque c'est l'anniversaire d'un utilisateur
 
 ### Services à implanter
-* AjouterPhotoProfil
-* ModifierPhotoProfil
+* AjouterPhotoProfil (⚠️️ Imposer limite photos)
+* ModifierPhotoProfil (⚠️️ Imposer limite photos)
 * SupprimerPhotoProfil
 * AjouterCommentaireAvecPhoto (⚠️️ Imposer limite photos)
 
