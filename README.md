@@ -19,7 +19,8 @@ http://li328.lip6.fr/phpmyadmin<br>
 Login: gr2_bourmaud_biz<br>
 Mdp: nz5QcHdRLNHCPpjK
 
-## Trucs à faire
+## Todo
+### Bugs
 * La date d'anniversaire doit être au format YYYY-MM-DD, il faut le checker
 * La fonction retournant le temps d'inactivite d'un utilisateur ne fonctionne pas de midi a 13h, ensuite elle refonctionne
 * Tester SupprimerLike avec un utilisateur n'ayant pas like
@@ -28,13 +29,13 @@ Mdp: nz5QcHdRLNHCPpjK
 * Quand on aura tout fini, rajouter pour chaque service un catch (Exception e) avec un JSON D'erreur : ERREUR_INCONNUE
 * Ajouter un petit message ou un petit design de site différent lorsque c'est l'anniversaire d'un utilisateur
 
-### Services
+### Services à implanter
 * AjouterPhotoProfil
 * ModifierPhotoProfil
 * SupprimerPhotoProfil
 * AjouterCommentaireAvecPhoto (⚠️️ Imposer limite photos)
 
-### Implantation côté client
+### Implantations côté client
 * ModifierUtilisateur
 * SupprimerCommentaire
 * SupprimerUtilisateur
