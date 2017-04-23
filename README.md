@@ -1,23 +1,11 @@
-# gr2_Bourmaud_Bizzozzero
-3I017 Projet Web
-
-## Lien vers le site :
-http://twister.ga
+# Twister
+Projet effectué dans le cadre de l'UE "[3I017] - Technologies du web" par <b>Bourmaud Alexia</b> et <b>Bizzozzero Nicolas</b>.<br>
+Le site est un clone de Twitter imitant quelques-unes de ses fonctionnalités. Le serveur tourne sur Apache Tomcat et utilise MySQL et MongoDB comme base de données.
 
 ## Sites utiles
 http://www-connex.lip6.fr/~soulier/content/TechnoWeb/TechnoWeb.html<br>
-http://www.cssdesk.com/<br>
-http://www.freeformatter.com/html-formatter.html
-
-#### Tomcat
 http://li328.lip6.fr:8280/manager/html<br>
-Login: admin<br>
-Mdp: admin.li328$
-
-#### PHPMyAdmin
-http://li328.lip6.fr/phpmyadmin<br>
-Login: gr2_bourmaud_biz<br>
-Mdp: nz5QcHdRLNHCPpjK
+http://li328.lip6.fr/phpmyadmin
 
 ## Todo
 ### Bugs
@@ -39,4 +27,3 @@ Mdp: nz5QcHdRLNHCPpjK
 * ModifierUtilisateur
 * SupprimerCommentaire
 * SupprimerUtilisateur
-
